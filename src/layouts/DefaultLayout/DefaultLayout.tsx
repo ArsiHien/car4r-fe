@@ -1,11 +1,12 @@
 import { FC, ReactNode } from "react";
 
+import { Header , Footer } from "../../components";
 const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
-      <header>Header</header>
+      <Header />
       <main>{children}</main>
-      <footer>Footer</footer>
+      <Footer/>
     </div>
   );
 };
