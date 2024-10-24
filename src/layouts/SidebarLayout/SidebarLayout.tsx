@@ -1,10 +1,12 @@
 import { FC, ReactNode } from "react";
+import { Footer, Header } from "../../components";
 
 const SidebarLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
-      <aside>Sidebar</aside>
+      <Header />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 };
