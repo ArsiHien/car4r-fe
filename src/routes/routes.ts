@@ -1,7 +1,6 @@
 import config from "../config";
 import Home from "../pages/Home";
 import Search from "../pages/Search";
-import { SidebarLayout } from "../layouts";
 import { FC } from "react";
 
 interface RouteConfig {
@@ -12,7 +11,7 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, component: Home },
-  { path: config.routes.search, component: Search, layout: SidebarLayout },
+  { path: config.routes.search, component: Search },
 ];
 
 export { publicRoutes };
