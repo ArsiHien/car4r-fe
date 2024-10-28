@@ -1,3 +1,6 @@
+/*
+  * File này thiết lập routing
+*/
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
