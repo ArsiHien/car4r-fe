@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import UserSidebar from "./UserSideBar";
+import UserSidebar from "./UserSidebar";
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
