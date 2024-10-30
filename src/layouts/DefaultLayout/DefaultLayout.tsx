@@ -5,11 +5,11 @@ const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
       <Header />
-      <div className="flex">
-      <SideBar/>
+      {/* <div className="flex">
+      <SideBar/> */}
       <main>{children}</main>
-      </div>
-      
+      {/* </div> */}
+
       <Footer />
     </div>
   );

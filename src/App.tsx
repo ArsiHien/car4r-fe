@@ -1,6 +1,6 @@
 /*
-  * File này thiết lập routing
-*/
+ * File này thiết lập routing
+ */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <Routes>
         {publicRoutes.map((route, index) => {
-          const Page = route.component;
+          const Page = route.page;
           const Layout = route.layout || DefaultLayout;
 
           return (
