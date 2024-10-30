@@ -1,4 +1,4 @@
-import { CarCardProps } from "../components/CarCard";
+import { CarCardProps } from "../components/Cars/CarCard";
 import car from "../assets/Car.png";
 
 const cars: CarCardProps[] = [
