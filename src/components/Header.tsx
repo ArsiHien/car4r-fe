@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import UserSidebar from "./UserSidebar";
+import UserSidebar from "./SideBar/UserSidebar";
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -71,6 +72,7 @@ const Header: React.FC = () => {
           />
         </svg>
 
+        <Link to="/settings">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -90,6 +92,7 @@ const Header: React.FC = () => {
             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
           />
         </svg>
+        </Link>
 
         {/* User Icon that triggers the sidebar */}
         <div className="relative">

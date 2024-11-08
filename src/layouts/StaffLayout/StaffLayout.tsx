@@ -1,12 +1,12 @@
 import { FC, ReactNode } from "react";
 
-import { Header, Footer, MainSidebar } from "../../components";
-const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
+import { Header, Footer, StaffSidebar } from "../../components";
+const StaffLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
       <Header />
       <div className="flex">
-      <MainSidebar/>
+      <StaffSidebar/>
       <main>{children}</main>
       </div>
 
@@ -15,4 +15,4 @@ const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-export default DefaultLayout;
+export default StaffLayout;

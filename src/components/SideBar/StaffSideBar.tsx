@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar: React.FC = () => {
+const StaffSidebar: React.FC = () => {
   return (
     <aside className="w-64 h-screen bg-gray-100 p-5 flex flex-col justify-between ">
       {/* Top Section */}
@@ -27,13 +27,29 @@ const Sidebar: React.FC = () => {
               />
             </svg>
 
-            <span>Home</span>
+            <span>Overview</span>
           </Link>
           <Link
             to="/content"
             className="flex items-center space-x-3 p-2 rounded-md text-gray-600 hover:bg-gray-200"
           >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+</svg>
+
+
             <span>Car Rent</span>
+          </Link>
+          <Link
+            to="/history"
+            className="flex items-center space-x-3 p-2 rounded-md text-gray-600 hover:bg-gray-200"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+</svg>
+
+
+            <span>Orders</span>
           </Link>
           <Link
             to="/tasks"
@@ -56,27 +72,7 @@ const Sidebar: React.FC = () => {
 
             <span>Inbox</span>
           </Link>
-          <Link
-            to="/history"
-            className="flex items-center space-x-3 p-2 rounded-md text-gray-600 hover:bg-gray-200"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-
-            <span>History</span>
-          </Link>
+          
         </nav>
 
         <h2 className="text-gray-500 text-sm uppercase mt-8 mb-4">Settings</h2>
@@ -108,25 +104,17 @@ const Sidebar: React.FC = () => {
             <span>Settings</span>
           </Link>
           <Link
-            to="/web-console"
+            to="/login"
             className="flex items-center space-x-3 p-2 rounded-md text-gray-600 hover:bg-gray-200"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
-              />
-            </svg>
-            <span>Help and Center</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+</svg>
+
+
+            <span>Logout</span>
           </Link>
+          
         </nav>
       </div>
 
@@ -135,4 +123,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar;
+export default StaffSidebar;

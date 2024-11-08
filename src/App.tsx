@@ -4,6 +4,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
+import StaffLayout from "./layouts/StaffLayout";
 
 const App = () => {
   return (
@@ -11,8 +12,10 @@ const App = () => {
       <Routes>
         {publicRoutes.map((route, index) => {
           const Page = route.page;
-          const Layout = route.layout || DefaultLayout;
 
+          /*chia Default Staff Admin layout cho từng account ??  */
+          // const Layout = route.layout || DefaultLayout;
+          const Layout = route.layout || DefaultLayout;
           return (
             <Route
               key={index}
