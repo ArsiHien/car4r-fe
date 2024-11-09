@@ -9,6 +9,8 @@ import { FC } from "react";
 import Booking1 from "../pages/Booking/Booking1";
 import Booking2 from "../pages/Booking/Booking2";
 import Booking3 from "../pages/Booking/Booking3";
+import Booking4 from "../pages/Booking/Booking4";
+
 
 interface RouteConfig {
   path: string;
@@ -27,6 +29,8 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
   { path: config.routes.booking3, page: Booking3, layout: Booking3 },
+  { path: config.routes.booking4, page: Booking4, layout: Booking4 },
+
 
 ];
 

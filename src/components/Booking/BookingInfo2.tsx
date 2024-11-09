@@ -4,13 +4,16 @@ import "./BookingInfo.css";
 
 const BookingInfo2 = () => {
   return (
-    <div className="bg-gray-200 flex h-[800px]"> 
-      <span className="w-1/3 ml-10 my-5 mr-5">
-        <div className="bg-white mb-5 pt-5"> 
+    <div className="bg-gray-200 flex h-[1000px]">
+      {/**left container */} 
+      <span className="w-1/3 ml-10 my-5 pr-5">
+      {/**car information seciton */}
+        <div className="bg-white mb-5 pt-5 py-5"> 
         <div className="bg-blue-100 w-3/4 h-60 mx-11 mb-5 text-center">Car img</div>
           <div className=" w-4/5 ml-4"> 
-          <h3 className="text-2xl text-blue-900 font-bold">Name</h3>          
-            <div className="text-xl flex flex-col">
+          <h3 className="text-2xl text-blue-900 font-bold pb-5 text-center">Name</h3> 
+          <hr className="pb-5" />         
+            <div className="text-xl flex flex-col gap-3">
               <label>Car Type: </label>
               <label>Price: </label>
               <label>Fuel: </label>
@@ -18,24 +21,28 @@ const BookingInfo2 = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/**bottom left container */}
+        <div className="py-5">
           <div className="bg-white pl-3 text-sm mb-3 pl-4"> 
-          <h3  className="text-blue-900 text-2xl font-bold">Bill</h3>
-            <div className="text-xl flex flex-col" >
+          <h3  className="text-2xl text-blue-900 font-bold py-5">Bill</h3>
+          <hr />
+            <div className="text-xl flex flex-col gap-3 py-5" >
               <label>Price: </label>
               <label>Number of days: </label>
               <hr className="" />
-              <label>Total: </label>
+              <label className="text-blue-600 font-bold">Total: </label>
             </div>
           </div>
         </div>
-        <div className="flex gap-10 ml-5 my-10">
-        <button className="text-white bg-blue-500 text-xl px-10">Return</button> 
-        <button className="text-white bg-blue-500 text-xl px-10">Order</button> 
+        {/**button section */}
+        <div className="flex gap-10 ml-3 my-10">
+        <button className="text-white bg-gray-600 text-xl px-10 hover:bg-gray-400 rounded focus:outline-none">Return</button> 
+        <button className="text-white bg-blue-900 text-xl px-10 hover:bg-blue-600 rounded focus:outline-none">Order</button> 
         </div>
       </span>
+      {/**right container */}
       <span className="bg-white mr-10 w-3/4 my-5 h-[700px]"> 
-        <h1 className="text-xl font-bold mx-3 my-3">THÔNG TIN KHÁCH HÀNG</h1>
+        <h1 className="text-xl font-bold text-blue-900 mx-3 my-3">THÔNG TIN KHÁCH HÀNG</h1>
         <hr />
         <h2 className="text-xl mx-3 my-3">Nhập thông tin cá nhân để tiến hành đặt đơn</h2>
         <div className="px-3"> 

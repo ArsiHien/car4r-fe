@@ -1,4 +1,6 @@
 import React from "react";
+import number1 from "../../assets/number1.png";
+
 
 const ProgressBar1 = () => {
   return (
