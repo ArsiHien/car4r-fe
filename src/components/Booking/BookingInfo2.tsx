@@ -6,9 +6,9 @@ const BookingInfo2 = () => {
   return (
     <div className="bg-gray-200 flex h-[1000px]">
       {/**left container */} 
-      <span className="w-1/3 ml-10 my-5 pr-5">
+      <span className="flex flex-col gap-5 w-1/3 ml-10 my-5 pr-5">
       {/**car information seciton */}
-        <div className="bg-white mb-5 pt-5 py-5"> 
+      <div className="bg-white mb-5 py-5"> 
         <div className="bg-blue-100 w-3/4 h-60 mx-11 mb-5 text-center">Car img</div>
           <div className=" w-4/5 ml-4"> 
           <h3 className="text-2xl text-blue-900 font-bold pb-5 text-center">Name</h3> 
@@ -20,10 +20,10 @@ const BookingInfo2 = () => {
               <label>Capacity: </label>
             </div>
           </div>
-        </div>
+      </div>
         {/**bottom left container */}
-        <div className="py-5">
-          <div className="bg-white pl-3 text-sm mb-3 pl-4"> 
+        <div className="">
+          <div className="bg-white pl-3 text-sm mb-3 "> 
           <h3  className="text-2xl text-blue-900 font-bold py-5">Bill</h3>
           <hr />
             <div className="text-xl flex flex-col gap-3 py-5" >
@@ -35,9 +35,9 @@ const BookingInfo2 = () => {
           </div>
         </div>
         {/**button section */}
-        <div className="flex gap-10 ml-3 my-10">
-        <button className="text-white bg-gray-600 text-xl px-10 hover:bg-gray-400 rounded focus:outline-none">Return</button> 
-        <button className="text-white bg-blue-900 text-xl px-10 hover:bg-blue-600 rounded focus:outline-none">Order</button> 
+        <div className="flex gap-10 justify-center">
+        <button className="text-white bg-gray-600 text-xl w-40 h-12 hover:bg-gray-400 rounded focus:outline-none">Return</button> 
+        <button className="text-white bg-blue-900 text-xl w-40 h-12 hover:bg-blue-600 rounded focus:outline-none">Order</button> 
         </div>
       </span>
       {/**right container */}
