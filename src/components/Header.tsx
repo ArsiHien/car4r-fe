@@ -13,7 +13,9 @@ const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white border-b shadow-md">
       {/* Logo */}
+      <Link to="/">
       <div className="text-2xl font-bold text-blue-600">CAR4R</div>
+      </Link>
 
       {/* Search Bar */}
       <div className="relative flex items-center max-w-md w-full mx-4">
@@ -97,7 +99,7 @@ const Header: React.FC = () => {
         {/* User Icon that triggers the sidebar */}
         <div className="relative">
           <img
-            src="https://via.placeholder.com/40" // replace with actual profile image path
+            src="src\assets\avatar.png" // replace with actual profile image path
             alt="User Icon"
             className="w-10 h-10 rounded-full cursor-pointer"
             onClick={toggleSidebar}

@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Search from "../pages/Search";
 import Overview from "../pages/StaffOverview"
+import Profile from "../pages/Profile"
 import { FC } from "react";
 
 interface RouteConfig {
@@ -24,6 +25,7 @@ const publicRoutes: RouteConfig[] = [
    */
   { path: config.routes.login, page: Login, layout: Login },
   { path: config.routes.overview, page: Overview,layout: Overview},
+  { path: config.routes.profile, page: Profile,layout: Profile},
 ];
 
 export { publicRoutes };
