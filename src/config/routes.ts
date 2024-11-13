@@ -4,7 +4,10 @@
 const routes = {
   home: "/",
   search: "/search",
-  login: "/login",
+  login: "/logIn",
+  auth: "/auth",
+  signUp: "/signUp",
+  resetPassword: "/resetPassword",
 };
 
 export default routes;
