@@ -7,6 +7,7 @@ const routes = {
   login: "/login",
   overview : "/management",
   profile : "/profile",
+  carMag : "/management/cars",
 };
 
 export default routes;
