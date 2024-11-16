@@ -1,3 +1,4 @@
+import { SideBar } from "../components";
 
 
 /*
@@ -11,6 +12,7 @@ const routes = {
   bookingInfo1: "/bookinginfo1",
   booking3: "/booking3",
   booking4: "/booking4",
+  ordermanagement: "/ordermanagement",
 };
 
 export default routes;

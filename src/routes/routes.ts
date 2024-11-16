@@ -10,8 +10,7 @@ import Booking1 from "../pages/Booking/Booking1";
 import Booking2 from "../pages/Booking/Booking2";
 import Booking3 from "../pages/Booking/Booking3";
 import Booking4 from "../pages/Booking/Booking4";
-
-
+import OrderMag from "../pages/Management/OrderMag";
 interface RouteConfig {
   path: string;
   page: FC;
@@ -30,6 +29,7 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
   { path: config.routes.booking3, page: Booking3, layout: Booking3 },
   { path: config.routes.booking4, page: Booking4, layout: Booking4 },
+  { path: config.routes.ordermanagement, page: OrderMag, layout: OrderMag },
 
 
 ];
