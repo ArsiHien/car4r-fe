@@ -4,10 +4,13 @@
 const routes = {
   home: "/",
   search: "/search",
-  login: "/login",
   overview : "/management",
   profile : "/profile",
   carMag : "/management/cars",
+  login: "/logIn",
+  auth: "/auth",
+  signUp: "/signUp",
+  resetPassword: "/resetPassword",
 };
 
 export default routes;

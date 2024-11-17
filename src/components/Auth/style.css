@@ -1,0 +1,14 @@
+.border-gradient {
+  position: relative;
+  background-clip: padding-box;
+}
+
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  margin: -3px;
+  background-image: linear-gradient(to right top, #2980ff, #07a787);
+}
