@@ -1,5 +1,5 @@
 import { CarCard, CarCardProps } from "./CarCard";
-import cars from "../data/cars";
+import cars from "../../data/cars";
 
 const CarList = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
-import fuelImg from "../assets/gas-station.png";
-import transmissionImg from "../assets/CarType.png";
-import capacityImg from "../assets/capacity.png";
+import fuelImg from "../../assets/gas-station.png";
+import transmissionImg from "../../assets/CarType.png";
+import capacityImg from "../../assets/capacity.png";
 
 export interface CarCardProps {
   carName: string;
