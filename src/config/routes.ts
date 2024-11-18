@@ -7,12 +7,18 @@ import { SideBar } from "../components";
 const routes = {
   home: "/",
   search: "/search",
+
   login: "/login",
   bookingInfo2: "/bookinginfo2",
   bookingInfo1: "/bookinginfo1",
   booking3: "/booking3",
   booking4: "/booking4",
   ordermanagement: "/ordermanagement",
+
+  auth: "/auth",
+  signUp: "/signUp",
+  resetPassword: "/resetPassword",
+
 };
 
 export default routes;
