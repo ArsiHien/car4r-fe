@@ -12,6 +12,8 @@ import Cars from "../pages/CarMag/Cars"
 import { FC } from "react";
 import SignUp from "../pages/SignUp/SignUp";
 import ResetPwPage from "../pages/ResetPwPage";
+import AddCar from "../pages/AddCar/AddCar";
+import EditCar from "../pages/AddCar/ChangeCarDetails";
 
 interface RouteConfig {
   path: string;
@@ -34,6 +36,8 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.auth, page: Auth, layout: Auth },
   { path: config.routes.signUp, page: SignUp, layout: SignUp },
   { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
+  { path: config.routes.addCar, page: AddCar, layout: AddCar },
+  { path: config.routes.editCar, page: EditCar, layout: EditCar },
 ];
 
 export { publicRoutes };

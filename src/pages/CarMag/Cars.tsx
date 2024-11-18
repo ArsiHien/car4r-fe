@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CarCard from '../../components/CarCard/CarCard';
 import { Car } from '../../components/CarCard/CarCard';
 import { Header, Footer, StaffSidebar } from "../../components";
-
+import { Link } from 'react-router-dom';
 const CarsPage = () => {
   const [cars] = useState<Car[]>([
     {
@@ -40,7 +40,7 @@ const CarsPage = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">All Cars</h1>
         <button className="px-4 py-2 bg-blue-600 text-white rounded-md">
-          Add Car
+          <Link to="/management/cars/addCar">Add Car</Link>
         </button>
       </div>
 

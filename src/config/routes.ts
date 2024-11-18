@@ -11,6 +11,8 @@ const routes = {
   auth: "/auth",
   signUp: "/signUp",
   resetPassword: "/resetPassword",
+  addCar: "/management/cars/addCar",
+  editCar: "/management/cars/editCar/:id",
 };
 
 export default routes;
