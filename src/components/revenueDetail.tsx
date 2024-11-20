@@ -4,7 +4,9 @@ const RevenueDetail = () => {
     
     return (
         <div>
-            
+            <div>
+                
+            </div>
         </div>
     );
 };
