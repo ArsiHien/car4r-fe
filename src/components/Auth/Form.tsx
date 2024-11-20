@@ -1,12 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./style.css";
+import { useDispatch } from "react-redux";
+import {
+  setPassword,
+  setUserName,
+  setValidateEmail,
+  setValidatePw,
+  setValidatePwLength,
+} from "../../store/Authen/authenSlice";
+import IValidatePw from "../../type/IValidatePw";
 
 const Form = () => {
-  const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
+  const dispatch = useDispatch();
+  const [validEmail, setValidEmail] = useState(false);
 
   const [show, setShow] = useState(false);
-  const passwordToggle: object[] = [
+  const passwordToggle = [
     {
       hidePath: "../../../src/assets/Auth/HidePass.png",
       value: "Hide",
@@ -18,6 +27,40 @@ const Form = () => {
   ];
 
   //logic
+  // validate
+  //validate email
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const res = emailRegex.test(email);
+    dispatch(setValidateEmail(res));
+    return res;
+  };
+
+  // validate password
+  const validatePwLength = (pW: string): boolean => {
+    return pW.length >= 8;
+  };
+
+  const validatePwULCase = (pW: string): boolean => {
+    return /[a-z]/.test(pW) && /[A-Z]/.test(pW);
+  };
+
+  const validatePwUseNum = (pW: string): boolean => {
+    return /\d/.test(pW);
+  };
+
+  const validatePwUseSym = (pW: string): boolean => {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(pW);
+  };
+
+  const validatePw = (pW: string): boolean => {
+    return (
+      validatePwLength(pW) &&
+      validatePwULCase(pW) &&
+      validatePwUseNum(pW) &&
+      validatePwUseSym(pW)
+    );
+  };
 
   // render
   return (
@@ -27,9 +70,19 @@ const Form = () => {
         <input
           className="focus:outline-none border-gradient w-full h-full p-4 rounded-xl border border-blue-600"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            const email = e.target.value;
+            dispatch(setUserName(email));
+            setValidEmail(validateEmail(email));
+          }}
         />
+        {validEmail ? (
+          <></>
+        ) : (
+          <h1 className="text-red-600 text-sm">
+            The email address has an invalid format.
+          </h1>
+        )}
       </div>
 
       <div className="flex flex-wrap items-center justify-between">
@@ -50,8 +103,20 @@ const Form = () => {
         <input
           className="focus:outline-none border-gradient w-full h-full p-4 rounded-xl border border-blue-600"
           type={show ? "password" : "text"}
-          value={pw}
-          onChange={(e) => setPw(e.target.value)}
+          onChange={(e) => {
+            const pW = e.target.value;
+            dispatch(setPassword(pW));
+
+            const validatePwO: IValidatePw = {
+              length: validatePwLength(pW),
+              uLCase: validatePwULCase(pW),
+              num: validatePwUseNum(pW),
+              symbol: validatePwUseSym(pW),
+              general: validatePw(pW),
+            };
+
+            dispatch(setValidatePw(validatePwO));
+          }}
         />
       </div>
     </div>

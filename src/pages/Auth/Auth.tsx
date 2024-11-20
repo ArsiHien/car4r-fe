@@ -27,15 +27,20 @@ const Auth = () => {
 
           <ButtonAuth
             txtVal="Sign Up With Gmail"
-            classNameAdd="bg-white"
+            classNameAdd="bg-white hover:bg-gray-500"
             handleClick={() => navigate("/signUp")}
           />
 
           <h1 className="text-center mt-6 text-sm text-wrap max-w-[28rem]">
             By signing up, you agree to the{" "}
-            <span className="underline">Terms of Service</span> and{" "}
-            <span className="underline">Privacy Policy</span>, including cookie
-            use.
+            <span className="underline hover:cursor-pointer">
+              Terms of Service
+            </span>{" "}
+            and{" "}
+            <span className="underline hover:cursor-pointer">
+              Privacy Policy
+            </span>
+            , including cookie use.
           </h1>
         </div>
       </div>
