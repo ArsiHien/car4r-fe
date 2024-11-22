@@ -1,7 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";  // Add useLocation import
+
 
 const StaffSidebar: React.FC = () => {
+  const location = useLocation();  // Add this hook to get current path
+
+  // Helper function to determine if link is active
+  const isActive = (path: string) => location.pathname === path;
+
+  // Common classes for links
+
+  const getLinkClasses = (path: string) =>
+    `flex items-center space-x-3 p-2 rounded-md ${
+      isActive(path)
+        ? "text-blue-600 bg-blue-100"
+        : "text-gray-600 hover:bg-gray-200"
+    }`;
   return (
     <aside className="w-64 h-screen bg-gray-100 p-5 flex flex-col justify-between ">
       {/* Top Section */}
@@ -10,7 +24,7 @@ const StaffSidebar: React.FC = () => {
         <nav className="space-y-2">
           <Link
             to="/"
-            className="flex items-center space-x-3 p-2 rounded-md text-blue-600 bg-blue-100"
+            className={getLinkClasses("/")}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +45,7 @@ const StaffSidebar: React.FC = () => {
           </Link>
           <Link
             to="/management"
-            className="flex items-center space-x-3 p-2 rounded-md text-gray-600 hover:bg-gray-200"
+            className={getLinkClasses("/management")}
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />

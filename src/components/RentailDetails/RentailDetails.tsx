@@ -1,5 +1,5 @@
 // ... existing imports ...
-
+import { Link } from "react-router-dom";
 const RentalDetails: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -90,7 +90,11 @@ const RentalDetails: React.FC = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">Recent Transaction</h2>
-            <button className="text-blue-500 text-sm">View All</button>
+            <button className="text-blue-500 text-sm">
+              <Link to="/management/cars">
+                View All
+              </Link>
+            </button>
           </div>
           
           <div className="space-y-4">

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export interface CarDetail {
     car: string;
@@ -67,7 +68,8 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
               </div>
               <div>
                 <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
-                  Edit
+                  {/* <Link to={`/management/cars/editCar/${car.id}`}>Edit</Link> */}
+                  <Link to="/management/cars/editCar/:1">Edit</Link>
                 </button>
               </div>
             </div>
