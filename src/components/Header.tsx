@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import UserSidebar from "./UserSidebar";
+import UserSidebar from "./SideBar/UserSidebar";
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -12,7 +13,9 @@ const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white border-b shadow-md">
       {/* Logo */}
+      <Link to="/">
       <div className="text-2xl font-bold text-blue-600">CAR4R</div>
+      </Link>
 
       {/* Search Bar */}
       <div className="relative flex items-center max-w-md w-full mx-4">
@@ -71,6 +74,7 @@ const Header: React.FC = () => {
           />
         </svg>
 
+        <Link to="/settings">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -90,11 +94,12 @@ const Header: React.FC = () => {
             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
           />
         </svg>
+        </Link>
 
         {/* User Icon that triggers the sidebar */}
         <div className="relative">
           <img
-            src="https://via.placeholder.com/40" // replace with actual profile image path
+            src="src\assets\avatar.png" // replace with actual profile image path
             alt="User Icon"
             className="w-10 h-10 rounded-full cursor-pointer"
             onClick={toggleSidebar}

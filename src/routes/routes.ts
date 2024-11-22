@@ -6,6 +6,9 @@ import Auth from "../pages/Auth";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Search from "../pages/Search";
+import Overview from "../pages/StaffOverview"
+import Profile from "../pages/Profile"
+import Cars from "../pages/CarMag/Cars"
 import { FC } from "react";
 
 import Booking1 from "../pages/Booking/Booking1";
@@ -16,6 +19,8 @@ import OrderMag from "../pages/Management/OrderMag";
 
 import SignUp from "../pages/SignUp/SignUp";
 import ResetPwPage from "../pages/ResetPwPage";
+import AddCar from "../pages/AddCar/AddCar";
+import EditCar from "../pages/AddCar/ChangeCarDetails";
 
 
 interface RouteConfig {
@@ -27,11 +32,21 @@ interface RouteConfig {
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
   { path: config.routes.search, page: Search },
+  
 
   /*
    * layout là login page
    */
   { path: config.routes.login, page: Login, layout: Login },
+  { path: config.routes.overview, page: Overview,layout: Overview},
+  { path: config.routes.profile, page: Profile,layout: Profile},
+  { path: config.routes.carMag, page: Cars,layout: Cars},
+  { path: config.routes.addCar, page: AddCar, layout: AddCar },
+  { path: config.routes.editCar, page: EditCar, layout: EditCar },
+
+  { path: config.routes.auth, page: Auth, layout: Auth },
+  { path: config.routes.signUp, page: SignUp, layout: SignUp },
+  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
@@ -39,9 +54,6 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.booking4, page: Booking4, layout: Booking4 },
   { path: config.routes.ordermanagement, page: OrderMag, layout: OrderMag },
 
-  { path: config.routes.auth, page: Auth, layout: Auth },
-  { path: config.routes.signUp, page: SignUp, layout: SignUp },
-  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
 
 ];
 
