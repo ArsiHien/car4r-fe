@@ -111,7 +111,6 @@ const ManagerSidebar: React.FC = () => {
                 stroke-linejoin="round"
               />
             </svg>
-
             <span>Revenue</span>
           </Link>
           <Link

@@ -91,7 +91,7 @@ const RentalDetails: React.FC = () => {
             <p className="text-2xl font-bold">$80.00</p>
           </div>
         </div>
-
+              
         {/* Recent Transactions Section */}
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">

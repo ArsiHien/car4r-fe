@@ -23,3 +23,4 @@ const RevenueDetail = () => {
 };
 
 export default RevenueDetail;
+
