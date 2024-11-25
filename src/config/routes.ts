@@ -1,4 +1,3 @@
-
 /*
  * File này khai bảo các route của ứng dụng
  */
