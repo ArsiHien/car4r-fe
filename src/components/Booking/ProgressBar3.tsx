@@ -6,9 +6,7 @@ const ProgressBar3 = () => {
       <span className="bg-slate-100 h-12 w-1/5 text-center border-black mx-3">
         Step 1
       </span>
-      <span className="bg-slate-100 h-12 w-1/5 text-center mx-3">
-        Step 2
-      </span>
+      <span className="bg-slate-100 h-12 w-1/5 text-center mx-3">Step 2</span>
       <span className="bg-lime-500 h-12 w-1/5 text white text-center border-black mx-3">
         Step 3
       </span>

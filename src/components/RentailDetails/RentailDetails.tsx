@@ -7,13 +7,17 @@ const RentalDetails: React.FC = () => {
         {/* Details Rental Section */}
         <div className="p-6">
           <h2 className="text-xl font-bold mb-6">Details Rental</h2>
-          
+
           {/* Map Section */}
           <div className="bg-gray-100 h-64 rounded-lg mb-6"></div>
-          
+
           {/* Car Details */}
           <div className="flex items-center mb-6">
-            <img src="https://via.placeholder.com/100" alt="Car" className="h-16 w-24 mr-4 rounded-lg"/>
+            <img
+              src="https://via.placeholder.com/100"
+              alt="Car"
+              className="h-16 w-24 mr-4 rounded-lg"
+            />
             <div>
               <h3 className="text-lg font-semibold">Nissan GT - R</h3>
               <p className="text-gray-500">Sport Car</p>
@@ -80,33 +84,55 @@ const RentalDetails: React.FC = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-500">Total Rental Price</p>
-              <p className="text-sm text-gray-400">Overall price and includes rental discount</p>
+              <p className="text-sm text-gray-400">
+                Overall price and includes rental discount
+              </p>
             </div>
             <p className="text-2xl font-bold">$80.00</p>
           </div>
         </div>
-        
+              
         {/* Recent Transactions Section */}
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">Recent Transaction</h2>
             <button className="text-blue-500 text-sm">
-              <Link to="/management/cars">
-                View All
-              </Link>
+              <Link to="/management/cars">View All</Link>
             </button>
           </div>
-          
+
           <div className="space-y-4">
             {[
-              { name: "Nissan GT - R", date: "20 July", price: "$80.00", type: "Sport Car" },
-              { name: "Koenigsegg", date: "19 July", price: "$99.00", type: "Sport Car" },
-              { name: "Rolls - Royce", date: "18 July", price: "$96.00", type: "Sport Car" },
+              {
+                name: "Nissan GT - R",
+                date: "20 July",
+                price: "$80.00",
+                type: "Sport Car",
+              },
+              {
+                name: "Koenigsegg",
+                date: "19 July",
+                price: "$99.00",
+                type: "Sport Car",
+              },
+              {
+                name: "Rolls - Royce",
+                date: "18 July",
+                price: "$96.00",
+                type: "Sport Car",
+              },
               { name: "CR - V", date: "17 July", price: "$80.00", type: "SUV" },
             ].map((transaction, index) => (
-              <div key={index} className="flex items-center justify-between bg-white p-4 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between bg-white p-4 rounded-lg"
+              >
                 <div className="flex items-center">
-                  <img src="https://via.placeholder.com/80" alt="Car" className="h-12 w-20 mr-4 rounded-lg"/>
+                  <img
+                    src="https://via.placeholder.com/80"
+                    alt="Car"
+                    className="h-12 w-20 mr-4 rounded-lg"
+                  />
                   <div>
                     <h3 className="font-semibold">{transaction.name}</h3>
                     <p className="text-sm text-gray-500">{transaction.type}</p>
