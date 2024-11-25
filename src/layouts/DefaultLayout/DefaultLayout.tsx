@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import { Header, Footer, SideBar } from "../../components";
+import { Header, Footer, MainSidebar } from "../../components";
 const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>

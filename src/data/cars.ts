@@ -1,6 +1,17 @@
 import { CarCardProps } from "../components/Cars/CarCard";
 import car from "../assets/Car.png";
 
+export interface Car {
+  id: string;
+  name: string;
+  carType: string;
+  capacity: number;
+  steering: string;
+  gasoline: string;
+  description: string;
+  images: string[];
+}
+
 const cars: CarCardProps[] = [
   {
     carName: "All New Rush",

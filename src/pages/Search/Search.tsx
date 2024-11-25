@@ -6,8 +6,8 @@ import { SidebarLayout } from "../../layouts";
 const Search = () => {
   return (
     <>
-        <FilterSideBar carTypes={carTypesData} capacities={capacityData} />
-        <CarList />
+      <FilterSideBar carTypes={carTypesData} capacities={capacityData} />
+      <CarList />
     </>
   );
 };
