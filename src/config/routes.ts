@@ -4,17 +4,11 @@
 const routes = {
   home: "/",
   search: "/search",
-<<<<<<< HEAD
   overview: "/management",
   profile: "/profile",
   carMag: "/management/cars",
   staffMag: "/management/staffs",
   revenueMag: "/management/revenue",
-=======
-  overview : "/management",
-  profile : "/profile",
-  carMag : "/management/cars",
->>>>>>> parent of 856f2ad (Add Revenue Mag)
   login: "/logIn",
   auth: "/auth",
   signUp: "/signUp",

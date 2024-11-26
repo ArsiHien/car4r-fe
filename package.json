@@ -10,12 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "chart.js": "^4.4.6",
     "@ant-design/icons": "^5.5.1",
     "antd": "^5.22.2",
-=======
->>>>>>> parent of 856f2ad (Add Revenue Mag)
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0"
