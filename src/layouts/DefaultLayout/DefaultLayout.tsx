@@ -4,12 +4,13 @@ import { Header, Footer, MainSidebar } from "../../components";
 const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div>
-      <Header />
-      <div className="flex">
-      <MainSidebar/>
-      <main>{children}</main>
+      <div className="fixed top-0 w-full z-10">
+        <Header />
       </div>
-
+      {/* <div className="flex">
+      <SideBar/> */}
+      <main className="p-20">{children}</main>
+      {/* </div> */}
       <Footer />
     </div>
   );

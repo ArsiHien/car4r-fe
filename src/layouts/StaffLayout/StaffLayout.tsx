@@ -6,8 +6,8 @@ const StaffLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <div>
       <Header />
       <div className="flex">
-      <StaffSidebar/>
-      <main>{children}</main>
+        <StaffSidebar />
+        <main>{children}</main>
       </div>
 
       <Footer />

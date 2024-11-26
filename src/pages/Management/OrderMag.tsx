@@ -1,9 +1,9 @@
 import OrderManagement from "../../components/Management/OrderManagement";
 const OrderMag = () => {
-    return (
-      <>
-        <OrderManagement />
-      </>
-    );
-  };
+  return (
+    <>
+      <OrderManagement />
+    </>
+  );
+};
 export default OrderMag;

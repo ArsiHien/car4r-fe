@@ -25,7 +25,7 @@ export const CarCard: React.FC<CarCardProps> = ({
   price,
 }) => {
   return (
-    <div className="max-w-sm rounded-lg bg-white p-6 shadow-md">
+    <div className="max-w-sm h-96 rounded-lg bg-white p-6 shadow-md hover:scale-105">
       <div className="text-lg font-bold text-[#1a202c]">{carName}</div>
       <div className="mb-4 text-sm text-[#90A3BF]">{carType}</div>
 
