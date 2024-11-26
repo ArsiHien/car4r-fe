@@ -41,21 +41,18 @@ const publicRoutes: RouteConfig[] = [
     sidebar: FilterSideBar,
   },
 
-  /*
-   * layout là login page
-   */
   { path: config.routes.login, page: Login, layout: Login },
-  { path: config.routes.overview, page: Overview,layout: Overview},
-  { path: config.routes.profile, page: Profile,layout: Profile},
+  { path: config.routes.auth, page: Auth, layout: Auth },
+  { path: config.routes.signUp, page: SignUp, layout: SignUp },
+  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
+
+  { path: config.routes.overview, page: Overview, layout: Overview },
+  { path: config.routes.profile, page: Profile, layout: Profile },
   { path: config.routes.carMag, page: Cars, layout: Cars },
   { path: config.routes.staffMag, page: StaffMag, layout: StaffMag },
   { path: config.routes.revenueMag, page: Revenue, layout: Revenue },
   { path: config.routes.addCar, page: AddCar, layout: AddCar },
   { path: config.routes.editCar, page: EditCar, layout: EditCar },
-
-  { path: config.routes.auth, page: Auth, layout: Auth },
-  { path: config.routes.signUp, page: SignUp, layout: SignUp },
-  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Avatar } from "../Avatar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="flex w-full justify-between pt-4 pb-4 border border-b-sky-400 shadow-black">
@@ -16,7 +18,10 @@ const Header = () => {
           <img className="size-3" src="../../../src/assets/DownArrow.png" />
         </button>
 
-        <button className="h-full pr-6 pl-6 rounded-xl border border-cyan-500">
+        <button
+          className="h-full pr-6 pl-6 rounded-xl border border-cyan-500 hover:bg-gray-500"
+          onClick={() => navigate("/logIn")}
+        >
           Log In
         </button>
       </div>
