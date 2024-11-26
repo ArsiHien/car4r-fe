@@ -3,7 +3,7 @@ import cars from "../../data/cars";
 
 const CarList = () => {
   return (
-    <div className="grid grid-cols-1 gap-6 pl-72 pr-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {cars.map((car: CarCardProps, index: number) => (
         <CarCard
           key={index}

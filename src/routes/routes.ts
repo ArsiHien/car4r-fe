@@ -10,9 +10,7 @@ import Search from "../pages/Search";
 import Overview from "../pages/StaffOverview";
 import Profile from "../pages/Profile";
 import Cars from "../pages/CarMag/Cars";
-import StaffMag from "../pages/ManagerView/StaffMag";
-import Revenue from "../pages/ManagerView/Revenue";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 import Booking1 from "../pages/Booking/Booking1";
 import Booking2 from "../pages/Booking/Booking2";
@@ -24,16 +22,24 @@ import SignUp from "../pages/SignUp/SignUp";
 import ResetPwPage from "../pages/ResetPwPage";
 import AddCar from "../pages/AddCar/AddCar";
 import EditCar from "../pages/AddCar/ChangeCarDetails";
+import FilterSideBar from "../components/SideBar/FilterSideBar";
 
 interface RouteConfig {
   path: string;
   page: FC;
-  layout?: FC;
+  layout?: FC<{ children: ReactNode; sidebar?: ReactNode }>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sidebar?: FC<any>;
 }
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
-  { path: config.routes.search, page: Search, layout: SidebarLayout },
+  {
+    path: config.routes.search,
+    page: Search,
+    layout: SidebarLayout,
+    sidebar: FilterSideBar,
+  },
 
   /*
    * layout là login page
