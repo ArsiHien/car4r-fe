@@ -4,8 +4,8 @@
 const routes = {
   home: "/",
   search: "/search",
-  overview : "/management",
-  profile : "/profile",
+  overview: "/management",
+  profile: "/profile",
   carMag: "/management/cars",
   staffMag: "/management/staffs",
   revenueMag: "/management/revenue",
@@ -15,13 +15,12 @@ const routes = {
   resetPassword: "/resetPassword",
   addCar: "/management/cars/addCar",
   editCar: "/management/cars/editCar/:id",
-  
+
   ordermanagement: "/ordermanagement",
   bookingInfo2: "/bookinginfo2",
   bookingInfo1: "/bookinginfo1",
   booking3: "/booking3",
   booking4: "/booking4",
-
 };
 
 export default routes;

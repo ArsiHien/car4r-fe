@@ -14,7 +14,7 @@ const CarAds: React.FC<CarAdsProps> = ({
   color,
 }) => {
   return (
-    <div className={`relative w-full h-full p-3 bg-[#${color}] `}>
+    <div className={`relative w-full h-full p-3 bg-[#${color}] bg-[#54A6FF]`}>
       <div className="text-white w-72">
         <h2 className="text-2xl font-semibold">{title}</h2>
         <p className="mt-4 text-xs">{description}</p>

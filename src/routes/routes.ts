@@ -3,13 +3,14 @@
  */
 import config from "../config";
 import Auth from "../pages/Auth";
+import { SidebarLayout } from "../layouts";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Search from "../pages/Search";
-import Overview from "../pages/StaffOverview"
-import Profile from "../pages/Profile"
-import Cars from "../pages/CarMag/Cars"
-import StaffMag from "../pages/ManagerView/StaffMag"
+import Overview from "../pages/StaffOverview";
+import Profile from "../pages/Profile";
+import Cars from "../pages/CarMag/Cars";
+import StaffMag from "../pages/ManagerView/StaffMag";
 import Revenue from "../pages/ManagerView/Revenue";
 import { FC } from "react";
 
@@ -24,7 +25,6 @@ import ResetPwPage from "../pages/ResetPwPage";
 import AddCar from "../pages/AddCar/AddCar";
 import EditCar from "../pages/AddCar/ChangeCarDetails";
 
-
 interface RouteConfig {
   path: string;
   page: FC;
@@ -33,8 +33,7 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
-  { path: config.routes.search, page: Search },
-  
+  { path: config.routes.search, page: Search, layout: SidebarLayout },
 
   /*
    * layout là login page
@@ -57,8 +56,6 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.booking3, page: Booking3, layout: Booking3 },
   { path: config.routes.booking4, page: Booking4, layout: Booking4 },
   { path: config.routes.ordermanagement, page: OrderMag, layout: OrderMag },
-
-
 ];
 
 export { publicRoutes };

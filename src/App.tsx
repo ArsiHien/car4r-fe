@@ -14,8 +14,8 @@ const App = () => {
           const Page = route.page;
 
           /*chia Default Staff Admin layout cho từng account ??  */
-          // const Layout = route.layout || DefaultLayout;
-          const Layout = route.layout || StaffLayout;
+          const Layout = route.layout || DefaultLayout;
+          // const Layout = route.layout || StaffLayout;
           return (
             <Route
               key={index}
