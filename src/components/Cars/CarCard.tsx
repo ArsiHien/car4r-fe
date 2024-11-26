@@ -65,8 +65,11 @@ export const CarCard: React.FC<CarCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="text-2xl font-bold text-[#1A202C]">
-              ${price.toFixed(2)}/day
+            <div>
+              <span className="text-2xl font-bold text-[#1A202C]">
+                ${price.toFixed(2)}/
+              </span>
+              <span className="text-sm text-[#90A3BF]"> day</span>
             </div>
           )}
         </div>
