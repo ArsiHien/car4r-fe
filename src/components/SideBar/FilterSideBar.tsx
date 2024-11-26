@@ -1,19 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { capacityData, carTypesData } from "../../data/sidebarProps";
 
-interface FilterItem {
-  type: string;
-  amount: number;
-}
 
-interface FilterSidebarProps {
-  carTypes: FilterItem[];
-  capacities: FilterItem[];
-}
-
-export const FilterSideBar: React.FC<FilterSidebarProps> = ({
-  carTypes,
-  capacities,
-}) => {
+export const FilterSideBar = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedCapacities, setSelectedCapacities] = useState<string[]>([]);
   const [maxPrice, setMaxPrice] = useState(100);
@@ -38,7 +27,7 @@ export const FilterSideBar: React.FC<FilterSidebarProps> = ({
     <div className="fixed top-20 h-screen w-64 rounded-lg bg-white p-6">
       <div className="mb-6">
         <h3 className="text-xs font-semibold text-[#90A3BF]">TYPE</h3>
-        {carTypes.map(({ type, amount }, index) => (
+        {carTypesData.map(({ type, amount }, index) => (
           <label key={index} className="mt-3 flex items-center">
             <input
               type="checkbox"
@@ -54,7 +43,7 @@ export const FilterSideBar: React.FC<FilterSidebarProps> = ({
 
       <div className="mb-6">
         <h3 className="text-xs font-semibold text-[#90A3BF]">CAPACITY</h3>
-        {capacities.map(({ type, amount }, index) => (
+        {capacityData.map(({ type, amount }, index) => (
           <label key={index} className="mt-3 flex items-center">
             <input
               type="checkbox"
