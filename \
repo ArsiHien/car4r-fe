@@ -1,9 +1,0 @@
-const ErrNotification = ({ value }: { value: string }) => {
-  return (
-    <div className="bg-black relative top-[-50rem] w-3/4">
-      <h1>{value}</h1>
-    </div>
-  );
-};
-
-export default ErrNotification;

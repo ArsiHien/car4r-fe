@@ -7,8 +7,9 @@ import { Avatar } from "../../components/Avatar";
 import "./style.css";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
-import ErrNotification from "../../components/Notification/ErrNotification";
-import { useState } from "react";
+import Notification from "../../components/Notification/Notification";
+import { useEffect, useState } from "react";
+import typeNotify from "../../const/TypeNotify";
 
 const Login = () => {
   // get state global
@@ -31,29 +32,25 @@ const Login = () => {
     notValid: "The email or password is not valid",
   };
 
-  enum alertType {
-    ERROR = 0,
-    SUCCESS,
-    INFOR,
-    WARN,
-    NONE,
-  }
-  const [alert, setAlert] = useState(alertType.NONE);
+  const [notify, setNotify] = useState(typeNotify.NONE);
 
   // logic
   // handle login
   const handleLogIn = () => {
     console.log("/Page/Login: Click Log In Button");
-    console.log(email);
-    console.log(pW);
-    console.log(validateEmail);
-    console.log(validatePw);
     if (!validateEmail || !validatePw) {
       setMsg(msgValue.notValid);
-      setAlert(alertType.ERROR);
-      console.log(alert);
+      setNotify(typeNotify.ERROR);
     }
   };
+
+  useEffect(() => {
+    console.log("useEffect: setTimeout");
+    console.log("notify: " + notify);
+    const timer = setTimeout(() => setNotify(typeNotify.NONE), 3000);
+
+    return () => clearTimeout(timer);
+  }, [notify]);
 
   return (
     <div className="relative w-screen h-screen">
@@ -101,7 +98,11 @@ const Login = () => {
           onClick={() => navigate("/")}
         />
       </div>
-      {alert === alertType.ERROR ? <ErrNotification msg={msg} /> : <></>}
+      {notify === typeNotify.NONE ? (
+        <></>
+      ) : (
+        <Notification msg={msg} typeOfNotify={notify} />
+      )}
     </div>
   );
 };

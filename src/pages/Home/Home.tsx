@@ -1,17 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import CarAds from "../../components/Cars/CarAds";
 import car from "../../assets/Car.png";
 import BookingForm from "../../components/BookingFrom";
-import CarList from "../../components/Cars/CarList";
-import config from "../../config";
+import HomeSectionHeader from "../../components/HomeSectionHeader";
+import CarListHorizontal from "../../components/Cars/CarListHorizontal";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const routeChange = () => {
-    const path = config.routes.search;
-    navigate(path);
-  };
   return (
     <>
       <div className="mt-8 m-16 flex justify-between gap-5">
@@ -34,11 +27,12 @@ const Home = () => {
       </div>
       <BookingForm></BookingForm>
       <div>
-        <div className="flex justify-between">
-          <h1>Popolar Car</h1>
-          <button onClick={routeChange}>View all</button>
-        </div>
-        <CarList></CarList>
+        <HomeSectionHeader title="Popular Car"></HomeSectionHeader>
+        <CarListHorizontal sliderId="popular-slider"></CarListHorizontal>
+      </div>
+      <div>
+        <HomeSectionHeader title="Recomendation Car"></HomeSectionHeader>
+        <CarListHorizontal sliderId="recomendation-slider"></CarListHorizontal>
       </div>
     </>
   );
