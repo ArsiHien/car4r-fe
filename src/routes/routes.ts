@@ -10,6 +10,8 @@ import Search from "../pages/Search";
 import Overview from "../pages/StaffOverview";
 import Profile from "../pages/Profile";
 import Cars from "../pages/CarMag/Cars";
+import StaffMag from "../pages/ManagerView/StaffMag";
+import Revenue from "../pages/ManagerView/Revenue";
 import { FC, ReactNode } from "react";
 
 import Booking1 from "../pages/Booking/Booking1";
