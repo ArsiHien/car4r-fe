@@ -1,6 +1,6 @@
 import { Header, Footer } from "../../components";
 import ManagerSideBar from "../../components/SideBar/ManagerSideBar";
-import RevenueDetail from "../../components/revenueDetail";
+import RevenueDetail from "../../components/Revenue/revenueDetail";
 
 const Revenue = () => {
   return (

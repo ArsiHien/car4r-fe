@@ -39,9 +39,11 @@ const publicRoutes: RouteConfig[] = [
    * layout là login page
    */
   { path: config.routes.login, page: Login, layout: Login },
-  { path: config.routes.overview, page: Overview, layout: Overview },
-  { path: config.routes.profile, page: Profile, layout: Profile },
+  { path: config.routes.overview, page: Overview,layout: Overview},
+  { path: config.routes.profile, page: Profile,layout: Profile},
   { path: config.routes.carMag, page: Cars, layout: Cars },
+  { path: config.routes.staffMag, page: StaffMag, layout: StaffMag },
+  { path: config.routes.revenueMag, page: Revenue, layout: Revenue },
   { path: config.routes.addCar, page: AddCar, layout: AddCar },
   { path: config.routes.editCar, page: EditCar, layout: EditCar },
 
