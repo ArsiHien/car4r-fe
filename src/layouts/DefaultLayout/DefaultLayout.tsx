@@ -9,7 +9,7 @@ const DefaultLayout: FC<{ children: ReactNode }> = ({ children }) => {
       </div>
       {/* <div className="flex">
       <SideBar/> */}
-      <main className="pt-20">{children}</main>
+      <main className="p-20">{children}</main>
       {/* </div> */}
       <Footer />
     </div>

@@ -7,7 +7,7 @@ const SidebarLayout: FC<{ children: ReactNode }> = ({ children }) => {
       <div className="fixed top-0 w-full z-10">
         <Header />
       </div>
-      <main>{children}</main>
+      <main className="mt-20">{children}</main>
       <Footer />
     </div>
   );
