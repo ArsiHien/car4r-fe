@@ -14,7 +14,7 @@ export interface Car {
 
 const cars: CarCardProps[] = [
   {
-    carName: "All New Rush",
+    carName: "ABc",
     carType: "SUV",
     carImg: car,
     fuel: 70,
@@ -24,7 +24,7 @@ const cars: CarCardProps[] = [
     price: 80.0,
   },
   {
-    carName: "All New Rush",
+    carName: "Lmao",
     carType: "SUV",
     carImg: car,
     fuel: 70,
