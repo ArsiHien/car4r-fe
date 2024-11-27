@@ -1,8 +1,9 @@
 import CarAds from "../../components/Cars/CarAds";
 import car from "../../assets/Car.png";
 import BookingForm from "../../components/BookingFrom";
-import HomeSectionHeader from "../../components/HomeSectionHeader";
+import HomeSectionHeader from "../../components/CarSectionHeader";
 import CarListHorizontal from "../../components/Cars/CarListHorizontal";
+import CarSectionHeader from "../../components/CarSectionHeader";
 
 const Home = () => {
   return (
@@ -27,11 +28,11 @@ const Home = () => {
       </div>
       <BookingForm></BookingForm>
       <div>
-        <HomeSectionHeader title="Popular Car"></HomeSectionHeader>
+        <CarSectionHeader title="Popular Car"></CarSectionHeader>
         <CarListHorizontal sliderId="popular-slider"></CarListHorizontal>
       </div>
       <div>
-        <HomeSectionHeader title="Recomendation Car"></HomeSectionHeader>
+        <CarSectionHeader title="Recomendation Car"></CarSectionHeader>
         <CarListHorizontal sliderId="recomendation-slider"></CarListHorizontal>
       </div>
     </>

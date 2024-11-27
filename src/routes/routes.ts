@@ -23,6 +23,9 @@ import ResetPwPage from "../pages/ResetPwPage";
 import AddCar from "../pages/AddCar/AddCar";
 import EditCar from "../pages/AddCar/ChangeCarDetails";
 import FilterSideBar from "../components/SideBar/FilterSideBar";
+import StaffMag from "../pages/ManagerView/StaffMag";
+import Revenue from "../pages/ManagerView/Revenue";
+import CarDetail from "../pages/CarDetail";
 
 interface RouteConfig {
   path: string;
@@ -40,13 +43,14 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: FilterSideBar,
   },
+  { path: config.routes.carDetail, page: CarDetail },
 
   /*
    * layout là login page
    */
   { path: config.routes.login, page: Login, layout: Login },
-  { path: config.routes.overview, page: Overview,layout: Overview},
-  { path: config.routes.profile, page: Profile,layout: Profile},
+  { path: config.routes.overview, page: Overview, layout: Overview },
+  { path: config.routes.profile, page: Profile, layout: Profile },
   { path: config.routes.carMag, page: Cars, layout: Cars },
   { path: config.routes.staffMag, page: StaffMag, layout: StaffMag },
   { path: config.routes.revenueMag, page: Revenue, layout: Revenue },
