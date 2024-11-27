@@ -10,6 +10,8 @@ import Search from "../pages/Search";
 import Overview from "../pages/StaffOverview";
 import Profile from "../pages/Profile";
 import Cars from "../pages/CarMag/Cars";
+import StaffMag from "../pages/ManagerView/StaffMag";
+import Revenue from "../pages/ManagerView/Revenue";
 import { FC, ReactNode } from "react";
 
 import Booking1 from "../pages/Booking/Booking1";
@@ -45,10 +47,11 @@ const publicRoutes: RouteConfig[] = [
   },
   { path: config.routes.carDetail, page: CarDetail },
 
-  /*
-   * layout là login page
-   */
   { path: config.routes.login, page: Login, layout: Login },
+  { path: config.routes.auth, page: Auth, layout: Auth },
+  { path: config.routes.signUp, page: SignUp, layout: SignUp },
+  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
+
   { path: config.routes.overview, page: Overview, layout: Overview },
   { path: config.routes.profile, page: Profile, layout: Profile },
   { path: config.routes.carMag, page: Cars, layout: Cars },
@@ -56,10 +59,6 @@ const publicRoutes: RouteConfig[] = [
   { path: config.routes.revenueMag, page: Revenue, layout: Revenue },
   { path: config.routes.addCar, page: AddCar, layout: AddCar },
   { path: config.routes.editCar, page: EditCar, layout: EditCar },
-
-  { path: config.routes.auth, page: Auth, layout: Auth },
-  { path: config.routes.signUp, page: SignUp, layout: SignUp },
-  { path: config.routes.resetPassword, page: ResetPwPage, layout: ResetPwPage },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },

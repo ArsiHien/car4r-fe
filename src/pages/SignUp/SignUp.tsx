@@ -3,16 +3,20 @@ import ButtonAuth from "../../components/Auth/ButtonAuth";
 import Form from "../../components/Auth/Form";
 import { Avatar } from "../../components/Avatar";
 import ResetPw from "../../components/Auth/ResetPw";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const SignUp = () => {
-  const pw = "";
+  const email = useSelector((state: RootState) => state.auth.email);
 
-  const checkPassLength = () => {
-    return pw.length >= 8 ? true : false;
-  };
+  const pW = useSelector((state: RootState) => state.auth.pW);
 
-  // dieu huong
+  const validatePw = useSelector((state: RootState) => state.auth.validatePw);
+
+  // navigate
   const navigate = useNavigate();
+
+  //validate
 
   return (
     <div className="h-screen flex flex-row justify-center relative bg-gray-200">
@@ -21,7 +25,7 @@ const SignUp = () => {
           {" "}
           Already have an ccount?{" "}
           <span
-            className="underline hover:cursor-pointer"
+            className="underline hover:cursor-pointer hover:text-blue-500"
             onClick={() => navigate("/login")}
           >
             Log in
@@ -29,7 +33,7 @@ const SignUp = () => {
           <br />
           <span
             onClick={() => navigate("/resetPassword")}
-            className="underline hover:cursor-pointer"
+            className="underline hover:cursor-pointer hover:text-blue-500"
           >
             Forget your password?
           </span>
@@ -50,37 +54,56 @@ const SignUp = () => {
 
           <div className="w-5/6 flex flex-row flex-wrap flex-1 mt-5 mb-10">
             <div className="flex flex-row items-center w-1/2">
-              <div className="w-2 h-2 bg-blue-100 rounded-full mr-2"></div>
+              {validatePw.length ? (
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+              ) : (
+                <div className="w-2 h-2 bg-red-600 rounded-full mr-2"></div>
+              )}
               <h1 className="text-sm">Use 8 or more characters</h1>
             </div>
+
             <div className="flex flex-row items-center w-1/2">
-              <div className="w-2 h-2 bg-blue-100 rounded-full mr-2"></div>
+              {validatePw.uLCase ? (
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+              ) : (
+                <div className="w-2 h-2 bg-red-600 rounded-full mr-2"></div>
+              )}
               <h1 className="text-sm">
                 Use upper and lower case letter (e.g Aa)
               </h1>
             </div>
+
             <div className="flex flex-row items-center w-1/2">
-              <div className="w-2 h-2 bg-blue-100 rounded-full mr-2"></div>
+              {validatePw.num ? (
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+              ) : (
+                <div className="w-2 h-2 bg-red-600 rounded-full mr-2"></div>
+              )}{" "}
               <h1 className="text-sm">Use a number (e.g 1234)</h1>
             </div>
+
             <div className="flex flex-row items-center w-1/2">
-              <div className="w-2 h-2 bg-blue-100 rounded-full mr-2"></div>
+              {validatePw.symbol ? (
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+              ) : (
+                <div className="w-2 h-2 bg-red-600 rounded-full mr-2"></div>
+              )}{" "}
               <h1 className="text-sm">Use a symbol(e.g !@#$)</h1>
             </div>
           </div>
 
           <ButtonAuth
-            classNameAdd="bg-black text-white mb-5"
+            classNameAdd="bg-black text-white mb-5 hover:bg-gray-800"
             txtVal="Sign Up"
           />
 
           <h1 className="mb-10 text-center">
             By creating an account, you agree to the{" "}
-            <span className="underline hover: cursor-pointer">
+            <span className="underline hover: cursor-pointer hover:text-blue-500">
               Terms of use{" "}
             </span>
             and{" "}
-            <span className="underline hover: cursor-pointer">
+            <span className="underline hover:cursor-pointer hover:text-blue-500">
               Privacy Policy
             </span>
             .{" "}
