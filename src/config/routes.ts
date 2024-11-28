@@ -4,6 +4,7 @@
 const routes = {
   home: "/",
   search: "/search",
+  carDetail: "/car/:carName",
   overview: "/management",
   profile: "/profile",
   carMag: "/management/cars",

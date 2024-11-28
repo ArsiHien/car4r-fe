@@ -2,6 +2,9 @@ import React from "react";
 import fuelImg from "../../assets/gas-station.png";
 import transmissionImg from "../../assets/CarType.png";
 import capacityImg from "../../assets/capacity.png";
+import { useNavigate } from "react-router-dom";
+import RentButton from "../RentButton";
+import CarPrice from "./CarPrice";
 
 export interface CarCardProps {
   carName: string;
@@ -24,8 +27,16 @@ export const CarCard: React.FC<CarCardProps> = ({
   newPrice,
   price,
 }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/car/${carName}`);
+  };
   return (
-    <div className="max-w-sm h-96 rounded-lg bg-white p-6 shadow-md hover:scale-105">
+    <div
+      onClick={handleCardClick}
+      className="max-w-sm h-96 rounded-lg bg-white p-6 shadow-md hover:scale-105"
+    >
       <div className="text-lg font-bold text-[#1a202c]">{carName}</div>
       <div className="mb-4 text-sm text-[#90A3BF]">{carType}</div>
 
@@ -53,30 +64,13 @@ export const CarCard: React.FC<CarCardProps> = ({
       </div>
 
       <div className="flex items-center justify-between">
-        <div>
-          {newPrice ? (
-            <div>
-              <span className="text-2xl font-bold text-[#1A202C]">
-                ${newPrice.toFixed(2)}/
-              </span>
-              <span className="text-sm text-[#90A3BF]"> day</span>
-              <div className="text-sm text-[#90A3BF] line-through">
-                ${price.toFixed(2)}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <span className="text-2xl font-bold text-[#1A202C]">
-                ${price.toFixed(2)}/
-              </span>
-              <span className="text-sm text-[#90A3BF]"> day</span>
-            </div>
-          )}
-        </div>
+        {newPrice ? (
+          <CarPrice price={price} newPrice={newPrice} />
+        ) : (
+          <CarPrice price={price} />
+        )}
 
-        <button className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]">
-          Rent Now
-        </button>
+        <RentButton></RentButton>
       </div>
     </div>
   );
