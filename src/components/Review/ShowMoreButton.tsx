@@ -16,7 +16,7 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
       >
         <span>{showAll ? "Show Less" : "Show All"}</span>
         <span className="text-lg">
-          {showAll ? <FaAngleDown /> : <FaAngleUp />}
+          {showAll ? <FaAngleUp /> : <FaAngleDown />}
         </span>
       </button>
     </div>
