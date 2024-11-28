@@ -6,7 +6,6 @@ import {
   setUserName,
   setValidateEmail,
   setValidatePw,
-  setValidatePwLength,
 } from "../../store/Authen/authenSlice";
 import IValidatePw from "../../type/IValidatePw";
 

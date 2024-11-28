@@ -6,10 +6,12 @@ import Or from "../../components/Auth/Or";
 import { Avatar } from "../../components/Avatar";
 import "./style.css";
 import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../../store/store";
 import Notification from "../../components/Notification/Notification";
 import { useEffect, useState } from "react";
 import typeNotify from "../../const/TypeNotify";
+import axios from "axios";
+import jwtEncode from "../../utils/JwtEncode";
 
 const Login = () => {
   // get state global
@@ -41,6 +43,18 @@ const Login = () => {
     if (!validateEmail || !validatePw) {
       setMsg(msgValue.notValid);
       setNotify(typeNotify.ERROR);
+    } else {
+      const token = jwtEncode(email, pW);
+      axios
+        .post("http://localhost:8080/api/v1/users/login", {
+          token: token,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

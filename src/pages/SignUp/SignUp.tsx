@@ -2,9 +2,8 @@ import { useNavigate } from "react-router-dom";
 import ButtonAuth from "../../components/Auth/ButtonAuth";
 import Form from "../../components/Auth/Form";
 import { Avatar } from "../../components/Avatar";
-import ResetPw from "../../components/Auth/ResetPw";
 import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../../store/store.ts";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.auth.email);
@@ -17,6 +16,10 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   //validate
+
+  const handleSignUp = () => {
+    console.log(email + " " + pW);
+  };
 
   return (
     <div className="h-screen flex flex-row justify-center relative bg-gray-200">
@@ -95,6 +98,7 @@ const SignUp = () => {
           <ButtonAuth
             classNameAdd="bg-black text-white mb-5 hover:bg-gray-800"
             txtVal="Sign Up"
+            handleClick={handleSignUp}
           />
 
           <h1 className="mb-10 text-center">
