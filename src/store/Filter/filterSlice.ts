@@ -24,6 +24,9 @@ const filterSlice = createSlice({
         state.types.push(type);
       }
     },
+    setType: (state, action: PayloadAction<string>) => {
+      state.types = [action.payload];
+    },
     toggleCapacity: (state, action: PayloadAction<string>) => {
       const capacity = action.payload;
       if (state.capacities.includes(capacity)) {
@@ -39,7 +42,12 @@ const filterSlice = createSlice({
   },
 });
 
-export const { toggleType, toggleCapacity, setMaxPrice, resetFilters } =
-  filterSlice.actions;
+export const {
+  toggleType,
+  setType,
+  toggleCapacity,
+  setMaxPrice,
+  resetFilters,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;
