@@ -37,6 +37,7 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
+
   {
     path: config.routes.search,
     page: Search,

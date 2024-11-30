@@ -3,7 +3,6 @@ import ButtonAuth from "../../components/Auth/ButtonAuth";
 import GoogleButton from "../../components/Auth/GoogleButton";
 import Header from "../../components/Auth/Header";
 import Or from "../../components/Auth/Or";
-import ResetPw from "../../components/Auth/ResetPw";
 
 const Auth = () => {
   const pathImg = "../../../src/assets/Background_LogSign.png";
