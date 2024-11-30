@@ -1,7 +1,6 @@
-import React from 'react';
 import carsData from "../../data/cars";
-import { CarCard, CarCardProps } from './CarCard';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { CarCard, CarCardProps } from "./CarCard";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 const CarListHorizontal = ({ sliderId }: { sliderId: string }) => {
   const slideLeft = () => {
     const slider = document.getElementById(sliderId);
@@ -19,12 +18,17 @@ const CarListHorizontal = ({ sliderId }: { sliderId: string }) => {
 
   return (
     <div className="relative flex items-center ">
-      <LeftOutlined onClick={slideLeft} className='text-2xl' />
-      <div id={sliderId} className="flex items-center w-full h-[420px] overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar">
+      <LeftOutlined onClick={slideLeft} className="text-2xl" />
+      <div
+        id={sliderId}
+        className="flex items-center w-full h-[420px] overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar"
+      >
         {carsData.map((car: CarCardProps, index: number) => (
-          <div className="min-w-96 inline-block mx-4 ease-in-out duration-300">
+          <div
+            key={index}
+            className="min-w-96 inline-block mx-4 ease-in-out duration-300"
+          >
             <CarCard
-              key={index}
               carName={car.carName}
               carType={car.carType}
               carImg={car.carImg}
@@ -37,7 +41,7 @@ const CarListHorizontal = ({ sliderId }: { sliderId: string }) => {
           </div>
         ))}
       </div>
-      <RightOutlined onClick={slideRight} className='text-2xl' />
+      <RightOutlined onClick={slideRight} className="text-2xl" />
     </div>
   );
 };

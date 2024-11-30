@@ -4,6 +4,7 @@ import CarDetailCard from "../../components/Cars/CarDetailCard";
 import ReviewSection from "../../components/Review/ReviewSection";
 import CarListHorizontal from "../../components/Cars/CarListHorizontal";
 import CarSectionHeader from "../../components/CarSectionHeader";
+import { useEffect } from "react";
 
 const CarDetail = () => {
   const { carName } = useParams<{ carName: string }>();
@@ -21,6 +22,28 @@ const CarDetail = () => {
     reviewersCount: 440,
     amenities: ["Map", "Bluetooth", "GPS Navigation", "USB Port"],
   };
+
+  useEffect(() => {
+    const duration = 300;
+    const startPosition = window.scrollY;
+    const distance = -startPosition;
+    const startTime = performance.now();
+  
+    const scroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const position = startPosition + distance * progress;
+      window.scrollTo(0, position);
+  
+      if (progress < 1) {
+        requestAnimationFrame(scroll);
+      }
+    };
+  
+    requestAnimationFrame(scroll);
+  }, [carName]);
+  
+  
 
   return (
     <div>
