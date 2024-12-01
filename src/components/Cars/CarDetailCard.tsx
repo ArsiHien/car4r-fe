@@ -5,28 +5,28 @@ import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
 
 type CarDetailCardProps = {
-  carName: string;
-  carType: string;
+  name: string;
+  type: string;
   description: string;
-  capacity: number;
+  numberOfPerson: number;
   steering: string;
-  fuel: number;
+  gasoline: number;
   price: number;
-  newPrice: number | null;
+  promotionPrice: number | null;
   rating: number;
   reviewersCount: number;
   amenities: string[];
 };
 
 const CarDetailCard: React.FC<CarDetailCardProps> = ({
-  carName,
-  carType,
+  name,
+  type,
   description,
-  capacity,
+  numberOfPerson,
   steering,
-  fuel,
+  gasoline,
   price,
-  newPrice,
+  promotionPrice,
   rating,
   reviewersCount,
   amenities,
@@ -35,7 +35,7 @@ const CarDetailCard: React.FC<CarDetailCardProps> = ({
     <div className="bg-white rounded-lg shadow-lg m-4 p-6 border border-blue-200 w-full">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-xl font-semibold text-gray-800">{carName}</h3>
+          <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
           <Rate allowHalf disabled defaultValue={rating} />
           <span className="text-sm text-gray-600 ml-8">
             {reviewersCount} Reviewer
@@ -47,27 +47,31 @@ const CarDetailCard: React.FC<CarDetailCardProps> = ({
       <div className="grid grid-cols-2 gap-x-36 my-4">
         <div className="flex justify-between items-center">
           <span>Type Car:</span>
-          <span className="font-semibold text-gray-800">{carType}</span>
+          <span className="font-semibold text-gray-800">{type}</span>
         </div>
         <div className="flex justify-between items-center">
           <span>Capacity:</span>
-          <span className="font-semibold text-gray-800">{capacity} Person</span>
+          <span className="font-semibold text-gray-800">
+            {numberOfPerson} Person
+          </span>
         </div>
         <div className="flex justify-between items-center">
           <span>Steering :</span>
-          <span className="font-semibold text-gray-800">{steering}</span>
+          <span className="font-semibold text-gray-800 capitalize">
+            {steering.toLowerCase()}
+          </span>
         </div>
         <div className="flex justify-between items-center">
           <span>Gasoline:</span>
-          <span className="font-semibold text-gray-800">{fuel} L</span>
+          <span className="font-semibold text-gray-800">{gasoline} L</span>
         </div>
       </div>
       <h1 className="text-xl font-semibold pt-4">Other Amenities</h1>
       <CarAmenities amenitiesName={amenities}></CarAmenities>
 
       <div className="flex items-center justify-between">
-        {newPrice ? (
-          <CarPrice price={price} newPrice={newPrice} />
+        {promotionPrice ? (
+          <CarPrice price={price} promotionPrice={promotionPrice} />
         ) : (
           <CarPrice price={price} />
         )}
