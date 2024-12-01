@@ -1,7 +1,6 @@
 import CarAds from "../../components/Cars/CarAds";
 import car from "../../assets/Car.png";
 import BookingForm from "../../components/BookingFrom";
-import HomeSectionHeader from "../../components/CarSectionHeader";
 import CarListHorizontal from "../../components/Cars/CarListHorizontal";
 import CarSectionHeader from "../../components/CarSectionHeader";
 
