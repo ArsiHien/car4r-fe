@@ -46,6 +46,7 @@ const CarListHorizontal = ({ sliderId }: { sliderId: string }) => {
             className="min-w-96 inline-block mx-4 ease-in-out duration-300"
           >
             <CarCard
+              id={car.id}
               name={car.name}
               type={car.type}
               mainImage={car.mainImage}

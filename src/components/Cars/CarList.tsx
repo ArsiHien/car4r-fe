@@ -1,5 +1,4 @@
 import { CarCard, CarCardProps } from "./CarCard";
-import cars from "../../data/cars";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -29,7 +28,8 @@ const CarList = () => {
       filters.types.length === 0 || filters.types.includes(car.type);
     const matchesCapacity =
       filters.capacities.length === 0 ||
-      filters.capacities.includes(String(car.numberOfPerson + " Person"));
+      filters.capacities.includes(String(car.numberOfPerson)) ||
+      (filters.capacities.includes("9 or More") && car.numberOfPerson >= 9);
     const matchesPrice = car.promotionPrice
       ? car.promotionPrice <= filters.maxPrice
       : car.price <= filters.maxPrice;
@@ -45,6 +45,7 @@ const CarList = () => {
         filteredCars.map((car: CarCardProps, index: number) => (
           <CarCard
             key={index}
+            id={car.id}
             name={car.name}
             type={car.type}
             mainImage={car.mainImage}

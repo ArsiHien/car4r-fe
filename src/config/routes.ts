@@ -4,7 +4,7 @@
 const routes = {
   home: "/",
   search: "/search",
-  carDetail: "/car/:carName",
+  carDetail: "/car/:carId",
   overview: "/management",
   profile: "/profile",
   carMag: "/management/cars",

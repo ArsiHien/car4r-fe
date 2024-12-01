@@ -7,6 +7,7 @@ import RentButton from "../RentButton";
 import CarPrice from "./CarPrice";
 
 export interface CarCardProps {
+  id: string;
   name: string;
   type: string;
   mainImage: string;
@@ -18,6 +19,7 @@ export interface CarCardProps {
 }
 
 export const CarCard: React.FC<CarCardProps> = ({
+  id,
   name,
   type,
   mainImage,
@@ -30,7 +32,8 @@ export const CarCard: React.FC<CarCardProps> = ({
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/car/${name}`);
+    console.log(id);
+    navigate(`/car/${name}-${id}`);
   };
   return (
     <div
@@ -59,13 +62,15 @@ export const CarCard: React.FC<CarCardProps> = ({
         </div>
         <div className="flex items-center space-x-2">
           <img src={capacityImg} alt="Capacity Icon" className="h-6 w-6" />
-          <span className="text-sm text-[#90A3BF]">{numberOfPerson} People</span>
+          <span className="text-sm text-[#90A3BF]">
+            {numberOfPerson} People
+          </span>
         </div>
       </div>
 
       <div className="flex items-center justify-between">
         {promotionPrice ? (
-          <CarPrice price={price} newPrice={promotionPrice} />
+          <CarPrice price={price} promotionPrice={promotionPrice} />
         ) : (
           <CarPrice price={price} />
         )}
