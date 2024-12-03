@@ -9,6 +9,7 @@ export interface Car {
   steering: string;
   gasoline: string;
   description: string;
+  mainImages: string[];
   images: string[];
 }
 
