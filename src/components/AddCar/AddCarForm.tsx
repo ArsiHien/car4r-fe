@@ -6,6 +6,7 @@ const amenitiesList = ["Air Conditioning", "GPS", "Bluetooth", "Sunroof"]; // Ad
 
 const AddCarForm = () => {
   const [images, setImages] = useState<string[]>([]);
+  const [mainImages, setMainImages] = useState<string[]>([]);
   const [carData, setCarData] = useState<Partial<Car>>({
     name: "",
     carType: "",
@@ -35,6 +36,17 @@ const AddCarForm = () => {
       );
       setImages([...images, ...newImages]);
       setCarData({ ...carData, images: [...images, ...newImages] });
+    }
+  };
+
+  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const newImages = Array.from(files).map((file) =>
+        URL.createObjectURL(file),
+      );
+      setMainImages([...images, ...newImages]);
+      setCarData({ ...carData, mainImages: [...images, ...newImages] });
     }
   };
 
@@ -136,7 +148,7 @@ const AddCarForm = () => {
         <div>
           <label className="block text-sm font-medium mb-1">Main Images</label>
           <div className="grid grid-cols-4 gap-4 mb-4">
-            {images.map((img, index) => (
+            {mainImages.map((img, index) => (
               <div key={index} className="relative">
                 <img
                   src={img}
@@ -152,7 +164,7 @@ const AddCarForm = () => {
                 multiple
                 accept="image/*"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={handleMainImageUpload}
               />
             </label>
           </div>
