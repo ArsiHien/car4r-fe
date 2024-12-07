@@ -5,11 +5,21 @@ const routes = {
   home: "/",
   search: "/search",
   carDetail: "/car/:carId",
-  overview: "/management",
+
+  manager: {
+    overview: "/management/manager",
+    dashboard: "/management/manager/dashboard",
+    staffManagement: "/management/manager/staffs",
+    cars: "/management/manager/cars",
+  },
+
+  staff: {
+    overview: "/management/staff",
+    orderManagement: "/management/staff/orders",
+    cars: "/management/staff/cars",
+  },
+
   profile: "/profile",
-  carMag: "/management/cars",
-  staffMag: "/management/staffs",
-  revenueMag: "/management/revenue",
   login: "/logIn",
   auth: "/auth",
   signUp: "/signUp",
