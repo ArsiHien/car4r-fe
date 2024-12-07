@@ -1,5 +1,5 @@
 import Header from "./Header/Header";
 import Footer from "./Footer";
-import MainSidebar from "./SideBar/MainSideBar";
-import StaffSidebar from "./SideBar/StaffSideBar";
+import MainSidebar from "./SideBar/MainSidebar";
+import StaffSidebar from "./SideBar/StaffSidebar";
 export { Header, Footer, MainSidebar, StaffSidebar };
