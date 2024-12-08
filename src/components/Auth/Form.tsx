@@ -7,7 +7,7 @@ import {
   setValidateEmail,
   setValidatePw,
 } from "../../store/Authen/authenSlice";
-import IValidatePw from "../../type/IValidatePw";
+import IValidatePw from "../../types/IValidatePw";
 
 const Form = () => {
   const dispatch = useDispatch();

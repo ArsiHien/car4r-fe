@@ -73,7 +73,11 @@ const StaffSidebar: React.FC = () => {
         <Menu
           mode="inline"
           className="bg-inherit"
-          defaultSelectedKeys={[location.pathname]}
+          defaultSelectedKeys={[
+            location.pathname.startsWith(routes.staff.cars)
+              ? routes.staff.cars
+              : location.pathname,
+          ]}
           items={items}
           inlineIndent={8}
         />

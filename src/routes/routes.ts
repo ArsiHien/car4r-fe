@@ -77,7 +77,18 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
   },
-
+  {
+    path: config.routes.manager.addCar,
+    page: AddCar,
+    layout: SidebarLayout,
+    sidebar: ManagerSidebar,
+  },
+  {
+    path: config.routes.manager.editCar,
+    page: EditCar,
+    layout: SidebarLayout,
+    sidebar: ManagerSidebar,
+  },
   {
     path: config.routes.staff.overview,
     page: StaffOverview,
@@ -96,8 +107,19 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: StaffSidebar,
   },
-  { path: config.routes.addCar, page: AddCar, layout: AddCar },
-  { path: config.routes.editCar, page: EditCar, layout: EditCar },
+
+  {
+    path: config.routes.staff.addCar,
+    page: AddCar,
+    layout: SidebarLayout,
+    sidebar: StaffSidebar,
+  },
+  {
+    path: config.routes.staff.editCar,
+    page: EditCar,
+    layout: SidebarLayout,
+    sidebar: StaffSidebar,
+  },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },

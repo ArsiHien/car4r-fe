@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import typeNotify from "../../const/TypeNotify";
-import INotify from "../../type/INotify";
+import INotify from "../../types/INotify";
 
 // order: err -> success -> info -> warn -> none
 // two props: type, msg
@@ -42,7 +42,7 @@ const Notification = ({
 
   useEffect(() => {
     const matchedNotify = notifyArr.find(
-      (notifyElement) => notifyElement.typeNotify === typeOfNotify,
+      (notifyElement) => notifyElement.typeNotify === typeOfNotify
     );
 
     if (matchedNotify) {
@@ -63,7 +63,9 @@ const Notification = ({
 
   return (
     <div
-      className={`flex flex-row items-center p-5 absolute top-[1.5rem] left-[70rem] w-[30%] rounded-lg ${isVisible ? "" : "transition-opacity ease-in duration-[1s] opacity-0"}`}
+      className={`flex flex-row items-center p-5 absolute top-[1.5rem] left-[70rem] w-[30%] rounded-lg ${
+        isVisible ? "" : "transition-opacity ease-in duration-[1s] opacity-0"
+      }`}
       style={{ backgroundColor: bgColor }}
     >
       <img className="size-8" src={pathIconNotify} />
