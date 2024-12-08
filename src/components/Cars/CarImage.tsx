@@ -1,5 +1,5 @@
-import { Button, Carousel } from "antd";
-import React, { useRef, useState } from "react";
+import { Carousel } from "antd";
+import { useRef, useState } from "react";
 
 const images: string[] = [
   "https://placehold.co/600x400/orange/white",

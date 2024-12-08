@@ -12,6 +12,7 @@ const CarDetails = () => {
     steering: "Manual",
     gasoline: "Petrol",
     description: "Sample car description",
+    mainImages:[carpng],
     images: [carpng],
   });
 

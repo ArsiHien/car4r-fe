@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./BookingInfo.css";
 
 const Payment = () => {
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null); // Added state for payment URL
+  const [amount, setAmount] = useState<number>(25000000);
+
+  const handlePayment = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/payment/vn-pay?amount=${amount}&bankCode=NCB`);
+      const data = await response.json();
+      if (data.code === 200) {
+        setPaymentUrl(data.data.paymentUrl); // Set payment URL from response
+      } else {
+        console.error("Payment error:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching payment URL:", error);
+    }
+  };
+
   return (
     <div className="flex mx-5 h-[600px] bg-gray-200 text-xl ">
       {/**left container */}
@@ -66,14 +83,21 @@ const Payment = () => {
       </span>
       {/**right container */}
       <span className="w-2/3 flex flex-col justify-center items-center bg-white mx-5 my-5">
-        <div className="px-5 justify-center">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1024px-QR_code_for_mobile_English_Wikipedia.svg.png"
-            className="h-96 w-96"
-            alt="QR Img"
-          />
-          <div className="w-96 text-center">Vui lòng quét mã</div>
+        <div className="flex justify-center items-center py-5">
+          <button
+            className="px-20 h-10 text-white bg-gray-600 text-xl hover:bg-gray-400 rounded focus:outline-none"
+            onClick={handlePayment} // Added onClick handler for payment button
+          >
+            Pay Now
+          </button>
         </div>
+        {paymentUrl && ( // Conditionally render the payment link
+          <div className="flex justify-center items-center py-5">
+            <a href={paymentUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+              Click here to complete your payment
+            </a>
+          </div>
+        )}
       </span>
     </div>
   );

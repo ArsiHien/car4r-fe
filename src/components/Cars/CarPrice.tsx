@@ -1,15 +1,15 @@
 interface CarPriceProps {
   price: number;
-  newPrice?: number;
+  promotionPrice?: number;
 }
 
-const CarPrice: React.FC<CarPriceProps> = ({ price, newPrice }) => {
+const CarPrice: React.FC<CarPriceProps> = ({ price, promotionPrice }) => {
   return (
     <div>
-      {newPrice ? (
+      {promotionPrice ? (
         <div>
           <span className="text-2xl font-bold text-[#1A202C]">
-            ${newPrice.toFixed(2)}/
+            ${promotionPrice.toFixed(2)}/
           </span>
           <span className="text-sm text-[#90A3BF]"> day</span>
           <div className="text-sm text-[#90A3BF] line-through">
