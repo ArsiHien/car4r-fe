@@ -7,7 +7,7 @@ export interface Car {
   carType: string;
   numberOfPerson: number;
   steering: string;
-  gasoline: string;
+  gasoline: number;
   description: string;
   mainImages: string[];
   images: string[];

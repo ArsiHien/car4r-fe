@@ -11,12 +11,16 @@ const routes = {
     dashboard: "/management/manager/dashboard",
     staffManagement: "/management/manager/staffs",
     cars: "/management/manager/cars",
+    addCar: "/management/manager/cars/add-car",
+    editCar: "/management/manager/cars/edit-car",
   },
 
   staff: {
     overview: "/management/staff",
     orderManagement: "/management/staff/orders",
     cars: "/management/staff/cars",
+    addCar: "/management/staff/cars/add-car",
+    editCar: "/management/staff/cars/edit-car/:id",
   },
 
   profile: "/profile",
@@ -24,8 +28,6 @@ const routes = {
   auth: "/auth",
   signUp: "/signUp",
   resetPassword: "/resetPassword",
-  addCar: "/management/cars/addCar",
-  editCar: "/management/cars/editCar/:id",
 
   ordermanagement: "/ordermanagement",
   bookingInfo2: "/bookinginfo2",

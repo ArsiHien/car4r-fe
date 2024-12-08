@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IValidatePw from "../../type/IValidatePw";
+import IValidatePw from "../../types/IValidatePw";
 
 const authenSlice = createSlice({
   name: "authenSlice",

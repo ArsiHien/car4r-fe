@@ -3,22 +3,9 @@ import CarPrice from "./CarPrice";
 import RentButton from "../RentButton";
 import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
+import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
-type CarDetailCardProps = {
-  name: string;
-  type: string;
-  description: string;
-  numberOfPerson: number;
-  steering: string;
-  gasoline: number;
-  price: number;
-  promotionPrice: number | null;
-  rating: number;
-  reviewersCount: number;
-  amenities: string[];
-};
-
-const CarDetailCard: React.FC<CarDetailCardProps> = ({
+const CarDetailCard: React.FC<CarCategoryDetail> = ({
   name,
   type,
   description,
