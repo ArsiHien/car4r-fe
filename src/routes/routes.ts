@@ -7,6 +7,7 @@ import { SidebarLayout } from "../layouts";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Search from "../pages/Search";
+import ProfilePage from "../pages/Profile";
 import { FC, ReactNode } from "react";
 import Booking1 from "../pages/Booking/Booking1";
 import Booking2 from "../pages/Booking/Booking2";
@@ -39,6 +40,7 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
+  {path: config.routes.profile,page:ProfilePage},
 
   {
     path: config.routes.search,
