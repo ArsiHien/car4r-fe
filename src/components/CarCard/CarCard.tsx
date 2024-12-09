@@ -44,11 +44,9 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
         />
         <div>
           <h3 className="font-medium text-gray-900">{carCategory.name}</h3>
-          <p className="text-sm text-gray-500">{carCategory.ty}</p>
+          <p className="text-sm text-gray-500">{carCategory.type}</p>
         </div>
-        <div>
-          <button onClick={handleCarCategoryEditClick}>Edit</button>
-        </div>
+        
         <div className="ml-auto flex gap-2">
           <button className="px-4 py-3 bg-green-500 text-white rounded-md text-sm" onClick={(e) => {
               e.stopPropagation(); // Prevent dropdown toggle
@@ -58,7 +56,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
           </button>
           <button className="px-4 py-3 bg-yellow-500 text-white rounded-md text-sm" onClick={(e) => {
             e.stopPropagation(); // Prevent dropdown toggle
-
+            handleCarCategoryEditClick();
           }}>
             Edit Car Category
           </button>
