@@ -1,10 +1,10 @@
-import AddCarForm from "../../components/AddCar/AddCarForm";
+import CarForm from "../../components/AddCar/AddCarForm";
 
 const AddCarPage = () => {
   return (
     <>
       <div className="flex-1 ">
-        <AddCarForm />
+        <CarForm isEditMode={false} />
       </div>
     </>
   );

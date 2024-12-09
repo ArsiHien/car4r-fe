@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Search from "../pages/Search";
 import ProfilePage from "../pages/Profile";
 import { FC, ReactNode } from "react";
+import Profile from "../pages/Profile";
 import Booking1 from "../pages/Booking/Booking1";
 import Booking2 from "../pages/Booking/Booking2";
 import Booking3 from "../pages/Booking/Booking3";
@@ -16,7 +17,7 @@ import Booking4 from "../pages/Booking/Booking4";
 import SignUp from "../pages/SignUp/SignUp";
 import ResetPwPage from "../pages/ResetPwPage";
 import AddCar from "../pages/AddCar/AddCar";
-import EditCar from "../pages/AddCar/ChangeCarDetails";
+import EditCar from "../pages/AddCar/EditCar";
 import CarDetail from "../pages/CarDetail";
 import OrderManagement from "../pages/StaffPages/OrderManagement";
 import {
@@ -130,6 +131,8 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: StaffSidebar,
   },
+
+  { path: config.routes.profile, page: Profile, layout: Profile },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
