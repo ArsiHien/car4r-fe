@@ -36,20 +36,6 @@ const CarDetail = () => {
   const [carDetails, setCarDetails] =
     useState<CarCategoryDetailResponse | null>(null);
   const { carId } = useParams<{ carId: string }>();
-  const carData = {
-    carName: "Toyota Camry",
-    carType: "Sport",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae omnis, laudantium recusandae repellendus excepturi vero ea consequuntur, ratione asperiores odio assumenda corrupti nihil. Quia vel, aliquam sunt tempora architecto laboriosam.",
-    capacity: 5,
-    steering: "Manual",
-    fuel: 70,
-    price: 80.0,
-    promotionPrice: 100.0,
-    rating: 4.5,
-    reviewersCount: 440,
-    amenities: ["Map", "Bluetooth", "GPS Navigation", "USB Port"],
-  };
 
   useEffect(() => {
     const fetchCarDetail = async () => {
@@ -78,7 +64,7 @@ const CarDetail = () => {
   return (
     <div>
       <div className="grid grid-cols-2 pb-8">
-        <CarImage />
+        <CarImage images={carDetails.carImages.map(image => image.imageUrl)}/>
         <CarDetailCard
           name={carDetails.name}
           type={carDetails.type}
