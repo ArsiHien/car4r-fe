@@ -37,7 +37,7 @@ const CarsManagement = () => {
                 : routes.staff.addCar
             }
           >
-            Add Car
+            Add Car Category
           </Link>
         </button>
       </div>
