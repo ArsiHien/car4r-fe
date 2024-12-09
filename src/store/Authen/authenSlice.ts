@@ -6,7 +6,7 @@ const authenSlice = createSlice({
 
   initialState: {
     email: "", // Lưu tên đăng nhập
-    pW: "", // Lưu mật khẩu
+    password: "", // Lưu mật khẩu
 
     validateEmail: false,
     validatePw: {
@@ -24,7 +24,7 @@ const authenSlice = createSlice({
     },
 
     setPassword: (state, action) => {
-      state.pW = action.payload;
+      state.password = action.payload;
     },
 
     setValidateEmail: (state, action) => {

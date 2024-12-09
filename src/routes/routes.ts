@@ -25,8 +25,8 @@ import {
 } from "../pages/ManagerPages";
 import CarsManagement from "../pages/Management/CarsManagement";
 import StaffSidebar from "../components/SideBar/StaffSidebar";
-import ManagerSidebar from "../components/SideBar/ManagerSidebar";
-import FilterSidebar from "../components/SideBar/FilterSidebar";
+import ManagerSidebar from "../../components/SideBar/ManagerSidebar";
+import FilterSidebar from "../../components/SideBar/FilterSidebar";
 import { StaffOverview } from "../pages/StaffPages";
 
 interface RouteConfig {

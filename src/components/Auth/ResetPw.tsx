@@ -23,10 +23,8 @@ const ResetPw = () => {
 
       <input
         type="email"
-        className={`w-full p-4 rounded-xl bg-blue-100 ${
-          validateEmail(email)
-            ? "border border-black-500"
-            : "border border-red-500"
+        className={`w-full p-4 rounded-xl bg-blue-100 border border-5 ${
+          validateEmail(email) ? "border-black-500" : "border-red-500"
         }  focus:outline-none `}
         placeholder="Enter Your Email You Register"
         onChange={(e) => setEmail(e.target.value)}

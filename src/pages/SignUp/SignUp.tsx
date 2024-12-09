@@ -4,12 +4,16 @@ import Form from "../../components/Auth/Form";
 import { Avatar } from "../../components/Avatar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store.ts";
+import axios from "axios";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.auth.email);
 
-  const pW = useSelector((state: RootState) => state.auth.pW);
+  const password = useSelector((state: RootState) => state.auth.password);
 
+  const validateEmail = useSelector(
+    (state: RootState) => state.auth.validateEmail,
+  );
   const validatePw = useSelector((state: RootState) => state.auth.validatePw);
 
   // navigate
@@ -18,7 +22,19 @@ const SignUp = () => {
   //validate
 
   const handleSignUp = () => {
-    console.log(email + " " + pW);
+    if (validatePw.general && validateEmail) {
+      axios
+        .post("http://localhost:8080/api/v1/users/register", {
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   return (

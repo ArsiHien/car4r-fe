@@ -16,7 +16,7 @@ import jwtEncode from "../../utils/JwtEncode";
 const Login = () => {
   // get state global
   const email = useSelector((state: RootState) => state.auth.email);
-  const pW = useSelector((state: RootState) => state.auth.pW);
+  const password = useSelector((state: RootState) => state.auth.password);
 
   const validateEmail = useSelector(
     (state: RootState) => state.auth.validateEmail,
@@ -38,13 +38,14 @@ const Login = () => {
 
   // logic
   // handle login
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     console.log("/Page/Login: Click Log In Button");
     if (!validateEmail || !validatePw) {
       setMsg(msgValue.notValid);
       setNotify(typeNotify.ERROR);
     } else {
-      const token = jwtEncode(email, pW);
+      const token = await jwtEncode(email, password);
+
       axios
         .post("http://localhost:8080/api/v1/users/login", {
           token: token,
