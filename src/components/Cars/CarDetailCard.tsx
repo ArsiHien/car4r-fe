@@ -54,7 +54,7 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
         </div>
       </div>
       <h1 className="text-xl font-semibold pt-4">Other Amenities</h1>
-      <CarAmenities amenitiesName={amenities}></CarAmenities>
+      <CarAmenities amenitiesName={amenities.map(amenity => amenity.name)}></CarAmenities>
 
       <div className="flex items-center justify-between">
         {promotionPrice ? (

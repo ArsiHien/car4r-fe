@@ -11,3 +11,9 @@ export interface Car {
   currentBookingReturnPlace: string;
   currentBookingTotalPrice: string;
 }
+
+export interface addCarApi{
+  categoryId: string;
+  licensePlate: string;
+  status: string;
+}
