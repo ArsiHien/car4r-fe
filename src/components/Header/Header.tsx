@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import UserSidebar from "../SideBar/UserSidebar";
-import { CiSearch } from "react-icons/ci";
 import SearchBar from "./SearchBar";
 
 const Header: React.FC = () => {

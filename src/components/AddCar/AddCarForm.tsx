@@ -10,7 +10,7 @@ const AddCarForm = () => {
   const [carData, setCarData] = useState<Partial<Car>>({
     name: "",
     carType: "",
-    capacity: 0,
+    numberOfPerson: 0,
     steering: "",
     gasoline: "",
     description: "",
@@ -86,9 +86,9 @@ const AddCarForm = () => {
             <input
               type="number"
               className="w-full p-2 border rounded-md"
-              value={carData.capacity}
+              value={carData.numberOfPerson}
               onChange={(e) =>
-                setCarData({ ...carData, capacity: Number(e.target.value) })
+                setCarData({ ...carData, numberOfPerson: Number(e.target.value) })
               }
             />
           </div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProgressBar3 = () => {
   return (
     <div className="mt-12 border-slate-950 flex w-2/4 h-20 align-middle bg-zinc-300 relative left-1/4 mb-8 items-center justify-center">
