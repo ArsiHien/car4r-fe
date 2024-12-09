@@ -7,6 +7,8 @@ import Or from "../../components/Auth/Or";
 const Auth = () => {
   const pathImg = "../../../src/assets/Background_LogSign.png";
 
+  const signUpWithGoogle = () => {};
+
   const navigate = useNavigate();
   return (
     <div className="flex flex-row flex-wrap w-full h-screen overflow-hidden">
@@ -20,12 +22,15 @@ const Auth = () => {
             smooth journeys!
           </h1>
 
-          <GoogleButton txtVal="Continue With Google" />
+          <GoogleButton
+            txtVal="Continue With Google"
+            handleClick={signUpWithGoogle}
+          />
 
           <Or classNameAdd="mt-12 mb-12" />
 
           <ButtonAuth
-            txtVal="Sign Up With Gmail"
+            txtVal="Sign Up With Email"
             classNameAdd="bg-white hover:bg-gray-500"
             handleClick={() => navigate("/signUp")}
           />

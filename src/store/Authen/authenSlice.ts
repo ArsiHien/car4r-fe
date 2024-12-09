@@ -8,6 +8,9 @@ const authenSlice = createSlice({
     email: "", // Lưu tên đăng nhập
     password: "", // Lưu mật khẩu
 
+    accessToken: "", // Luu access token
+    refreshToken: "", // luu refresh token"
+
     validateEmail: false,
     validatePw: {
       length: false,
@@ -27,6 +30,14 @@ const authenSlice = createSlice({
       state.password = action.payload;
     },
 
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload;
+    },
+
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload;
+    },
+
     setValidateEmail: (state, action) => {
       state.validateEmail = action.payload;
     },
@@ -38,8 +49,14 @@ const authenSlice = createSlice({
 });
 
 // export actions
-export const { setUserName, setPassword, setValidateEmail, setValidatePw } =
-  authenSlice.actions;
+export const {
+  setUserName,
+  setPassword,
+  setAccessToken,
+  setRefreshToken,
+  setValidateEmail,
+  setValidatePw,
+} = authenSlice.actions;
 
 // Export reducer để tích hợp vào store
 export default authenSlice.reducer;

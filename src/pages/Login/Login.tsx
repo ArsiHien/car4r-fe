@@ -5,13 +5,14 @@ import GoogleButton from "../../components/Auth/GoogleButton";
 import Or from "../../components/Auth/Or";
 import { Avatar } from "../../components/Avatar";
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import Notification from "../../components/Notification/Notification";
-import { useEffect, useState } from "react";
-import typeNotify from "../../const/TypeNotify";
 import axios from "axios";
-import jwtEncode from "../../utils/JwtEncode";
+import { notify } from "../../const/Notify";
+import {
+  setAccessToken,
+  setRefreshToken,
+} from "../../store/Authen/authenSlice";
 
 const Login = () => {
   // get state global
@@ -28,44 +29,44 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [msg, setMsg] = useState("");
-
-  const msgValue = {
-    notValid: "The email or password is not valid",
-  };
-
-  const [notify, setNotify] = useState(typeNotify.NONE);
+  const dispatch = useDispatch();
 
   // logic
   // handle login
   const handleLogIn = async () => {
     console.log("/Page/Login: Click Log In Button");
     if (!validateEmail || !validatePw) {
-      setMsg(msgValue.notValid);
-      setNotify(typeNotify.ERROR);
+      notify("error", "Not Validate Email Or Password.Please Try Again");
     } else {
-      const token = await jwtEncode(email, password);
-
       axios
         .post("http://localhost:8080/api/v1/users/login", {
-          token: token,
+          email: email,
+          password: password,
         })
         .then((res) => {
           console.log(res);
+
+          if (res.data.message === "FAIL") {
+            notify("error", res.data.messageDetail);
+          } else {
+            notify("success", "Welcom Back To CAR4R");
+            navigate("/");
+
+            const accessToken = res.data.accessToken;
+            const refreshToken = res.data.refreshToken;
+
+            dispatch(setAccessToken(accessToken));
+            dispatch(setRefreshToken(refreshToken));
+
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-
-  useEffect(() => {
-    console.log("useEffect: setTimeout");
-    console.log("notify: " + notify);
-    const timer = setTimeout(() => setNotify(typeNotify.NONE), 3000);
-
-    return () => clearTimeout(timer);
-  }, [notify]);
 
   return (
     <div className="relative w-screen h-screen">
@@ -113,11 +114,6 @@ const Login = () => {
           onClick={() => navigate("/")}
         />
       </div>
-      {notify === typeNotify.NONE ? (
-        <></>
-      ) : (
-        <Notification msg={msg} typeOfNotify={notify} />
-      )}
     </div>
   );
 };
