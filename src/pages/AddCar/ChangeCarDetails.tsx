@@ -17,10 +17,7 @@ const CarDetails = () => {
   });
 
   return (
-    <>
-      <Header />
       <div className="flex w-full">
-        <StaffSidebar />
         <div className="p-6 flex-1">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -112,8 +109,6 @@ const CarDetails = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
   );
 };
 
