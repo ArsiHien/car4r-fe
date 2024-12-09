@@ -91,11 +91,19 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
   },
+
+  //STAFF
   {
     path: config.routes.staff.overview,
     page: StaffOverview,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
+  },
+  {
+    path:config.routes.staff.profile,
+    page:ProfilePage,
+    sidebar:StaffSidebar,
+    layout: SidebarLayout,
   },
   {
     path: config.routes.staff.orderManagement,

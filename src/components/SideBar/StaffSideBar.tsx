@@ -47,7 +47,7 @@ const StaffSidebar: React.FC = () => {
       label: "SETTINGS",
       type: "group",
       children: [
-        { key: "settings", label: "Settings", icon: <SettingOutlined /> },
+        { key: "settings", label: <Link to={routes.staff.profile}>Settings</Link>, icon: <SettingOutlined /> },
         { key: "logout", label: "Logout", icon: <TbLogout2 /> },
       ],
     },

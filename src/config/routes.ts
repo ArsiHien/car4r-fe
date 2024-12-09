@@ -21,6 +21,7 @@ const routes = {
     cars: "/management/staff/cars",
     addCar: "/management/staff/cars/add-car",
     editCar: "/management/staff/cars/edit-car/:id",
+    profile:"/management/staff/profile"
   },
 
   profile: "/profile",
