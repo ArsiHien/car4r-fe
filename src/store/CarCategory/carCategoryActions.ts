@@ -7,12 +7,12 @@ const API_URL = "http://localhost:8080/api/car-category";
 export const fetchCarCategories = createAsyncThunk<CarCategory[]>(
   "carCategories/fetchAll",
   async () => {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(`${API_URL}/detail`);
     return response.data;
   }
 );
 
-export const fetchCarCateforyTypes = createAsyncThunk<string[]>(
+export const fetchCarCategoryTypes = createAsyncThunk<string[]>(
   "carCategories/fetchTypes",
   async () => {
     const response = await axios.get(`${API_URL}/types`);

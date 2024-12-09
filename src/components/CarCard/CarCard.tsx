@@ -1,26 +1,34 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import routes from "../../config/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchCarsByCategory } from "../../store/Car/carSlice";
+import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
-export interface CarDetail {
-  car: string;
-  number: string;
-  status: "In Gara" | "Rented" | "Maintenance";
-}
-
-export interface Car {
-  id: string;
-  name: string;
-  model: string;
-  imageUrl: string;
-  details: CarDetail[];
-}
-
-interface CarCardProps {
-  car: Car;
-}
-
-const CarCard: React.FC<CarCardProps> = ({ car }) => {
+const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
+  carCategory,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { cars, loading, error } = useSelector(
+    (state: RootState) => state.cars
+  );
+
+  useEffect(() => {
+    dispatch(fetchCarsByCategory(carCategory.id));
+  }, [dispatch, isExpanded, carCategory.id]);
+
+  const handleCarCategoryEditClick = () => {
+    const editUrl = location.pathname.includes(routes.manager.overview)
+      ? routes.manager.editCar.replace(":id", carCategory.id)
+      : routes.staff.editCar.replace(":id", carCategory.id);
+
+    navigate(editUrl, { state: { carCategory } });
+  };
 
   return (
     <div className="border-b border-gray-200">
@@ -30,13 +38,16 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <img
-          src={car.imageUrl}
-          alt={car.name}
+          src={carCategory.mainImage}
+          alt={carCategory.name}
           className="w-24 h-16 object-contain"
         />
         <div>
-          <h3 className="font-medium text-gray-900">{car.name}</h3>
-          <p className="text-sm text-gray-500">{car.model}</p>
+          <h3 className="font-medium text-gray-900">{carCategory.name}</h3>
+          <p className="text-sm text-gray-500">{carCategory.ty}</p>
+        </div>
+        <div>
+          <button onClick={handleCarCategoryEditClick}>Edit</button>
         </div>
       </div>
 
@@ -53,14 +64,14 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
           </div>
 
           {/* Details */}
-          {car.details.map((detail, index) => (
+          {cars.map((car, index) => (
             <div
               key={index}
               className="grid grid-cols-5 px-4 py-3 items-center hover:bg-gray-50"
             >
-              <div className="text-gray-900">{detail.car}</div>
-              <div className="text-gray-900">{detail.number}</div>
-              <div className="text-gray-900">{detail.status}</div>
+              <div className="text-gray-900">{car.categoryName}</div>
+              <div className="text-gray-900">{car.licensePlate}</div>
+              <div className="text-gray-900">{car.status}</div>
               <div>
                 <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
                   Map

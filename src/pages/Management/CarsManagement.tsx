@@ -1,37 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CarCard from "../../components/CarCard/CarCard";
-import { Car } from "../../components/CarCard/CarCard";
 import { Link, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
-import { SoundTwoTone } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchCarCategories } from "../../store/CarCategory/carCategoryActions";
+
 const CarsManagement = () => {
   const location = useLocation();
-  const [cars] = useState<Car[]>([
-    {
-      id: "1",
-      name: "CR-V",
-      model: "SUV",
-      imageUrl: "/path-to-crv-image.png",
-      details: [
-        {
-          car: "CR-V1",
-          number: "OOA-12345",
-          status: "In Gara",
-        },
-        {
-          car: "CR-V1",
-          number: "OOA-12346",
-          status: "Rented",
-        },
-        {
-          car: "CR-V1",
-          number: "OOA-11111",
-          status: "Maintenance",
-        },
-      ],
-    },
-    // Add more cars as needed
-  ]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { carCategories, loading, error } = useSelector(
+    (state: RootState) => state.carCategory
+  );
+
+  useEffect(() => {
+    dispatch(fetchCarCategories());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -51,8 +43,8 @@ const CarsManagement = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow">
-        {cars.map((car) => (
-          <CarCard key={car.id} car={car} />
+        {carCategories.map((car) => (
+          <CarCard carCategory={car} />
         ))}
       </div>
     </>

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchCarCategories,
-  fetchCarCateforyTypes,
+  fetchCarCategoryTypes,
   addCarCategory,
   updateCarCategory,
   deleteCarCategory,
@@ -56,15 +56,15 @@ const carCategorySlice = createSlice({
         }
       )
       .addCase(fetchCarCategories.rejected, handleRejected)
-      .addCase(fetchCarCateforyTypes.pending, handlePending)
+      .addCase(fetchCarCategoryTypes.pending, handlePending)
       .addCase(
-        fetchCarCateforyTypes.fulfilled,
+        fetchCarCategoryTypes.fulfilled,
         (state, action: PayloadAction<string[]>) => {
           state.carCategoryTypes = action.payload;
           state.loading = false;
         }
       )
-      .addCase(fetchCarCateforyTypes.rejected, handleRejected)
+      .addCase(fetchCarCategoryTypes.rejected, handleRejected)
       .addCase(addCarCategory.pending, handlePending)
       .addCase(
         addCarCategory.fulfilled,

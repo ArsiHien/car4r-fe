@@ -60,11 +60,6 @@ const CarMap = () => {
         marks={marks}
         style={{ marginBottom: "20px" }}
       />
-      <div style={{ textAlign: "center", marginBottom: "10px" }}>
-        <span>
-          Time: {marks[timeRatio] || "Now"} to {marks[1]}
-        </span>
-      </div>
     </div>
   );
 };
