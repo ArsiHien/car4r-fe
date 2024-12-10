@@ -104,7 +104,7 @@ const FilterSidebar = () => {
           <input
             type="range"
             min="0"
-            max="100"
+            max="10000000"
             value={filters.maxPrice}
             onChange={(e) => handlePriceChange(Number(e.target.value))}
             className="slider w-full"
