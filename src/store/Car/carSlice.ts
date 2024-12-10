@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Car } from "../../types/Car";
+import { Car,addCarApi } from "../../types/Car";
 
 export interface CarByStatusResponse {
   status: string;
@@ -26,7 +26,7 @@ export const fetchCarsByStatus = createAsyncThunk<
   return response.data;
 });
 
-export const addCar = createAsyncThunk<Car, Car>(
+export const addCar = createAsyncThunk<Car,addCarApi>(
   "cars/addCar",
   async (carData) => {
     const response = await axios.post(API_URL, carData);

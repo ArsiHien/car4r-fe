@@ -11,8 +11,8 @@ export type CarCategoryDetail = {
   rating: number;
   reviewersCount: number;
   mainImage: string;
-  carImages: string[];
-  amenities: string[];
+  carImages: CarImageResponse[];
+  amenities: AmenityResponse[];
 };
 
 export interface CarCategoryRequest {
@@ -27,4 +27,14 @@ export interface CarCategoryRequest {
   mainImage: File | null;
   carImages: File[];
   amenityNames: string[];
+}
+
+export interface CarImageResponse {
+  id: string;
+  imageUrl: string;
+}
+
+export interface AmenityResponse {
+  id: string;
+  name: string;
 }

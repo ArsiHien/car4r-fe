@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
+import { Alert } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import routes from "../../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { fetchCarsByCategory } from "../../store/Car/carSlice";
+import { addCar, fetchCarsByCategory } from "../../store/Car/carSlice";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
 const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
   carCategory,
 }) => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [newCar, setNewCar] = useState({ licensePlate: "", status: "" }); // State for new car details
+
   const [isExpanded, setIsExpanded] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,6 +33,34 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
       : routes.staff.editCar.replace(":id", carCategory.id);
 
     navigate(editUrl, { state: { carCategory } });
+  };
+
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "info" | "success" | "error";
+  } | null>(null);
+
+
+  const handleAddCar = async() => {
+    setNewCar({ licensePlate: "", status: "" });
+    const carData = {
+      categoryId: carCategory.id, // Use the carCategory ID
+      licensePlate: newCar.licensePlate,
+      status: newCar.status,
+    };
+    try{
+      setAlert({ message: "Adding car ...", type: "info" });
+      await dispatch(addCar(carData)).unwrap();
+      setAlert({
+        message: "Car added successfully!",
+        type: "success",
+      });
+    } catch (error: any) {
+      setAlert({
+      message: `Failed to add car category: ${error.message}`,
+      type: "error",
+    });
+  }
   };
 
   return (
@@ -50,7 +83,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
         <div className="ml-auto flex gap-2">
           <button className="px-4 py-3 bg-green-500 text-white rounded-md text-sm" onClick={(e) => {
               e.stopPropagation(); // Prevent dropdown toggle
-              // Edit car category logic here
+              setIsModalOpen(true);
             }}>
             Add Car
           </button>
@@ -62,6 +95,32 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
           </button>
         </div>
       </div>
+
+      {/* Modal for Adding Car */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md">
+            <h2 className="text-lg font-medium">Add Car</h2>
+            {alert && <Alert message={alert.message} type={alert.type} showIcon />}
+            <input
+              type="text"
+              placeholder="License Plate"
+              value={newCar.licensePlate}
+              onChange={(e) => setNewCar({ ...newCar, licensePlate: e.target.value })}
+              className="border p-2 mb-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="Status"
+              value={newCar.status}
+              onChange={(e) => setNewCar({ ...newCar, status: e.target.value })}
+              className="border p-2 mb-2 w-full"
+            />
+            <button onClick={handleAddCar} className="bg-green-500 text-white px-4 py-2 rounded-md">Add</button>
+            <button onClick={() => setIsModalOpen(false)} className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
+          </div>
+        </div>
+      )}
 
       {/* Dropdown Content */}
       {isExpanded && (
