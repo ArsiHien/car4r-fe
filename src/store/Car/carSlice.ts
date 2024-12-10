@@ -28,9 +28,14 @@ export const fetchCarsByStatus = createAsyncThunk<
 
 export const addCar = createAsyncThunk<Car,addCarApi>(
   "cars/addCar",
-  async (carData) => {
-    const response = await axios.post(API_URL, carData);
-    return response.data;
+  async (carData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(API_URL, carData);
+      return response.data;
+    } catch (error: any) {
+      // Handle the error and return a rejected value
+      return rejectWithValue(error.response?.data || "Failed to add car");
+    }
   }
 );
 

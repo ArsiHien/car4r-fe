@@ -57,7 +57,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
       });
     } catch (error: any) {
       setAlert({
-      message: `Failed to add car category: ${error.message}`,
+      message: `Failed to add car : ${error.message}`,
       type: "error",
     });
   }
