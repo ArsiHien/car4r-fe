@@ -24,7 +24,11 @@ const routes = {
     profile:"/management/staff/profile"
   },
 
-  profile: "/profile",
+  customer: {
+    profile: "/profile",
+    orderManagement: "/orders",
+  },
+
   login: "/logIn",
   auth: "/auth",
   signUp: "/signUp",

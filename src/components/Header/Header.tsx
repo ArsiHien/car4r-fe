@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import UserSidebar from "../SideBar/UserSidebar";
-import { CiSearch } from "react-icons/ci";
+import UserMenu from "../SideBar/UserMenu";
 import SearchBar from "./SearchBar";
 
 const Header: React.FC = () => {
@@ -89,7 +88,7 @@ const Header: React.FC = () => {
 
           {/* Sidebar Component */}
           {isSidebarOpen && (
-            <UserSidebar onClose={() => setIsSidebarOpen(false)} />
+            <UserMenu onClose={() => setIsSidebarOpen(false)} />
           )}
         </div>
       </div>

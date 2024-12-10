@@ -1,18 +1,13 @@
-import {
-  BarChartOutlined,
-  CarOutlined,
-  HomeOutlined,
-  ScheduleOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import { ConfigProvider, Menu, MenuProps } from "antd";
 import React from "react";
 import { TbLogout2 } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
+import { CgProfile } from "react-icons/cg";
+import { BsClipboard2Check } from "react-icons/bs";
 
-const ManagerSidebar: React.FC = () => {
+const CustomerSidebar: React.FC = () => {
   const location = useLocation();
   type MenuItem = Required<MenuProps>["items"][number];
   const items: MenuItem[] = [
@@ -27,24 +22,14 @@ const ManagerSidebar: React.FC = () => {
           icon: <HomeOutlined />,
         },
         {
-          key: routes.manager.overview,
-          label: <Link to={routes.manager.overview}>Overview</Link>,
-          icon: <ScheduleOutlined />,
+          key: routes.customer.profile,
+          label: <Link to={routes.customer.profile}>Profile</Link>,
+          icon: <CgProfile />,
         },
         {
-          key: routes.manager.dashboard,
-          label: <Link to={routes.manager.dashboard}>Dashboard</Link>,
-          icon: <BarChartOutlined />,
-        },
-        {
-          key: routes.manager.cars,
-          label: <Link to={routes.manager.cars}>Cars</Link>,
-          icon: <CarOutlined />,
-        },
-        {
-          key: routes.manager.staffManagement,
-          label: <Link to={routes.manager.staffManagement}>Staffs</Link>,
-          icon: <UserOutlined />,
+          key: routes.customer.orderManagement,
+          label: <Link to={routes.customer.orderManagement}>Orders</Link>,
+          icon: <BsClipboard2Check />,
         },
       ],
     },
@@ -79,11 +64,7 @@ const ManagerSidebar: React.FC = () => {
         <Menu
           mode="inline"
           className="bg-inherit"
-          defaultSelectedKeys={[
-            location.pathname.startsWith(routes.manager.cars)
-              ? routes.manager.cars
-              : location.pathname,
-          ]}
+          selectedKeys={[location.pathname]}
           items={items}
           inlineIndent={8}
         />
@@ -92,4 +73,4 @@ const ManagerSidebar: React.FC = () => {
   );
 };
 
-export default ManagerSidebar;
+export default CustomerSidebar;

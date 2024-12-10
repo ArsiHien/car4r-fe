@@ -27,9 +27,11 @@ import {
 } from "../pages/ManagerPages";
 import CarsManagement from "../pages/Management/CarsManagement";
 import StaffSidebar from "../components/SideBar/StaffSidebar";
-import ManagerSidebar from "../components/SideBar/ManagerSidebar";
+import ManagerSidebar from "../components/SideBar/ManagerSideBar";
 import FilterSidebar from "../components/SideBar/FilterSidebar";
 import { StaffOverview } from "../pages/StaffPages";
+import CustomerSidebar from "../components/SideBar/CustomerSidebar";
+import CustomerOrderManagement from "../pages/CustomerOrderManagement";
 
 interface RouteConfig {
   path: string;
@@ -41,7 +43,7 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   { path: config.routes.home, page: Home },
-  {path: config.routes.profile,page:ProfilePage},
+  { path: config.routes.profile, page: ProfilePage },
 
   {
     path: config.routes.search,
@@ -101,9 +103,9 @@ const publicRoutes: RouteConfig[] = [
     sidebar: StaffSidebar,
   },
   {
-    path:config.routes.staff.profile,
-    page:ProfilePage,
-    sidebar:StaffSidebar,
+    path: config.routes.staff.profile,
+    page: ProfilePage,
+    sidebar: StaffSidebar,
     layout: SidebarLayout,
   },
   {
@@ -131,8 +133,24 @@ const publicRoutes: RouteConfig[] = [
     layout: SidebarLayout,
     sidebar: StaffSidebar,
   },
-
-  { path: config.routes.profile, page: Profile, layout: Profile },
+  {
+    path: config.routes.staff.profile,
+    page: Profile,
+    layout: SidebarLayout,
+    sidebar: StaffSidebar,
+  },
+  {
+    path: config.routes.customer.orderManagement,
+    page: CustomerOrderManagement,
+    layout: SidebarLayout,
+    sidebar: CustomerSidebar,
+  },
+  {
+    path: config.routes.customer.profile,
+    page: Profile,
+    layout: SidebarLayout,
+    sidebar: CustomerSidebar,
+  },
 
   { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
   { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
