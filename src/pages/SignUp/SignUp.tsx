@@ -3,12 +3,13 @@ import ButtonAuth from "../../components/Auth/ButtonAuth";
 import Form from "../../components/Auth/Form";
 import VerificationEmail from "../../components/Auth/VerificationEmail.tsx";
 import { Avatar } from "../../components/Avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store.ts";
 import axios from "axios";
 import { notify } from "../../const/Notify.ts";
 import { useState } from "react";
 import { Spin } from "antd";
+import { setEmail, setPassword } from "../../store/Authen/authenSlice.ts";
 
 const SignUp = () => {
   const email = useSelector((state: RootState) => state.auth.email);
@@ -23,6 +24,7 @@ const SignUp = () => {
 
   // navigate
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //state
   const [loading, setLoading] = useState(false);
@@ -58,6 +60,9 @@ const SignUp = () => {
       notify("error", "Email Or Password Invalid");
       setLoading(false);
     }
+
+    dispatch(setEmail(""));
+    dispatch(setPassword(""));
   };
 
   return (

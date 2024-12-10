@@ -10,6 +10,7 @@ const authenSlice = createSlice({
 
     accessToken: "", // Luu access token
     refreshToken: "", // luu refresh token"
+    role: "",
 
     validateEmail: false,
     validatePw: {
@@ -22,7 +23,7 @@ const authenSlice = createSlice({
   },
 
   reducers: {
-    setUserName: (state, action) => {
+    setEmail: (state, action) => {
       state.email = action.payload;
     },
 
@@ -31,11 +32,19 @@ const authenSlice = createSlice({
     },
 
     setAccessToken: (state, action) => {
-      state.accessToken = action.payload;
+      const accessToken = action.payload;
+      state.accessToken = accessToken;
+
+      // save in localStorage
+      localStorage.setItem("accessToken", accessToken);
     },
 
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload;
+    },
+
+    setRole: (state, action) => {
+      state.role = action.payload;
     },
 
     setValidateEmail: (state, action) => {
@@ -50,10 +59,11 @@ const authenSlice = createSlice({
 
 // export actions
 export const {
-  setUserName,
+  setEmail,
   setPassword,
   setAccessToken,
   setRefreshToken,
+  setRole,
   setValidateEmail,
   setValidatePw,
 } = authenSlice.actions;

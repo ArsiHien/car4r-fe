@@ -12,7 +12,9 @@ import { notify } from "../../const/Notify";
 import {
   setAccessToken,
   setRefreshToken,
+  setRole,
 } from "../../store/Authen/authenSlice";
+import jwtDecode from "../../utils/JwtDecode";
 
 const Login = () => {
   // get state global
@@ -36,35 +38,40 @@ const Login = () => {
   const handleLogIn = async () => {
     console.log("/Page/Login: Click Log In Button");
     if (!validateEmail || !validatePw) {
-      notify("error", "Not Validate Email Or Password.Please Try Again");
+      notify("error", "Not Validate Email Or Password. Please Try Again");
     } else {
-      axios
-        .post("http://localhost:8080/api/v1/users/login", {
-          email: email,
-          password: password,
-        })
-        .then((res) => {
-          console.log(res);
+      try {
+        const res = await axios.post(
+          "http://localhost:8080/api/v1/users/login",
+          {
+            email: email,
+            password: password,
+          },
+        );
 
-          if (res.data.message === "FAIL") {
-            notify("error", res.data.messageDetail);
-          } else {
-            notify("success", "Welcom Back To CAR4R");
-            navigate("/");
+        console.log(res);
 
-            const accessToken = res.data.accessToken;
-            const refreshToken = res.data.refreshToken;
+        if (res.data.message === "FAIL") {
+          notify("error", res.data.messageDetail);
+        } else {
+          notify("success", "Welcome Back To CAR4R");
+          navigate("/");
 
-            dispatch(setAccessToken(accessToken));
-            dispatch(setRefreshToken(refreshToken));
+          const { accessToken, refreshToken } = res.data;
 
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          // Dispatch token actions
+          dispatch(setAccessToken(accessToken));
+          dispatch(setRefreshToken(refreshToken));
+
+          const role = await jwtDecode(accessToken);
+          dispatch(setRole(role));
+
+          document.cookie = `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict`;
+        }
+      } catch (err) {
+        console.log(err);
+        notify("error", "Something went wrong, please try again.");
+      }
     }
   };
 

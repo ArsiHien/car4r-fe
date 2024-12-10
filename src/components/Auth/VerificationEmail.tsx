@@ -6,36 +6,45 @@ import { useDispatch } from "react-redux";
 import {
   setAccessToken,
   setRefreshToken,
+  setRole,
 } from "../../store/Authen/authenSlice";
+import { useNavigate } from "react-router-dom";
+import jwtDecode from "../../utils/JwtDecode";
 
 const VerificationEmail = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleVerify = () => {
-    axios
-      .get(`http://localhost:8080/api/v1/users/verifyRegister/${token}`)
-      .then((res) => {
-        console.log(res);
+  const handleVerify = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/users/verifyRegister/${token}`,
+      );
+      console.log(res);
 
-        if (res.data.message === "FAIL") {
-          notify("error", res.data.messageDetail);
-        } else {
-          notify("success", "Welcom To CAR4R");
+      if (res.data.message === "FAIL") {
+        notify("error", res.data.messageDetail);
+      } else {
+        // Notify success
+        notify("success", "Welcome to CAR4R");
 
-          const accessToken = res.data.accessToken;
-          const refreshToken = res.data.refreshToken;
+        const { accessToken, refreshToken } = res.data;
 
-          dispatch(setAccessToken(accessToken));
-          dispatch(setRefreshToken(refreshToken));
+        const role = await jwtDecode(accessToken);
 
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
-        }
-      })
-      .catch((err) => {
-        notify("error", "Not verify email success");
-      });
+        dispatch(setAccessToken(accessToken));
+        dispatch(setRefreshToken(refreshToken));
+        dispatch(setRole(role)); // Nếu bạn có action setRole trong Redux
+
+        document.cookie = `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict`;
+
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      notify("error", "Failed to verify email. Please try again.");
+    }
   };
 
   return (
