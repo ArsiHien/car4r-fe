@@ -11,13 +11,16 @@ import {
   UploadProps,
 } from "antd";
 import CreatableSelect from "react-select/creatable";
-import { CarCategoryRequest, CarDetail } from "../../types/CarCategoryDetail";
+import {
+  CarCategoryDetail,
+  CarCategoryRequest,
+} from "../../types/CarCategoryDetail";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import {
-  addCarCategory,
   fetchCarCategoryTypes,
+  updateCarCategory,
 } from "../../store/CarCategory/carCategoryActions";
 import { fetchAmenities } from "../../store/CarCategory/amenitySlice";
 
@@ -31,7 +34,11 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const AddCarForm = () => {
+interface EditCarFormProps {
+  carCategory: CarCategoryDetail;
+}
+
+const EditCarForm = ({ carCategory }: EditCarFormProps) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [images, setImages] = useState<UploadFile[]>([]);
   const [mainImage, setMainImage] = useState<UploadFile[]>([]);
@@ -42,31 +49,86 @@ const AddCarForm = () => {
     type: "info" | "success" | "error";
   } | null>(null);
   const [carData, setCarData] = useState<Partial<CarCategoryRequest>>({
-    name: "",
-    type: "",
-    numberOfPerson: 0,
-    steering: "",
-    gasoline: 0,
-    description: "",
-    price: 0,
-    promotionPrice: 0,
+    name: carCategory.name,
+    type: carCategory.type,
+    numberOfPerson: carCategory.numberOfPerson,
+    steering:
+      carCategory.steering.charAt(0) +
+      carCategory.steering.slice(1).toLowerCase(),
+    gasoline: carCategory.gasoline,
+    description: carCategory.description,
+    price: carCategory.price,
+    promotionPrice: carCategory.promotionPrice ?? 0,
     mainImage: null,
     carImages: [],
-    amenityNames: [],
+    amenityNames: carCategory.amenities.map((amenity) => amenity.name),
   });
+
   const dispatch = useDispatch<AppDispatch>();
 
   const { carCategories, carCategoryTypes, loading, error } = useSelector(
     (state: RootState) => state.carCategory
   );
-  const {
-    amenities
-  } = useSelector((state: RootState) => state.amenity);
+  const { amenities } = useSelector((state: RootState) => state.amenity);
+
+  const getBlobFromUrl = async (url: string): Promise<Blob> => {
+    const response = await fetch(url);
+    return await response.blob();
+  };
 
   useEffect(() => {
-    dispatch(fetchCarCategoryTypes());
-    dispatch(fetchAmenities());
-  }, [dispatch]);
+    const initializeData = async () => {
+      dispatch(fetchAmenities());
+      dispatch(fetchCarCategoryTypes());
+      try {
+        if (carCategory.mainImage) {
+          const mainImageBlob = await getBlobFromUrl(carCategory.mainImage);
+          const mainImageFile = new File([mainImageBlob], "mainImage.jpg", {
+            type: "image/jpeg",
+          });
+          setMainImage([
+            {
+              uid: "mainImage",
+              name: "mainImage.jpg",
+              status: "done",
+              url: carCategory.mainImage,
+              originFileObj: mainImageFile,
+            } as UploadFile<any>,
+          ]);
+          setCarData((prev) => ({ ...prev, mainImage: mainImageFile }));
+        }
+
+        if (carCategory.carImages && carCategory.carImages.length > 0) {
+          const imagePromises = carCategory.carImages.map(async (image) => {
+            const blob = await getBlobFromUrl(image.imageUrl);
+            return new File([blob], `carImage_${image.id}.jpg`, {
+              type: "image/jpeg",
+            });
+          });
+
+          const imageFiles = await Promise.all(imagePromises);
+          setImages(
+            imageFiles.map(
+              (file, index) =>
+                ({
+                  uid: carCategory.carImages[index].id,
+                  name: file.name,
+                  status: "done",
+                  url: carCategory.carImages[index].imageUrl,
+                  originFileObj: file,
+                  lastModifiedDate: new Date(),
+                } as UploadFile<any>)
+            )
+          );
+          setCarData((prev) => ({ ...prev, carImages: imageFiles }));
+        }
+      } catch (error) {
+        console.error("Error initializing car data:", error);
+      }
+    };
+
+    initializeData();
+  }, [carCategory, dispatch]);
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -140,15 +202,17 @@ const AddCarForm = () => {
     formData.append("amenityNames", carData.amenityNames?.join(",") || "");
 
     try {
-      setAlert({ message: "Adding car category...", type: "info" });
-      await dispatch(addCarCategory(formData)).unwrap();
+      setAlert({ message: "Updating car category...", type: "info" });
+      await dispatch(
+        updateCarCategory({ id: carCategory.id, carCategoryData: formData })
+      ).unwrap();
       setAlert({
-        message: "Car category added successfully!",
+        message: "Car category updated successfully!",
         type: "success",
       });
-    } catch (error: any) {
+    } catch (error) {
       setAlert({
-        message: `Failed to add car category: ${error.message}`,
+        message: `Failed to update car category: ${error}`,
         type: "error",
       });
     }
@@ -156,7 +220,7 @@ const AddCarForm = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add New Car</h2>
+      <h2 className="text-2xl font-bold mb-6">Edit Car</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-x-16 gap-y-4">
           <div>
@@ -172,6 +236,11 @@ const AddCarForm = () => {
             <label className="block text-sm font-medium mb-1">Car Type</label>
             <CreatableSelect
               isClearable
+              defaultValue={
+                carData.type
+                  ? { label: carData.type, value: carData.type }
+                  : null
+              }
               placeholder="Type of car"
               options={carCategoryTypes.map((type) => ({
                 label: type,
@@ -202,7 +271,7 @@ const AddCarForm = () => {
           <div>
             <label className="block text-sm font-medium mb-1">Steering</label>
             <Select
-              defaultValue="Manual"
+              defaultValue={carData.steering}
               className="w-full h-[39px]"
               onChange={(e) => {
                 setCarData({ ...carData, steering: e });
@@ -266,6 +335,14 @@ const AddCarForm = () => {
           <CreatableSelect
             isMulti
             isClearable
+            defaultValue={
+              carData.amenityNames
+                ? carData.amenityNames.map((name) => ({
+                    label: name,
+                    value: name,
+                  }))
+                : []
+            }
             classNames={{
               control: (state) =>
                 state.isFocused ? "border-[#4096ff]" : "border-[#d9d9d9]",
@@ -275,11 +352,13 @@ const AddCarForm = () => {
               label: amenity.name,
               value: amenity.name,
             }))}
-            onChange={(values) => {
-              const amenities = values.map((values) => values.value);
+            onChange={(selectedOptions) => {
+              const selectedAmenityNames = selectedOptions
+                ? selectedOptions.map((option) => option.value)
+                : [];
               setCarData({
                 ...carData,
-                amenityNames: amenities,
+                amenityNames: selectedAmenityNames,
               });
             }}
           />
@@ -352,11 +431,11 @@ const AddCarForm = () => {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
         >
-          Add Car
+          Update Car
         </button>
       </form>
     </div>
   );
 };
 
-export default AddCarForm;
+export default EditCarForm;

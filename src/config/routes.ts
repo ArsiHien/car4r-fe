@@ -12,7 +12,7 @@ const routes = {
     staffManagement: "/management/manager/staffs",
     cars: "/management/manager/cars",
     addCar: "/management/manager/cars/add-car",
-    editCar: "/management/manager/cars/edit-car",
+    editCar: "/management/manager/cars/edit-car/:id",
   },
 
   staff: {
@@ -21,6 +21,7 @@ const routes = {
     cars: "/management/staff/cars",
     addCar: "/management/staff/cars/add-car",
     editCar: "/management/staff/cars/edit-car/:id",
+    profile:"/management/staff/profile"
   },
 
   profile: "/profile",
