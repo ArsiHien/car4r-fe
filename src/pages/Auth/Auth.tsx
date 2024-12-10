@@ -67,8 +67,6 @@ const Auth = () => {
           const role = await jwtDecode(accessToken);
           dispatch(setRole(role));
 
-          document.cookie = `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict`;
-
           navigate("/");
         }
       } catch (error) {

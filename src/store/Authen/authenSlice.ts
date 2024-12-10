@@ -40,7 +40,9 @@ const authenSlice = createSlice({
     },
 
     setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload;
+      const refreshToken = action.payload;
+      state.refreshToken = refreshToken;
+      document.cookie = `refreshToken=${refreshToken}, path=/, domain=localhost, HttpOnly, SameSite=Lax`;
     },
 
     setRole: (state, action) => {

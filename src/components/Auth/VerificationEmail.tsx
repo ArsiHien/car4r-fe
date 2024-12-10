@@ -37,8 +37,6 @@ const VerificationEmail = () => {
         dispatch(setRefreshToken(refreshToken));
         dispatch(setRole(role)); // Nếu bạn có action setRole trong Redux
 
-        document.cookie = `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict`;
-
         navigate("/");
       }
     } catch (err) {

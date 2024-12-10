@@ -11,10 +11,13 @@ import axios from "axios";
 import { notify } from "../../const/Notify";
 import {
   setAccessToken,
+  setEmail,
+  setPassword,
   setRefreshToken,
   setRole,
 } from "../../store/Authen/authenSlice";
 import jwtDecode from "../../utils/JwtDecode";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   // get state global
@@ -36,7 +39,6 @@ const Login = () => {
   // logic
   // handle login
   const handleLogIn = async () => {
-    console.log("/Page/Login: Click Log In Button");
     if (!validateEmail || !validatePw) {
       notify("error", "Not Validate Email Or Password. Please Try Again");
     } else {
@@ -46,6 +48,11 @@ const Login = () => {
           {
             email: email,
             password: password,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
           },
         );
 
@@ -57,6 +64,9 @@ const Login = () => {
           notify("success", "Welcome Back To CAR4R");
           navigate("/");
 
+          dispatch(setEmail(""));
+          dispatch(setPassword(""));
+
           const { accessToken, refreshToken } = res.data;
 
           // Dispatch token actions
@@ -65,8 +75,6 @@ const Login = () => {
 
           const role = await jwtDecode(accessToken);
           dispatch(setRole(role));
-
-          document.cookie = `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict`;
         }
       } catch (err) {
         console.log(err);
@@ -74,6 +82,67 @@ const Login = () => {
       }
     }
   };
+
+  const logInWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Lấy thông tin user từ Google
+        const userInfo = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          },
+        );
+        console.log("User Info:", userInfo.data);
+
+        const data = {
+          email: userInfo.data.email,
+          firstName: userInfo.data.family_name,
+          lastName: userInfo.data.given_name,
+          username: userInfo.data.name,
+          avatar: userInfo.data.picture,
+          role: "CUSTOMER",
+        };
+
+        console.log(data);
+
+        const res = await axios.post(
+          "http://localhost:8080/api/v1/users/oauth/google",
+          data,
+        );
+        console.log(res);
+
+        if (!res.data || !res.data.accessToken) {
+          notify("error", "Login failed. Please try again.");
+        } else {
+          notify("success", "Welcome to CAR4R");
+
+          const { accessToken, refreshToken } = res.data;
+
+          dispatch(setAccessToken(accessToken));
+          dispatch(setRefreshToken(refreshToken));
+
+          const role = await jwtDecode(accessToken);
+          dispatch(setRole(role));
+
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        notify(
+          "error",
+          "Sign Up With Google Not Successfully. Please Try Again",
+        );
+      }
+    },
+
+    onError: () => {
+      console.error("Google login failed");
+      notify("error", "Google login failed. Please try again.");
+    },
+  });
 
   return (
     <div className="relative w-screen h-screen">
@@ -96,7 +165,10 @@ const Login = () => {
           </span>
         </div>
 
-        <GoogleButton txtVal="Log In With Google" />
+        <GoogleButton
+          txtVal="Log In With Google"
+          handleClick={logInWithGoogle}
+        />
 
         <Or classNameAdd="mt-8 mb-4" />
 
