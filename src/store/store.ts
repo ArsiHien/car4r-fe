@@ -6,11 +6,13 @@ import carsReducer from "./Car/carSlice";
 import selectedCarReducer from "./Car/selectedCarSlice";
 import carCategoryReducer from "./CarCategory/carCategorySlice";
 import amenityReducer from "./CarCategory/amenitySlice";
+import carByStatusReducer from "./Car/carSliceByStatus";
 const store = configureStore({
   reducer: {
     auth: authReducer,
     filters: filterReducer,
     carMap: carMapReducer,
+    carsByStatus: carByStatusReducer,
     cars: carsReducer,
     selectedCar: selectedCarReducer,
     carCategory: carCategoryReducer,
