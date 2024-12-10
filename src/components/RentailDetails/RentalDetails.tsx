@@ -3,7 +3,7 @@ import CarMap from "./CarMap";
 import CurrentRentalsList from "./CurrentRentalsList";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Car, fetchCarsByStatus } from "../../store/Car/carSlice";
+import { fetchCarsByStatus } from "../../store/Car/carSliceByStatus";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect } from "react";
 import { setSelectedCarID } from "../../store/Car/selectedCarSlice";

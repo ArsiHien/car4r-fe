@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { fetchCarCategories } from "../../store/CarCategory/carCategoryActions";
 
 const CarsManagement = () => {
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { carCategories, loading, error } = useSelector(
@@ -16,6 +17,20 @@ const CarsManagement = () => {
   useEffect(() => {
     dispatch(fetchCarCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (loading) {
+      setExpandedCardId(null); // Reset expanded card when loading
+    } 
+  }, [loading]);
+
+  const handleToggle = (id: string) => {
+    if (loading) {
+      setExpandedCardId(null); // Reset expanded card when loading
+    } else {
+      setExpandedCardId(expandedCardId === id ? null : id); // Toggle the expanded state
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -43,9 +58,14 @@ const CarsManagement = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow">
-        {carCategories.map((car) => (
-          <CarCard carCategory={car} />
-        ))}
+      {carCategories.map((category) => (
+          <CarCard
+            key={category.id}
+            carCategory={category}
+            isExpanded={expandedCardId === category.id} // Check if this card is expanded
+            onToggle={() => handleToggle(category.id)} // Pass the toggle function 
+            />
+          ))}
       </div>
     </>
   );

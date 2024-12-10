@@ -7,14 +7,15 @@ import { AppDispatch, RootState } from "../../store/store";
 import { addCar, fetchCarsByCategory } from "../../store/Car/carSlice";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
-const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
+const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; onToggle: () => void }> = ({
   carCategory,
+  isExpanded,
+  onToggle,
 }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
   const [newCar, setNewCar] = useState({ licensePlate: "", status: "" }); // State for new car details
 
-  const [isExpanded, setIsExpanded] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -23,10 +24,16 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
     (state: RootState) => state.cars
   );
 
-  useEffect(() => {
-    dispatch(fetchCarsByCategory(carCategory.id));
-  }, [dispatch, isExpanded, carCategory.id]);
+  // useEffect(() => {
+  //   dispatch(fetchCarsByCategory(carCategory.id));
+  // }, [dispatch, isExpanded, carCategory.id]);
 
+  const handleDropdownToggle = () => {
+    onToggle(); // Call the function to toggle the expanded state in the parent
+    if (!isExpanded) {
+      dispatch(fetchCarsByCategory(carCategory.id)); // Fetch cars when dropdown is opened
+    }
+  };
   const handleCarCategoryEditClick = () => {
     const editUrl = location.pathname.includes(routes.manager.overview)
       ? routes.manager.editCar.replace(":id", carCategory.id)
@@ -41,14 +48,14 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
   } | null>(null);
 
 
-  const handleAddCar = async() => {
+  const handleAddCar = async () => {
     setNewCar({ licensePlate: "", status: "" });
     const carData = {
       categoryId: carCategory.id, // Use the carCategory ID
       licensePlate: newCar.licensePlate,
       status: newCar.status,
     };
-    try{
+    try {
       setAlert({ message: "Adding car ...", type: "info" });
       await dispatch(addCar(carData)).unwrap();
       setAlert({
@@ -57,10 +64,10 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
       });
     } catch (error: any) {
       setAlert({
-      message: `Failed to add car : ${error.message}`,
-      type: "error",
-    });
-  }
+        message: `Failed to add car : ${error.message}`,
+        type: "error",
+      });
+    }
   };
 
   return (
@@ -68,7 +75,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
       {/* Main Card */}
       <div
         className="flex items-center gap-4 p-4 cursor-pointer hover:bg-gray-50"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleDropdownToggle}
       >
         <img
           src={carCategory.mainImage}
@@ -79,12 +86,12 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
           <h3 className="font-medium text-gray-900">{carCategory.name}</h3>
           <p className="text-sm text-gray-500">{carCategory.type}</p>
         </div>
-        
+
         <div className="ml-auto flex gap-2">
           <button className="px-4 py-3 bg-green-500 text-white rounded-md text-sm" onClick={(e) => {
-              e.stopPropagation(); // Prevent dropdown toggle
-              setIsModalOpen(true);
-            }}>
+            e.stopPropagation(); // Prevent dropdown toggle
+            setIsModalOpen(true);
+          }}>
             Add Car
           </button>
           <button className="px-4 py-3 bg-yellow-500 text-white rounded-md text-sm" onClick={(e) => {
@@ -134,28 +141,28 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail }> = ({
             <div>Edit</div>
           </div>
 
+          {loading && <div>Loading...</div>}
+          {error && <div className="text-red-500">{error}</div>}    
           {/* Details */}
-          {cars.map((car, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-5 px-4 py-3 items-center hover:bg-gray-50"
-            >
-              <div className="text-gray-900">{car.categoryName}</div>
-              <div className="text-gray-900">{car.licensePlate}</div>
-              <div className="text-gray-900">{car.status}</div>
-              <div>
-                <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
-                  Map
-                </button>
+          {cars.length > 0 ? (
+            cars.map((car) => (
+              <div key={car.id} className="grid grid-cols-5 px-4 py-3 items-center hover:bg-gray-50">
+                <div className="text-gray-900">{car.categoryName}</div>
+                <div className="text-gray-900">{car.licensePlate}</div>
+                <div className="text-gray-900">{car.status}</div>
+                <div>
+                  <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">Map</button>
+                </div>
+                <div>
+                  <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
+                    <Link to={`/management/cars/editCar/${car.id}`}>Edit</Link>
+                  </button>
+                </div>
               </div>
-              <div>
-                <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
-                  {/* <Link to={`/management/cars/editCar/${car.id}`}>Edit</Link> */}
-                  <Link to="/management/cars/editCar/:1">Edit</Link>
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div>No cars available.</div> // Message when no cars are found
+          )}
         </div>
       )}
     </div>

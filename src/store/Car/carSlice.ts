@@ -1,32 +1,33 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Car,addCarApi } from "../../types/Car";
+import { Car, addCarApi } from "../../types/Car";
 
-export interface CarByStatusResponse {
-  status: string;
+export interface CarByCategoryResponse {
+  categoryId: string;
   numberOfCar: number;
   cars: Car[];
 }
 
 const API_URL = "http://localhost:8080/api/cars";
 
-export const fetchCarsByCategory = createAsyncThunk<Car[], string>(
+export const fetchCarsByCategory = createAsyncThunk<CarByCategoryResponse, string>(
   "cars/fetchByCategory",
   async (carCategoryId) => {
     const response = await axios.get(`${API_URL}/${carCategoryId}`);
-    return response.data;
+    console.log("Fetched cars:", response.data); // Log the response for debugging
+    return response.data; // Ensure this matches the expected structure
   }
 );
 
 export const fetchCarsByStatus = createAsyncThunk<
-  CarByStatusResponse,
+  CarByCategoryResponse,
   string
 >("cars/fetchByStatus", async (status) => {
   const response = await axios.get(`${API_URL}/status/${status}`);
   return response.data;
 });
 
-export const addCar = createAsyncThunk<Car,addCarApi>(
+export const addCar = createAsyncThunk<Car, addCarApi>(
   "cars/addCar",
   async (carData, { rejectWithValue }) => {
     try {
@@ -71,6 +72,35 @@ const initialState: CarsState = {
   error: null,
 };
 
+// const carsSlice = createSlice({
+//   name: "cars",
+//   initialState,
+//   reducers: {
+//     clearCarList: (state) => {
+//       state.cars = [];
+//     },
+//   },
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchCarsByStatus.pending, (state) => {
+//         state.loading = true;
+//         state.error = null;
+//       })
+//       .addCase(
+//         fetchCarsByStatus.fulfilled,
+//         (state, action: PayloadAction<CarByStatusResponse>) => {
+//           state.cars = action.payload.cars;
+//           state.loading = false;
+//           state.error = null;
+//         }
+//       )
+//       .addCase(fetchCarsByStatus.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error = action.error.message || "Failed to fetch cars";
+//       });
+//   },
+// });
+
 const carsSlice = createSlice({
   name: "cars",
   initialState,
@@ -81,20 +111,19 @@ const carsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCarsByStatus.pending, (state) => {
+      .addCase(fetchCarsByCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
-        fetchCarsByStatus.fulfilled,
-        (state, action: PayloadAction<CarByStatusResponse>) => {
-          state.cars = action.payload.cars;
-          state.numberOfCar = action.payload.numberOfCar;
-          state.status = action.payload.status;
+        fetchCarsByCategory.fulfilled,
+        (state, action: PayloadAction<CarByCategoryResponse>) => {
+          state.cars = action.payload.cars; // Update the cars state
           state.loading = false;
+          state.error = null; // Clear any previous errors
         }
       )
-      .addCase(fetchCarsByStatus.rejected, (state, action) => {
+      .addCase(fetchCarsByCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch cars";
       });
