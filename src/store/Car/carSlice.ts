@@ -105,7 +105,7 @@ const carsSlice = createSlice({
   name: "cars",
   initialState,
   reducers: {
-    clearCarList: (state) => {
+    resetCars: (state) => {
       state.cars = [];
     },
   },
@@ -130,5 +130,5 @@ const carsSlice = createSlice({
   },
 });
 
-export const { clearCarList } = carsSlice.actions;
+export const { resetCars } = carsSlice.actions;
 export default carsSlice.reducer;

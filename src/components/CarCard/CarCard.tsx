@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import routes from "../../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { addCar, fetchCarsByCategory } from "../../store/Car/carSlice";
+import { addCar, fetchCarsByCategory, resetCars } from "../../store/Car/carSlice";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
 const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; onToggle: () => void }> = ({
@@ -31,7 +31,11 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
   const handleDropdownToggle = () => {
     onToggle(); // Call the function to toggle the expanded state in the parent
     if (!isExpanded) {
+      dispatch(resetCars());
       dispatch(fetchCarsByCategory(carCategory.id)); // Fetch cars when dropdown is opened
+    } else {
+      // Reset cars if the card is collapsed
+      dispatch(resetCars());
     }
   };
   const handleCarCategoryEditClick = () => {
@@ -142,7 +146,6 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
           </div>
 
           {loading && <div>Loading...</div>}
-          {error && <div className="text-red-500">{error}</div>}    
           {/* Details */}
           {cars.length > 0 ? (
             cars.map((car) => (

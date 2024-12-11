@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CarCategory } from "../../types/CarCategoryDetail";
 
+
+
 const API_URL = "http://localhost:8080/api/car-category";
 
 export const fetchCarCategories = createAsyncThunk<CarCategory[]>(
@@ -28,6 +30,7 @@ export const addCarCategory = createAsyncThunk<CarCategory, FormData>(
         "Content-Type": "multipart/form-data",
       },
     });
+    console.log(response.data)
     return response.data;
   }
 );

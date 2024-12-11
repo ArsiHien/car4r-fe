@@ -11,7 +11,7 @@ import {
   UploadProps,
 } from "antd";
 import CreatableSelect from "react-select/creatable";
-import { CarCategoryRequest, CarDetail } from "../../types/CarCategoryDetail";
+import { CarCategoryRequest, CarCategoryDetail } from "../../types/CarCategoryDetail";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
@@ -119,7 +119,6 @@ const AddCarForm = () => {
     const validationErrors = validateForm();
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
-      return;
     }
     setErrors([]);
     const formData = new FormData();
