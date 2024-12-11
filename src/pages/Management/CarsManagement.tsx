@@ -64,7 +64,7 @@ const CarsManagement = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
+      <div className="bg-white rounded-lg shadow ">
       {carCategories.map((category) => (
           <CarCard
             key={category.id}

@@ -33,7 +33,7 @@ export const addCar = createAsyncThunk<Car, addCarApi>(
   }
 );
 
-export const updateCar = createAsyncThunk<Car, { id: string; carData: Car }>(
+export const updateCar = createAsyncThunk<Car, { id: string; carData: addCarApi }>(
   "cars/updateCar",
   async ({ id, carData }) => {
     const response = await axios.put(`${API_URL}/${id}`, carData);
