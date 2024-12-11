@@ -71,7 +71,7 @@ const CarsManagement = () => {
             carCategory={category}
             isExpanded={expandedCardId === category.id} // Check if this card is expanded
             onToggle={() => handleToggle(category.id)} // Pass the toggle function 
-            />
+            />    
           ))}
       </div>
     </>

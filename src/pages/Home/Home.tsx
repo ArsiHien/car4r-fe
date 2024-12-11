@@ -11,7 +11,7 @@ const Home = () => {
       {/* Background Image Section */}
       <div className="relative h-[70vh]"> {/* Set the height to 50% of the viewport */}
         <img
-          src="https://n1-cstg.mioto.vn/7/cho_thue_xe_tu_lai_hn/ha_noi/p/m/cities/HaNoi_cover.jpg" // Replace with your actual image URL
+          src="src\assets\bg-landingpage.png" // Replace with your actual image URL
           alt="Hanoi City"
           className="w-full h-full object-cover rounded-3xl"
         />
