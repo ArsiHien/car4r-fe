@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { Alert } from "antd";
+import { Alert, Select } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import routes from "../../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { addCar, fetchCarsByCategory, resetCars } from "../../store/Car/carSlice";
+import { addCar, fetchCarsByCategory, resetCars, updateCar } from "../../store/Car/carSlice";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
+import { Car } from "../../types/Car";
 
-const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; onToggle: () =>void }> = ({
+const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; onToggle: () => void }> = ({
   carCategory,
   isExpanded,
   onToggle,
 }) => {
 
-  const [isLoadingCars, setIsLoadingCars] = useState(false); // New state for loading cars
-
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsNewModalOpen] = useState(false); // State for modal visibility
   const [newCar, setNewCar] = useState({ licensePlate: "", status: "" }); // State for new car details
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State for edit modal visibility
+  const [carToEdit, setCarToEdit] = useState<{ licensePlate: string; status: string, id: string } | null>(null); // State for car to edit
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,9 +35,6 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
   const handleDropdownToggle = () => {
     onToggle(); // Call the function to toggle the expanded state in the parent
     if (!isExpanded) {
-      setIsLoadingCars(true); // Set loading state to true
-      dispatch(fetchCarsByCategory(carCategory.id)).unwrap()
-        .finally(() => setIsLoadingCars(false)); // Reset loading state after fetching
       dispatch(resetCars());
       dispatch(fetchCarsByCategory(carCategory.id)); // Fetch cars when dropdown is opened
     } else {
@@ -55,6 +54,11 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
     message: string;
     type: "info" | "success" | "error";
   } | null>(null);
+
+  const handleCarEditClick = (car: Car) => {
+    setCarToEdit({ licensePlate: car.licensePlate, status: car.status, id: car.id }); // Set the car data to edit
+    setIsEditModalOpen(true); // Open the edit modal
+  };
 
 
   const handleAddCar = async () => {
@@ -79,8 +83,32 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
     }
   };
 
+  const handleEditCar = async () => {
+    if (carToEdit) {
+      const carData = {
+        categoryId: carCategory.id,
+        licensePlate: carToEdit.licensePlate,
+        status: carToEdit.status,
+      };
+      try {
+        setAlert({ message: "Editing car ...", type: "info" });
+        await dispatch(updateCar({ id: carToEdit.id, carData })).unwrap(); // Call the updateCar action
+        setAlert({
+          message: "Car edited successfully!",
+          type: "success",
+        });
+        dispatch(fetchCarsByCategory(carCategory.id));
+      } catch (error: any) {
+        setAlert({
+          message: `Failed to edit car: ${error.message}`,
+          type: "error",
+        });
+      }
+    }
+  };
+
   return (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-gray-200 p-4">
       {/* Main Card */}
       <div
         className="flex items-center gap-4 p-4 cursor-pointer hover:bg-gray-50"
@@ -99,7 +127,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
         <div className="ml-auto flex gap-2">
           <button className="px-4 py-3 bg-green-500 text-white rounded-md text-sm" onClick={(e) => {
             e.stopPropagation(); // Prevent dropdown toggle
-            setIsModalOpen(true);
+            setIsNewModalOpen(true);
           }}>
             Add Car
           </button>
@@ -115,7 +143,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
       {/* Modal for Adding Car */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-md">
+          <div className="bg-white p-4 rounded-md" style={{ width: '500px' }}>
             <h2 className="text-lg font-medium">Add Car</h2>
             {alert && <Alert message={alert.message} type={alert.type} showIcon />}
             <input
@@ -125,19 +153,46 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
               onChange={(e) => setNewCar({ ...newCar, licensePlate: e.target.value })}
               className="border p-2 mb-2 w-full"
             />
-
-            <select
+            <Select
+              placeholder="Select Status"
               value={newCar.status}
-              onChange={(e) => setNewCar({ ...newCar, status: e.target.value })}
-              className="border p-2 mb-2 w-full"
+              onChange={(value) => setNewCar({ ...newCar, status: value })}
+              className="mb-2 w-full"
             >
-              <option value="">Select Status</option>
-              <option value="AVAILABLE">AVAILABLE</option>
-              <option value="RENTED">RENTED</option>
-              <option value="MAINTENANCE">MAINTENANCE</option>
-            </select>
+              <Select.Option value="AVAILABLE">AVAILABLE</Select.Option>
+              <Select.Option value="RENTED">RENTED</Select.Option>
+              <Select.Option value="MAINTENANCE">MAINTENANCE</Select.Option>
+            </Select>
             <button onClick={handleAddCar} className="bg-green-500 text-white px-4 py-2 rounded-md">Add</button>
-            <button onClick={() => setIsModalOpen(false)} className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
+            <button onClick={() => setIsNewModalOpen(false)} className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {isEditModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md" style={{ width: '500px' }}>
+            <h2 className="text-lg font-medium">Edit Car</h2>
+            {alert && <Alert message={alert.message} type={alert.type} showIcon />}
+            <input
+              type="text"
+              placeholder="License Plate"
+              value={carToEdit?.licensePlate || ""}
+              onChange={(e) => setCarToEdit({ ...carToEdit, licensePlate: e.target.value })}
+              className="border p-2 mb-2 w-full"
+            />
+            <Select
+              placeholder="Select Status"
+              value={carToEdit?.status || ""}
+              onChange={(value) => setCarToEdit({ ...carToEdit, status: value })}
+              className="mb-2 w-full h-[39px]"
+            >
+              <Select.Option value="AVAILABLE">AVAILABLE</Select.Option>
+              <Select.Option value="RENTED">RENTED</Select.Option>
+              <Select.Option value="MAINTENANCE">MAINTENANCE</Select.Option>
+            </Select>
+            <button onClick={handleEditCar} className="bg-green-500 text-white px-4 py-2 rounded-md">Save</button>
+            <button onClick={() => setIsEditModalOpen(false)} className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
           </div>
         </div>
       )}
@@ -150,15 +205,10 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
             <div>Car</div>
             <div>Number</div>
             <div>Status</div>
-            <div>Map</div>
             <div>Edit</div>
+            <div>Delete</div>
           </div>
 
-          {isLoadingCars ? ( // Show loading message only when loading
-            <div>Loading cars...</div>
-          ) : error ? ( // Show error message if there's an error
-            <div className="text-red-500">{error}</div>
-          ) : cars.length > 0 ? ( // Show car details if available
           {loading && <div>Loading...</div>}
           {/* Details */}
           {cars.length > 0 ? (
@@ -168,13 +218,20 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
                 <div className="text-gray-900">{car.licensePlate}</div>
                 <div className="text-gray-900">{car.status}</div>
                 <div>
-                  <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">Map</button>
-                </div>
-                <div>
-                  <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm">
-                    <Link to={`/management/cars/editCar/${car.id}`}>Edit</Link>
+                  <button className="px-6 py-1 bg-blue-600 text-white rounded-md text-sm " onClick={() => handleCarEditClick(car)}>
+                    Edit
                   </button>
                 </div>
+                <div>
+                  <button className="px-6 py-1 bg-red-600 text-white rounded-md text-sm" onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this car?")) {
+                      // Call delete function here
+                    }
+                  }}> 
+                    Delete
+                  </button>
+                </div>
+
               </div>
             ))
           ) : (
@@ -183,7 +240,6 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
         </div>
       )}
     </div>
-    
   );
 };
 

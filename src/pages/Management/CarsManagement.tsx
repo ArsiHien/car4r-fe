@@ -64,14 +64,14 @@ const CarsManagement = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
+      <div className="bg-white rounded-lg shadow ">
       {carCategories.map((category) => (
           <CarCard
             key={category.id}
             carCategory={category}
             isExpanded={expandedCardId === category.id} // Check if this card is expanded
             onToggle={() => handleToggle(category.id)} // Pass the toggle function 
-            />
+            />    
           ))}
       </div>
     </>
