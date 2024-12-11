@@ -8,6 +8,7 @@ import { fetchCarCategories } from "../../store/CarCategory/carCategoryActions";
 
 const CarsManagement = () => {
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [selectedCarId, setSelectedCarId] = useState<string | null>(null); // Local state for selected car
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { carCategories, loading, error } = useSelector(
@@ -18,11 +19,7 @@ const CarsManagement = () => {
     dispatch(fetchCarCategories());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (loading) {
-      setExpandedCardId(null); // Reset expanded card when loading
-    } 
-  }, [loading]);
+
 
   const handleToggle = (id: string) => {
     if (loading) {
@@ -31,6 +28,16 @@ const CarsManagement = () => {
       setExpandedCardId(expandedCardId === id ? null : id); // Toggle the expanded state
     }
   };
+
+  const handleCarSelect = (id: string) => {
+    setSelectedCarId(id); // Update local selected car ID
+  };
+
+  useEffect(() => {
+    if (loading) {
+      setExpandedCardId(null); // Reset expanded card when loading
+    } 
+  }, [loading]);
 
   if (loading) {
     return <div>Loading...</div>;

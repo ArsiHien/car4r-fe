@@ -19,13 +19,6 @@ export const fetchCarsByCategory = createAsyncThunk<CarByCategoryResponse, strin
   }
 );
 
-export const fetchCarsByStatus = createAsyncThunk<
-  CarByCategoryResponse,
-  string
->("cars/fetchByStatus", async (status) => {
-  const response = await axios.get(`${API_URL}/status/${status}`);
-  return response.data;
-});
 
 export const addCar = createAsyncThunk<Car, addCarApi>(
   "cars/addCar",

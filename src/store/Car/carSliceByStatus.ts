@@ -18,16 +18,9 @@ export const fetchCarsByStatus = createAsyncThunk<
   return response.data;
 });
 
-export const addCar = createAsyncThunk<Car,addCarApi>(
-  "cars/addCar",
-  async (carData) => {
-    const response = await axios.post(API_URL, carData);
-    return response.data;
-  }
-);
 
 interface CarsState {
-    cars: Car[];
+    carsByStatus: Car[];
     numberOfCar: number;
     status: string;
     loading: boolean;
@@ -35,7 +28,7 @@ interface CarsState {
   }
   
   const initialState: CarsState = {
-    cars: [],
+    carsByStatus: [],
     numberOfCar: 0,
     status: "",
     loading: false,
@@ -43,11 +36,11 @@ interface CarsState {
   };
   
   const carSliceByStatus = createSlice({
-    name: "cars",
+    name: "carsByStatus",
     initialState,
     reducers: {
-      clearCarList: (state) => {
-        state.cars = [];
+      clearCarByStatusList: (state) => {
+        state.carsByStatus = [];
       },
     },
     extraReducers: (builder) => {
@@ -59,10 +52,8 @@ interface CarsState {
         .addCase(
           fetchCarsByStatus.fulfilled,
           (state, action: PayloadAction<CarByStatusResponse>) => {
-            state.cars = action.payload.cars;
-            state.numberOfCar = action.payload.numberOfCar;
-            state.status = action.payload.status;
-            state.loading = false;
+            state.carsByStatus = action.payload.cars;
+            // ... existing code ...
           }
         )
         .addCase(fetchCarsByStatus.rejected, (state, action) => {
@@ -72,5 +63,5 @@ interface CarsState {
     },
   });
   
-  export const { clearCarList } = carSliceByStatus.actions;
+  export const { clearCarByStatusList } = carSliceByStatus.actions;
   export default carSliceByStatus.reducer;
