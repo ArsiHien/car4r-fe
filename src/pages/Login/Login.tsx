@@ -18,6 +18,10 @@ import {
 } from "../../store/Authen/authenSlice";
 import jwtDecode from "../../utils/JwtDecode";
 import { useGoogleLogin } from "@react-oauth/google";
+import Role from "../../const/Role";
+import routes from "../../config/routes";
+import { useState } from "react";
+import { Spin } from "antd";
 
 const Login = () => {
   // get state global
@@ -36,9 +40,13 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   // logic
   // handle login
   const handleLogIn = async () => {
+    setLoading(true);
+
     if (!validateEmail || !validatePw) {
       notify("error", "Not Validate Email Or Password. Please Try Again");
     } else {
@@ -49,11 +57,6 @@ const Login = () => {
             email: email,
             password: password,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
         );
 
         console.log(res);
@@ -62,7 +65,6 @@ const Login = () => {
           notify("error", res.data.messageDetail);
         } else {
           notify("success", "Welcome Back To CAR4R");
-          navigate("/");
 
           dispatch(setEmail(""));
           dispatch(setPassword(""));
@@ -75,16 +77,41 @@ const Login = () => {
 
           const role = await jwtDecode(accessToken);
           dispatch(setRole(role));
+
+          console.log(role);
+
+          switch (role) {
+            case Role.CUSTOMER:
+              navigate("/");
+              break;
+
+            case Role.MANAGER:
+              navigate(routes.manager.overview);
+              break;
+
+            case Role.STAFF:
+              navigate(routes.staff.overview);
+              break;
+
+            default:
+              break;
+          }
         }
       } catch (err) {
         console.log(err);
         notify("error", "Something went wrong, please try again.");
+        setLoading(false);
       }
     }
+    setLoading(false);
+
+    dispatch(setEmail(""));
+    dispatch(setPassword(""));
   };
 
   const logInWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      setLoading(true);
       try {
         // Lấy thông tin user từ Google
         const userInfo = await axios.get(
@@ -131,6 +158,7 @@ const Login = () => {
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
+        setLoading(false);
         notify(
           "error",
           "Sign Up With Google Not Successfully. Please Try Again",
@@ -140,59 +168,68 @@ const Login = () => {
 
     onError: () => {
       console.error("Google login failed");
+      setLoading(false);
       notify("error", "Google login failed. Please try again.");
     },
   });
 
   return (
-    <div className="relative w-screen h-screen">
-      <img
-        className="object-cover w-full h-screen -z-10"
-        src="../../../src/assets/Background_LogSign.png"
-      />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-300 w-[35%] pb-14 rounded-2xl flex flex-col items-center bg-white">
-        <div className="flex flex-col items-center mt-10">
-          <Avatar classNameAdd="size-12" />
-          <h1 className="text-3xl mt-3">Log In</h1>
-          <span className="text-xl mt-4 tracking-wide">
-            Don't have an account?
-            <span
-              className="ml-1 underline hover:cursor-pointer hover:text-blue-500"
-              onClick={() => navigate("/signUp")}
+    <div
+      className={`relative w-screen h-screen ${loading ? "flex justify-center items-center" : ""}`}
+    >
+      {loading ? (
+        <Spin size="large" />
+      ) : (
+        <>
+          <img
+            className="object-cover w-full h-screen -z-10"
+            src="../../../src/assets/Background_LogSign.png"
+          />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-300 w-[35%] pb-14 rounded-2xl flex flex-col items-center bg-white">
+            <div className="flex flex-col items-center mt-10">
+              <Avatar classNameAdd="size-12" />
+              <h1 className="text-3xl mt-3">Log In</h1>
+              <span className="text-xl mt-4 tracking-wide">
+                Don't have an account?
+                <span
+                  className="ml-1 underline hover:cursor-pointer hover:text-blue-500"
+                  onClick={() => navigate("/signUp")}
+                >
+                  Sign Up
+                </span>
+              </span>
+            </div>
+
+            <GoogleButton
+              txtVal="Log In With Google"
+              handleClick={logInWithGoogle}
+            />
+
+            <Or classNameAdd="mt-8 mb-4" />
+
+            <Form />
+
+            <a
+              onClick={() => navigate("/resetPassword")}
+              className="mt-2 text-right w-5/6 mb-3 underline hover:cursor-pointer hover:text-blue-500"
             >
-              Sign Up
-            </span>
-          </span>
-        </div>
+              Forgot Your Password
+            </a>
 
-        <GoogleButton
-          txtVal="Log In With Google"
-          handleClick={logInWithGoogle}
-        />
+            <ButtonAuth
+              txtVal="Log In"
+              classNameAdd="bg-[#C3C3C3] hover:bg-[#d1d1e0]"
+              handleClick={handleLogIn}
+            />
 
-        <Or classNameAdd="mt-8 mb-4" />
-
-        <Form />
-
-        <a
-          onClick={() => navigate("/resetPassword")}
-          className="mt-2 text-right w-5/6 mb-3 underline hover:cursor-pointer hover:text-blue-500"
-        >
-          Forgot Your Password
-        </a>
-
-        <ButtonAuth
-          txtVal="Log In"
-          classNameAdd="bg-[#C3C3C3] hover:bg-[#d1d1e0]"
-          handleClick={handleLogIn}
-        />
-
-        <img
-          className="absolute top-2 right-2 w-8 h-8 hover:scale-75 hover:cursor-pointer"
-          src="../../../src/assets/XIcon.png"
-          onClick={() => navigate("/")}
-        />
-      </div>
+            <img
+              className="absolute top-2 right-2 w-8 h-8 hover:scale-75 hover:cursor-pointer"
+              src="../../../src/assets/XIcon.png"
+              onClick={() => navigate("/")}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

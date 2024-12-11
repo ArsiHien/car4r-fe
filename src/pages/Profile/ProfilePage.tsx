@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
-
 const ProfilePage: React.FC = () => {
   const [profilePicture, setProfilePicture] = useState(
-    "https://via.placeholder.com/100" // Default profile picture
+    "https://via.placeholder.com/100", // Default profile picture
   );
 
-  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const result = e.target?.result;
-        if (result && typeof result === 'string') {
+        if (result && typeof result === "string") {
           setProfilePicture(result); // Update the profile picture
         }
       };
@@ -20,7 +21,9 @@ const ProfilePage: React.FC = () => {
     }
   };
   const triggerFileInput = () => {
-    const fileInput = document.getElementById("profilePictureInput") as HTMLInputElement;
+    const fileInput = document.getElementById(
+      "profilePictureInput",
+    ) as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
@@ -169,6 +172,5 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 };
-
 
 export default ProfilePage;

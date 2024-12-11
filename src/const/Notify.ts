@@ -30,7 +30,7 @@ const notify = (typeNotify: IconType, message: string) => {
     type: typeNotify,
     message: message,
     className: "custom-notify",
-    duration: 5,
+    duration: 6,
     style: {
       display: "flex",
       justifyItems: "center",
