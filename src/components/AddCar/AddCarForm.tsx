@@ -11,7 +11,7 @@ import {
   UploadProps,
 } from "antd";
 import CreatableSelect from "react-select/creatable";
-import { CarCategoryRequest } from "../../types/CarCategoryDetail";
+import { CarCategoryRequest, CarDetail } from "../../types/CarCategoryDetail";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
