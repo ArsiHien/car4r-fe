@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./BookingInfo.css";
 
 const BookingInfo2 = () => {

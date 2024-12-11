@@ -1,4 +1,3 @@
-import React from "react";
 import carIcon from "../../assets/carIcon.png";
 import order from "../../assets/order.png";
 import overview from "../../assets/overview.png";

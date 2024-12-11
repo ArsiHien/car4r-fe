@@ -3,7 +3,7 @@ import "./style.css";
 import { useDispatch } from "react-redux";
 import {
   setPassword,
-  setUserName,
+  setEmail,
   setValidateEmail,
   setValidatePw,
 } from "../../store/Authen/authenSlice";
@@ -71,7 +71,7 @@ const Form = () => {
           type="email"
           onChange={(e) => {
             const email = e.target.value;
-            dispatch(setUserName(email));
+            dispatch(setEmail(email));
             setValidEmail(validateEmail(email));
           }}
         />

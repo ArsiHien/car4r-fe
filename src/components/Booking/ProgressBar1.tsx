@@ -1,6 +1,3 @@
-import React from "react";
-import number1 from "../../assets/number1.png";
-
 const ProgressBar1 = () => {
   return (
     <div className="mt-12 border-slate-950 flex w-2/4 h-20 align-middle bg-zinc-300 relative left-1/4 mb-8 items-center justify-center">
