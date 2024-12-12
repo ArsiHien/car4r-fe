@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import routes from "../../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { addCar, fetchCarsByCategory, resetCars, updateCar } from "../../store/Car/carSlice";
+import { addCar, fetchCarsByCategory, resetCars, updateCar, deleteCar } from "../../store/Car/carSlice";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 import { Car } from "../../types/Car";
 
@@ -104,6 +104,23 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
           type: "error",
         });
       }
+    }
+  };
+
+  const handleDeleteCar = async (carId: string) => {
+    try {
+      await dispatch(deleteCar(carId)).unwrap(); // Call the deleteCar action
+      setAlert({
+        message: "Car deleted successfully!",
+        type: "success",
+      });
+      dispatch(fetchCarsByCategory(carCategory.id)); // Refresh the car list
+    } catch (error: any) {
+      setAlert({
+        message: `Failed to delete car: ${error.message}`,
+        type: "error",
+      });
+      console.log(alert.message)
     }
   };
 
@@ -225,7 +242,8 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
                 <div>
                   <button className="px-6 py-1 bg-red-600 text-white rounded-md text-sm" onClick={() => {
                     if (window.confirm("Are you sure you want to delete this car?")) {
-                      // Call delete function here
+                      // console.log(car.id)
+                      // handleDeleteCar(car.id);
                     }
                   }}> 
                     Delete

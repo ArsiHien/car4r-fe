@@ -8,7 +8,7 @@ const authenSlice = createSlice({
     email: "", // Lưu tên đăng nhập
     password: "", // Lưu mật khẩu
 
-    accessToken: "", // Luu access token
+    accessToken: localStorage.getItem("accessToken") || "", // Load access token from localStorage
     refreshToken: "", // luu refresh token"
     role: "",
 
@@ -56,6 +56,12 @@ const authenSlice = createSlice({
     setValidatePw: (state, action: PayloadAction<IValidatePw>) => {
       state.validatePw = action.payload;
     },
+    logout: (state) => {
+      state.accessToken = ""; // Clear access token
+      state.refreshToken = ""; // Clear refresh token
+      localStorage.removeItem("accessToken"); // Remove from localStorage
+      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Clear refresh token cookie
+    },
   },
 });
 
@@ -68,6 +74,7 @@ export const {
   setRole,
   setValidateEmail,
   setValidatePw,
+  logout
 } = authenSlice.actions;
 
 // Export reducer để tích hợp vào store
