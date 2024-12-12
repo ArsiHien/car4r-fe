@@ -60,7 +60,7 @@ const authenSlice = createSlice({
       state.accessToken = ""; // Clear access token
       state.refreshToken = ""; // Clear refresh token
       localStorage.removeItem("accessToken"); // Remove from localStorage
-      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Clear refresh token cookie
+      document.cookie = "refreshToken=; expires=; path=/;"; // Clear refresh token cookie
     },
   },
 });
