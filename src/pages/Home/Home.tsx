@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import User from "../../data/User";
+import { setUser } from "../../store/User/userSlice";
 
 const Home = () => {
   const { RangePicker } = DatePicker;
@@ -26,7 +27,8 @@ const Home = () => {
           );
 
           const user: User = response.data;
-          console.log(user);
+
+          dispatch(setUser(user));
         }
       } catch (error) {
         console.error("Error verifying token or fetching user data:", error);
