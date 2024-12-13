@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import IValidatePw from "../../types/IValidatePw";
+import Cookies from "js-cookie";
 
 const authenSlice = createSlice({
   name: "authenSlice",
@@ -42,7 +43,20 @@ const authenSlice = createSlice({
     setRefreshToken: (state, action) => {
       const refreshToken = action.payload;
       state.refreshToken = refreshToken;
-      document.cookie = `refreshToken=${refreshToken}, path=/, domain=localhost, HttpOnly, SameSite=Lax`;
+
+      Cookies.set("refreshToken", refreshToken, {
+        sameSite: "None",
+        path: "/",
+        expires: 28,
+      });
+    },
+
+    logout: (state) => {
+      state.accessToken = "";
+      state.refreshToken = "";
+
+      localStorage.clear();
+      Cookies.remove("refreshToken");
     },
 
     setRole: (state, action) => {

@@ -7,9 +7,12 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
+import useRefreshToken from "./utils/RefreshToken";
 
 const App = () => {
   const location = useLocation();
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = useRefreshToken();
 
   useEffect(() => {
     const duration = 300;
