@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
-import PrivateRoute from './components/PrivateRoute';
-
+import useRefreshToken from "./utils/RefreshToken";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   const location = useLocation();
@@ -34,6 +34,21 @@ const App = () => {
 
     requestAnimationFrame(scroll);
   }, [location.pathname]);
+
+  // Kiem tra refresh token
+  useEffect(() => {
+    const checkAndRefreshToken = async () => {
+      console.log("refreshToken");
+      if (!accessToken) {
+        console.log("null access token");
+        await refreshToken();
+      }
+    };
+
+    checkAndRefreshToken();
+
+    return () => {};
+  }, [accessToken]);
 
   return (
     <Routes>

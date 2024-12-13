@@ -70,12 +70,6 @@ const authenSlice = createSlice({
     setValidatePw: (state, action: PayloadAction<IValidatePw>) => {
       state.validatePw = action.payload;
     },
-    logout: (state) => {
-      state.accessToken = ""; // Clear access token
-      state.refreshToken = ""; // Clear refresh token
-      localStorage.removeItem("accessToken"); // Remove from localStorage
-      document.cookie = "refreshToken=; expires=; path=/;"; // Clear refresh token cookie
-    },
   },
 });
 
@@ -88,7 +82,7 @@ export const {
   setRole,
   setValidateEmail,
   setValidatePw,
-  logout
+  logout,
 } = authenSlice.actions;
 
 // Export reducer để tích hợp vào store
