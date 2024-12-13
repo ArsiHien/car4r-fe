@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
+import { logout } from "../../store/Authen/authenSlice";
+import { useDispatch } from "react-redux";
+
 
 interface UserMenuProps {
   onClose: () => void;
@@ -20,6 +23,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+  };
 
   return (
     <div className="absolute right-0 top-12 w-64 bg-white rounded-lg shadow-lg p-4 user-sidebar z-50">
@@ -161,27 +170,30 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
           </div>
           <span className="text-sm text-blue-600">Allow</span>
         </div> */}
+        <div>
+          <Link to="/login" onClick={handleLogout}>
+            <div
+              className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded-md"
+              onClick={onClose} // Close sidebar on "Log Out" click
+            >
 
-        <div
-          className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded-md"
-          onClick={onClose} // Close sidebar on "Log Out" click
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
-            />
-          </svg>
-
-          <span className="ml-2">Log Out</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                />
+              </svg>
+              <span className="ml-2">Log Out</span>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

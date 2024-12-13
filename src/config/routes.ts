@@ -9,6 +9,7 @@ const routes = {
   manager: {
     overview: "/management/manager",
     dashboard: "/management/manager/dashboard",
+    profile: "/management/manager/profile",
     staffManagement: "/management/manager/staffs",
     cars: "/management/manager/cars",
     addCar: "/management/manager/cars/add-car",
