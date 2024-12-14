@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import routes from "../../config/routes";
 import { logout } from "../../store/Authen/authenSlice";
 import { useDispatch } from "react-redux";
-
+import { clearUser } from "../../store/User/userSlice";
 
 interface UserMenuProps {
   onClose: () => void;
@@ -28,6 +28,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
 
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
+    dispatch(clearUser());
   };
 
   return (
@@ -176,7 +177,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
               className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded-md"
               onClick={onClose} // Close sidebar on "Log Out" click
             >
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

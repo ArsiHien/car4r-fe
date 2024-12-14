@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Authen/authenSlice";
+import userReducer from "./User/userSlice";
 import filterReducer from "./Filter/filterSlice";
 import carMapReducer from "./CarMap/carMapSlice";
 import carsReducer from "./Car/carSlice";
@@ -10,6 +11,7 @@ import carByStatusReducer from "./Car/carSliceByStatus";
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    user: userReducer,
     filters: filterReducer,
     carMap: carMapReducer,
     carsByStatus: carByStatusReducer,
