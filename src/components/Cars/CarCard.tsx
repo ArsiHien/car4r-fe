@@ -3,7 +3,6 @@ import fuelImg from "../../assets/gas-station.png";
 import transmissionImg from "../../assets/CarType.png";
 import capacityImg from "../../assets/capacity.png";
 import { useNavigate } from "react-router-dom";
-import RentButton from "../RentButton";
 import CarPrice from "./CarPrice";
 
 export interface CarCardProps {
@@ -75,7 +74,9 @@ export const CarCard: React.FC<CarCardProps> = ({
           <CarPrice price={price} />
         )}
 
-        <RentButton></RentButton>
+  <button className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]">
+      Rent Now
+    </button>
       </div>
     </div>
   );

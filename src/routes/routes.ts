@@ -156,13 +156,6 @@ const publicRoutes: RouteConfig[] = [
     allowedRoles: [Role.STAFF]
   },
   {
-    path: config.routes.staff.profile,
-    page: Profile,
-    layout: SidebarLayout,
-    sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
-  },
-  {
     path: config.routes.customer.orderManagement,
     page: CustomerOrderManagement,
     layout: SidebarLayout,

@@ -20,6 +20,7 @@ const authenSlice = createSlice({
       symbol: false,
       general: false,
     },
+    isLoading: true,
   },
 
   reducers: {
@@ -62,6 +63,9 @@ const authenSlice = createSlice({
       localStorage.removeItem("accessToken"); // Remove from localStorage
       document.cookie = "refreshToken=; expires=; path=/;"; // Clear refresh token cookie
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
@@ -74,6 +78,7 @@ export const {
   setRole,
   setValidateEmail,
   setValidatePw,
+  setLoading,
   logout
 } = authenSlice.actions;
 

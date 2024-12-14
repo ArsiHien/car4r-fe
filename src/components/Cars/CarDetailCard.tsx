@@ -1,6 +1,5 @@
 import React from "react";
 import CarPrice from "./CarPrice";
-import RentButton from "../RentButton";
 import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
@@ -62,7 +61,9 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
         ) : (
           <CarPrice price={price} />
         )}
-        <RentButton></RentButton>
+        <button className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]">
+          Rent Now
+        </button>
       </div>
     </div>
   );

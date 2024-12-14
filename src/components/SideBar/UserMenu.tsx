@@ -2,14 +2,28 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
 import { logout } from "../../store/Authen/authenSlice";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import Role from "../../const/Role";
 
 interface UserMenuProps {
   onClose: () => void;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
+  const role = useSelector((state: RootState) => state.auth.role);
+  const getProfileRoute = () => {
+    switch (role) {
+      case Role.CUSTOMER:
+        return routes.customer.profile;
+      case Role.STAFF:
+        return routes.staff.profile;
+      case Role.MANAGER:
+        return routes.manager.profile;
+      default:
+        return routes.customer.profile;
+    }
+  };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -41,13 +55,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
         />
         <div>
           <p className="font-semibold">Your name</p>
-          <p className="text-sm text-gray-500">yourname@gmail.com</p>
+          <p className="text-sm text-gray-500">userEmail</p>
         </div>
       </div>
 
       {/* Menu Options */}
       <div className="space-y-3">
-        <Link to={routes.customer.profile}>
+        <Link to={getProfileRoute()}>
           <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
             <div className="flex items-center">
               <svg
