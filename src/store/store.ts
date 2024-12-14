@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Authen/authenSlice";
 import userReducer from "./User/userSlice";
 import filterReducer from "./Filter/filterSlice";
+import bookingReducer from "./Booking/bookingSlice";
 import carMapReducer from "./CarMap/carMapSlice";
 import carsReducer from "./Car/carSlice";
 import selectedCarReducer from "./Car/selectedCarSlice";
@@ -12,6 +13,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
+    booking: bookingReducer,
     filters: filterReducer,
     carMap: carMapReducer,
     carsByStatus: carByStatusReducer,

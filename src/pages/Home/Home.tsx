@@ -70,8 +70,7 @@ const Home = () => {
             <div className="flex items-center justify-between space-x-4">
               <div className="flex-1">
                 <RangePicker
-                  showTime={{ format: "HH:mm" }}
-                  format="HH:mm, DD/MM/YYYY"
+                  format="DD/MM/YYYY"
                   className="w-full text-2xl"
                   placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
                 />

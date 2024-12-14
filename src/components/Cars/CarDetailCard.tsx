@@ -3,6 +3,9 @@ import CarPrice from "./CarPrice";
 import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setSelectedCar } from '../../store/Booking/bookingSlice';
 
 const CarDetailCard: React.FC<CarCategoryDetail> = ({
   name,
@@ -16,7 +19,28 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
   rating,
   reviewersCount,
   amenities,
+  mainImage,
+  carImages
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRentNow = () => {
+    dispatch(setSelectedCar({
+      name,
+      type,
+      numberOfPerson,
+      steering,
+      gasoline,
+      price,
+      promotionPrice,
+      rating,
+      mainImage,
+      carImages
+    }));
+    navigate('/bookinginfo1'); // Assuming this is your booking route
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg m-4 p-6 border border-blue-200 w-full">
       <div className="flex justify-between items-center">
@@ -61,7 +85,10 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
         ) : (
           <CarPrice price={price} />
         )}
-        <button className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]">
+        <button 
+          className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+          onClick={handleRentNow}
+        >
           Rent Now
         </button>
       </div>

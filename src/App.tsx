@@ -9,7 +9,7 @@ import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
 import PrivateRoute from './components/PrivateRoute';
 import { useDispatch } from 'react-redux';
-import { setAccessToken, setRole, setLoading } from './store/Authen/authenSlice';
+import { setRole, setLoading } from './store/Authen/authenSlice';
 import jwtDecode from './utils/JwtDecode';
 import useRefreshToken from "./utils/RefreshToken";
 
