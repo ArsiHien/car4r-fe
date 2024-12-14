@@ -243,7 +243,7 @@ const CarCard: React.FC<{ carCategory: CarCategoryDetail; isExpanded: boolean; o
                   <button className="px-6 py-1 bg-red-600 text-white rounded-md text-sm" onClick={() => {
                     if (window.confirm("Are you sure you want to delete this car?")) {
                       // console.log(car.id)
-                      // handleDeleteCar(car.id);
+                      handleDeleteCar(car.id);
                     }
                   }}> 
                     Delete

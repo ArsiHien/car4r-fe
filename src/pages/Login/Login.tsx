@@ -105,7 +105,6 @@ const Login = () => {
     }
     setLoading(false);
 
-    dispatch(setEmail(""));
     dispatch(setPassword(""));
   };
 
