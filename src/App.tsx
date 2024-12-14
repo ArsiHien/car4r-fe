@@ -28,7 +28,6 @@ const App = () => {
         try {
           const role = await jwtDecode(token);
           if (role) {
-            dispatch(setAccessToken(token));
             dispatch(setRole(role));
           } else {
             localStorage.removeItem('accessToken');

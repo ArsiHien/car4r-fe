@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
 import { logout } from "../../store/Authen/authenSlice";
-import { useDispatch } from "react-redux";
 import { clearUser } from "../../store/User/userSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import Role from "../../const/Role";
 
