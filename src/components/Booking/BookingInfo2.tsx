@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import "./BookingInfo.css";
+import { RootState } from "../../store/store";
 
 const BookingInfo2 = () => {
+  const user = useSelector((state: RootState) => state.user.user);
   return (
     <div className="bg-gray-200 flex h-[1000px]">
       {/**left container */}
