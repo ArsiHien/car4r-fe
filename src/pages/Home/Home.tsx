@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import User from "../../data/User";
-import { setUser } from "../../store/User/userSlice";
+import { setUser, clearUser } from "../../store/User/userSlice";
+import Cookies from "js-cookie";
 
 
 const Home = () => {
@@ -17,23 +18,23 @@ const Home = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
+    const storedUser = Cookies.get('user');
 
-    console.log(token);
     const verifyTokenAndFetchUser = async () => {
       try {
-        if (token) {
+        if (token && !storedUser) {
           const response = await axios.post(
             "http://localhost:8080/api/v1/users/verifyAccessToken",
             { token },
           );
 
           const user: User = response.data;
-
           dispatch(setUser(user));
         }
       } catch (error) {
         console.error("Error verifying token or fetching user data:", error);
-        localStorage.removeItem("accessToken"); // Xóa token nếu không hợp lệ
+        localStorage.removeItem("accessToken");
+        dispatch(clearUser());
       }
     };
 

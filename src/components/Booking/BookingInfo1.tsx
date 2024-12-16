@@ -1,12 +1,16 @@
 import "./BookingInfo.css";
 import { DatePicker } from "antd";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import CarImage from "../../components/Cars/CarImage";
-
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { setTotalPrice } from '../../store/Booking/bookingSlice'
+import routes from "../../config/routes";
 
 const BookingInfo1 = () => {
+  const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
   const navigate = useNavigate();
   const selectedCar = useSelector((state: RootState) => state.booking.selectedCar);
@@ -17,6 +21,31 @@ const BookingInfo1 = () => {
     return null;
   }
 
+  const [dateRange, setDateRange] = useState<[dayjs.Dayjs | null, dayjs.Dayjs | null]>([null, null]);
+  const [total, setTotal] = useState<number>(0);
+
+  const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
+    setDateRange(dates);
+
+    if (dates[0] && dates[1]) {
+      const days = dates[1].diff(dates[0], 'day');
+      setTotal(selectedCar.price * days);
+    } else {
+      setTotal(0);
+    }
+  };
+
+    dispatch(setTotalPrice(total));
+
+    const handleReturn = () => {
+      navigate(-1);
+    };
+
+  const handleOrder = () => {
+    dispatch(setTotalPrice(total));
+    navigate('/bookingInfo2');
+  };
+
   return (
     <div className="bg-gray-200 flex h-[800px] text-xl">
       {/**left container */}
@@ -25,7 +54,7 @@ const BookingInfo1 = () => {
         <div className="flex bg-white h-[500px]">
           {/**image section */}
           <div className=" flex flex-col w-1/2 ml-5 my-5 ">
-          <CarImage images={[selectedCar.mainImage, ...selectedCar.carImages.map(image => image.imageUrl)]}/>
+            <CarImage images={[selectedCar.mainImage, ...selectedCar.carImages.map(image => image.imageUrl)]} />
           </div>
 
           {/**information section */}
@@ -64,14 +93,15 @@ const BookingInfo1 = () => {
             Thời gian thuê
           </h3>
           <div className="flex items-center justify-between space-x-4">
-              <div className="flex-1">
-                <RangePicker
-                  format="DD/MM/YYYY"
-                  className="w-full text-3xl"
-                  placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
-                />
-              </div>
+            <div className="flex-1">
+              <RangePicker
+                format="DD/MM/YYYY"
+                className="w-full text-3xl"
+                placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                onChange={handleDateChange}
+              />
             </div>
+          </div>
         </div>
         {/**bill section */}
         <div className="bg-white pl-3 text-xl">
@@ -79,15 +109,15 @@ const BookingInfo1 = () => {
           <hr className="pb-5" />
           <div className="flex flex-col gap-3 pb-5">
             <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
-            <label>Total: </label>
+            <label>Total: {total} USD</label>
           </div>
         </div>
         {/**button section */}
         <div className=" bg-white flex flex-col gap-3 py-3">
-          <button className="h-10 text-white bg-blue-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none">
+          <button className="h-10 text-white bg-blue-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleOrder}>
             Order
           </button>
-          <button className="h-10 text-white bg-gray-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none">
+          <button className="h-10 text-white bg-gray-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleReturn}>
             Return
           </button>
         </div>

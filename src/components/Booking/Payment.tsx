@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 import "./BookingInfo.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
 
 const Payment = () => {
+  const navigate = useNavigate();
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null); // Added state for payment URL
-  const [amount, setAmount] = useState<number>(25000000);
+  const selectedCar = useSelector((state: RootState) => state.booking.selectedCar);
+  const totalPrice = useSelector((state: RootState) => state.booking.totalPrice);
+
+  const [amount, setAmount] = useState<number>(totalPrice);
+
+  const handleReturn = () => {
+    navigate(-1);
+  };
 
   const handlePayment = async () => {
     try {
@@ -36,23 +47,23 @@ const Payment = () => {
             </h3>
             <div className="flex justify-between">
               <label>Name: </label>
-              <label className="text-right">BMX</label>
+              <label className="text-right">{selectedCar?.name}</label>
             </div>
             <div className="flex justify-between">
               <label>Car Type: </label>
-              <label className="text-right">Toyota Corolla</label>
+              <label className="text-right">{selectedCar?.type}</label>
             </div>
             <div className="flex justify-between">
               <label>Price: </label>
-              <label className="text-right">5.000.000 VND/day</label>
+              <label className="text-right">{selectedCar?.promotionPrice} VND/day</label>
             </div>
             <div className="flex justify-between">
-              <label>Fuel: </label>
-              <label></label>
+              <label>Fuel:</label>
+              <label>{selectedCar?.gasoline}</label>
             </div>
             <div className="flex justify-between">
               <label>Capacity: </label>
-              <label></label>
+              <label>{selectedCar?.numberOfPerson}</label>
             </div>
           </div>
         </div>
@@ -61,22 +72,13 @@ const Payment = () => {
         <div className="flex flex-col gap-3 bg-white mx-5">
           <h3 className="text-2xl text-blue-600 font-bold">Bill</h3>
           <div className="flex justify-between">
-            <label>Price: </label>
-            <label className="text-right">5.000.000 VND/day</label>
-          </div>
-          <div className="flex justify-between">
-            <label>Number of days: </label>
-            <label className="text-right">5 days</label>
-          </div>
-          <hr />
-          <div className="flex justify-between">
             <label>Total: </label>
-            <label className="text-right">25.000.000 VND</label>
+            <label className="text-right">{totalPrice} VND</label>
           </div>
         </div>
         {/**button section */}
         <div className="flex justify-center items-center py-5">
-          <button className="px-20 h-10 text-white bg-gray-600 text-xl hover:bg-gray-400 rounded focus:outline-none">
+          <button className="px-20 h-10 text-white bg-gray-600 text-xl hover:bg-gray-400 rounded focus:outline-none " onClick={handleReturn}>
             Return
           </button>
         </div>
@@ -84,7 +86,7 @@ const Payment = () => {
       {/**right container */}
       <span className="w-2/3 flex flex-col justify-center items-center bg-white mx-5 my-5">
         <div className="flex justify-center items-center py-5">
-          <button
+          <button  
             className="px-20 h-10 text-white bg-gray-600 text-xl hover:bg-gray-400 rounded focus:outline-none"
             onClick={handlePayment} // Added onClick handler for payment button
           >

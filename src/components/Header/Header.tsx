@@ -7,10 +7,16 @@ import SearchBar from "./SearchBar";
 
 import { useSelector } from "react-redux"; // Add this import
 import { RootState } from "../../store/store";
+import avatar from "../../assets/avatar.png";
 
 const Header: React.FC = () => {
   const isLoggedIn = useSelector((state: RootState) => !!state.auth.accessToken); // Check if user is logged in
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const user = useSelector((state: RootState) => state.user.user);
+
+  const [profilePicture, setProfilePicture] = useState(
+    user?.avatar || avatar,
+  );
 
   const toggleSidebar = (): void => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -92,7 +98,7 @@ const Header: React.FC = () => {
             {/* User Icon that triggers the sidebar */}
             <div className="relative">
               <img
-                src="src\assets\avatar.png" // replace with actual profile image path
+                src= {profilePicture} // replace with actual profile image path
                 alt="User Icon"
                 className="w-10 h-10 rounded-full cursor-pointer"
                 onClick={toggleSidebar}

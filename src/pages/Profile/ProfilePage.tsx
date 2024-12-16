@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-
+import avatar from "../../assets/avatar.png";
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
 
   const [profilePicture, setProfilePicture] = useState(
-    user?.avatar || "https://via.placeholder.com/100",
+    user?.avatar || avatar,
   );
 
   const handleProfilePictureChange = (
