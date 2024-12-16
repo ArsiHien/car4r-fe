@@ -3,15 +3,14 @@ import CarMap from "./CarMap";
 import CurrentRentalsList from "./CurrentRentalsList";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Car, fetchCarsByStatus } from "../../store/Car/carSlice";
+import { fetchCarsByStatus } from "../../store/Car/carSliceByStatus";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect } from "react";
 import { setSelectedCarID } from "../../store/Car/selectedCarSlice";
 const RentalDetails: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { cars } = useSelector(
-    (state: RootState) => state.cars
-  );
+  const { carsByStatus } = useSelector((state: RootState) => state.carsByStatus);
+
 
   const selectedCarId = useSelector((state: RootState) => state.selectedCar.selectedCarID)
 
@@ -24,10 +23,10 @@ const RentalDetails: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() =>{
-    if(cars.length > 0 && selectedCarId === null){
-      dispatch(setSelectedCarID(cars[0].id));
+    if(carsByStatus.length > 0 && selectedCarId === null){
+      dispatch(setSelectedCarID(carsByStatus[0].id));
     }
-  }, [cars, dispatch, selectedCarId])
+  }, [carsByStatus, dispatch, selectedCarId])
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -44,14 +43,14 @@ const RentalDetails: React.FC = () => {
           {/* Car Details */}
           <div className="flex items-center mb-6">
             <img
-              src={cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.mainImage : ""}
+              src={carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.mainImage : ""}
               alt="Car"
               className="h-16 w-24 mr-4 rounded-lg"
             />
             <div>
-            <h3 className="text-lg font-semibold">{cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.categoryName : "bla"}</h3>
-              <p className="text-gray-500">{cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.categoryType : "bla"}</p>
-              <p className="text-gray-500">{cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.licensePlate : "bla"}</p>
+            <h3 className="text-lg font-semibold">{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.categoryName : "bla"}</h3>
+              <p className="text-gray-500">{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.categoryType : "bla"}</p>
+              <p className="text-gray-500">{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.licensePlate : "bla"}</p>
             </div>
           </div>
 
@@ -65,7 +64,7 @@ const RentalDetails: React.FC = () => {
               <div className="relative">
                 <label className="text-sm text-gray-500">Locations</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  <option>{cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.currentBookingLoanPlace:"bla"}</option>
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingLoanPlace:"bla"}</option>
                 </select>
               </div>
               <div className="relative">
@@ -87,7 +86,7 @@ const RentalDetails: React.FC = () => {
               <div className="relative">
                 <label className="text-sm text-gray-500">Locations</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  <option>{cars.length > 0 ? cars.find(car => car.id === selectedCarId)?.currentBookingReturnPlace:"bla"}</option>
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingReturnPlace:"bla"}</option>
                 </select>
               </div>
               <div className="relative">

@@ -1,142 +1,172 @@
 import React, { useState } from "react";
-import { Header, Footer } from "../../components";
-
-interface ProfileData {
-  name: string;
-  email: string;
-  mobile: string;
-  birthday: string;
-}
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const ProfilePage: React.FC = () => {
-  const [profileData, setProfileData] = useState<ProfileData>({
-    name: "your name",
-    email: "yourname@gmail.com",
-    mobile: "Add number",
-    birthday: "01/01/1000",
-  });
+  const user = useSelector((state: RootState) => state.user.user);
 
-  const handleSaveChanges = () => {
-    // Handle save logic here
-    console.log("Saving profile data:", profileData);
+  const [profilePicture, setProfilePicture] = useState(
+    user?.avatar || "https://via.placeholder.com/100",
+  );
+
+  const handleProfilePictureChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result;
+        if (result && typeof result === "string") {
+          setProfilePicture(result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const triggerFileInput = () => {
+    const fileInput = document.getElementById(
+      "profilePictureInput",
+    ) as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
   };
 
   return (
-    <div>
-      <Header />
-      <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-        {/* Header with avatar */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <img
-                src="src\assets\avatar.png"
-                alt="Profile"
-                className="w-12 h-12 rounded-full"
-              />
-              <button className="absolute bottom-0 right-0 p-1 bg-white rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div>
-              <p className="font-medium">{profileData.name}</p>
-              <p className="text-sm text-gray-500">{profileData.email}</p>
-            </div>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
+      <div className="bg-white shadow-md rounded-md w-full max-w-4xl p-6">
+        <div className="flex items-center space-x-4 mb-6">
+          <div
+            className="w-20 h-20 rounded-full bg-gray-200 overflow-hidden cursor-pointer"
+            onClick={triggerFileInput}
+          >
+            <img
+              src={profilePicture}
+              alt="Profile"
+              className="object-cover w-full h-full"
+            />
           </div>
-          <button className="text-gray-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+          <div>
+            <h1 className="text-xl font-bold">
+              {user?.firstName} {user?.lastName}
+            </h1>
+            <p className="text-gray-500">{user?.role}</p>
+          </div>
         </div>
 
-        {/* Form fields */}
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">Name</label>
-            <input
-              type="text"
-              value={profileData.name}
-              onChange={(e) =>
-                setProfileData({ ...profileData, name: e.target.value })
-              }
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            />
-          </div>
+        <input
+          type="file"
+          id="profilePictureInput"
+          accept="image/*"
+          onChange={handleProfilePictureChange}
+          className="hidden"
+        />
 
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">
-              Email account
-            </label>
-            <input
-              type="email"
-              value={profileData.email}
-              onChange={(e) =>
-                setProfileData({ ...profileData, email: e.target.value })
-              }
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            />
+        <div>
+          <h2 className="text-lg font-semibold mb-4">Profile Information</h2>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                  defaultValue={user?.firstName}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                  defaultValue={user?.lastName}
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                defaultValue={user?.email}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                defaultValue={user?.phone}
+              />
+            </div>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">
-              Mobile number
-            </label>
-            <input
-              type="tel"
-              value={profileData.mobile}
-              onChange={(e) =>
-                setProfileData({ ...profileData, mobile: e.target.value })
-              }
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            />
+        <div className="mt-6">
+          <h2 className="text-lg font-semibold mb-4">Change Password</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="oldPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Old Password
+              </label>
+              <input
+                type="password"
+                id="oldPassword"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="**********"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="newPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                New Password
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="**********"
+              />
+            </div>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">Birthday</label>
-            <input
-              type="text"
-              value={profileData.birthday}
-              onChange={(e) =>
-                setProfileData({ ...profileData, birthday: e.target.value })
-              }
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <button
-            onClick={handleSaveChanges}
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
-          >
-            Save Change
+        <div className="mt-6 text-right">
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+            Save
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

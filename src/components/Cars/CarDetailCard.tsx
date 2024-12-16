@@ -1,24 +1,13 @@
 import React from "react";
 import CarPrice from "./CarPrice";
-import RentButton from "../RentButton";
 import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
+import { CarCategoryDetail } from "../../types/CarCategoryDetail";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setSelectedCar } from '../../store/Booking/bookingSlice';
 
-type CarDetailCardProps = {
-  name: string;
-  type: string;
-  description: string;
-  numberOfPerson: number;
-  steering: string;
-  gasoline: number;
-  price: number;
-  promotionPrice: number | null;
-  rating: number;
-  reviewersCount: number;
-  amenities: string[];
-};
-
-const CarDetailCard: React.FC<CarDetailCardProps> = ({
+const CarDetailCard: React.FC<CarCategoryDetail> = ({
   name,
   type,
   description,
@@ -30,7 +19,28 @@ const CarDetailCard: React.FC<CarDetailCardProps> = ({
   rating,
   reviewersCount,
   amenities,
+  mainImage,
+  carImages
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRentNow = () => {
+    dispatch(setSelectedCar({
+      name,
+      type,
+      numberOfPerson,
+      steering,
+      gasoline,
+      price,
+      promotionPrice,
+      rating,
+      mainImage,
+      carImages
+    }));
+    navigate('/bookinginfo1'); // Assuming this is your booking route
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg m-4 p-6 border border-blue-200 w-full">
       <div className="flex justify-between items-center">
@@ -67,7 +77,7 @@ const CarDetailCard: React.FC<CarDetailCardProps> = ({
         </div>
       </div>
       <h1 className="text-xl font-semibold pt-4">Other Amenities</h1>
-      <CarAmenities amenitiesName={amenities}></CarAmenities>
+      <CarAmenities amenitiesName={amenities.map(amenity => amenity.name)}></CarAmenities>
 
       <div className="flex items-center justify-between">
         {promotionPrice ? (
@@ -75,7 +85,12 @@ const CarDetailCard: React.FC<CarDetailCardProps> = ({
         ) : (
           <CarPrice price={price} />
         )}
-        <RentButton></RentButton>
+        <button 
+          className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+          onClick={handleRentNow}
+        >
+          Rent Now
+        </button>
       </div>
     </div>
   );

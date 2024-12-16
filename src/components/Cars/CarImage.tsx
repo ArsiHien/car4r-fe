@@ -1,15 +1,11 @@
 import { Carousel } from "antd";
 import { useRef, useState } from "react";
 
-const images: string[] = [
-  "https://placehold.co/600x400/orange/white",
-  "https://placehold.co/600x400/red/white",
-  "https://placehold.co/600x400/blue/white",
-  "https://placehold.co/600x400/green/white",
-  "https://placehold.co/600x400/violet/white",
-];
+interface CarImageProps {
+  images: string[]; // Add a prop for images
+}
 
-const CarImage = () => {
+const CarImage:React.FC<CarImageProps> = ({images}) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);

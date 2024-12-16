@@ -1,17 +1,11 @@
-import AddCarForm from "../../components/AddCar/AddCarForm";
-import { Header, Footer, StaffSidebar } from "../../components";
+import CarForm from "../../components/AddCar/AddCarForm";
 
 const AddCarPage = () => {
   return (
     <>
-      <Header />
-      <div className="flex w-full">
-        <StaffSidebar />
-        <div className="p-6 flex-1 ">
-          <AddCarForm />
-        </div>
+      <div className="flex-1 ">
+        <CarForm isEditMode={false} />
       </div>
-      <Footer />
     </>
   );
 };

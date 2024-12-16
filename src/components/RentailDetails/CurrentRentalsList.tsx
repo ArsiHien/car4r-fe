@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Car, fetchCarsByStatus } from "../../store/Car/carSlice";
+import { Car, fetchCarsByStatus } from "../../store/Car/carSliceByStatus";
 import { AppDispatch, RootState } from "../../store/store";
 import { setSelectedCarID } from "../../store/Car/selectedCarSlice";
 
@@ -10,8 +10,8 @@ interface CurrentRentalsListProps {
 
 const CurrentRentalsList: React.FC<CurrentRentalsListProps> = ({ onCarSelect }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { cars, loading, error } = useSelector(
-    (state: RootState) => state.cars
+  const { carsByStatus, loading, error } = useSelector(
+    (state: RootState) => state.carsByStatus
   );
   const selectedCarId = useSelector((state: RootState) => state.selectedCar.selectedCarID)
 
@@ -20,27 +20,23 @@ const CurrentRentalsList: React.FC<CurrentRentalsListProps> = ({ onCarSelect }) 
   }, [dispatch]);
 
   useEffect(() =>{
-    if(cars.length > 0 && selectedCarId === null){
-      dispatch(setSelectedCarID(cars[0].id));
+    if(carsByStatus.length > 0 && selectedCarId === null){
+      dispatch(setSelectedCarID(carsByStatus[0].id));
     }
-  }, [cars, dispatch, selectedCarId])
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  }, [carsByStatus, dispatch, selectedCarId])
 
   const handleCarClick = (car: Car) => {
     dispatch(setSelectedCarID(car.id))
     onCarSelect(car.id);
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="space-y-4">
-      {cars.map((car, index) => (
+      {carsByStatus.map((car, index) => (
         <div
           key={index}
           className="flex items-center justify-between bg-white p-4 rounded-lg transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 cursor-pointer"

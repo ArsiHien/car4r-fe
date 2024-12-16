@@ -58,7 +58,6 @@ const ManagerSidebar: React.FC = () => {
       ],
     },
   ];
-  console.log(location.pathname);
 
   return (
     <aside className="fixed top-20 rounded-lg p-6 w-64 h-screen bg-gray-100 flex flex-col justify-between">
@@ -80,7 +79,11 @@ const ManagerSidebar: React.FC = () => {
         <Menu
           mode="inline"
           className="bg-inherit"
-          defaultSelectedKeys={[location.pathname]}
+          defaultSelectedKeys={[
+            location.pathname.startsWith(routes.manager.cars)
+              ? routes.manager.cars
+              : location.pathname,
+          ]}
           items={items}
           inlineIndent={8}
         />

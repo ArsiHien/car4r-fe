@@ -6,57 +6,19 @@ import CarListHorizontal from "../../components/Cars/CarListHorizontal";
 import CarSectionHeader from "../../components/CarSectionHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface CarImageResponse {
-  id: string;
-  imageUrl: string;
-}
-
-interface AmenityResponse {
-  id: string;
-  name: string;
-}
-
-interface CarCategoryDetailResponse {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  numberOfPerson: number;
-  steering: string;
-  gasoline: number;
-  price: number;
-  promotionPrice: number;
-  mainImage: string;
-  carImages: CarImageResponse[];
-  amenities: AmenityResponse[];
-}
+import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
 const CarDetail = () => {
   const [carDetails, setCarDetails] =
-    useState<CarCategoryDetailResponse | null>(null);
+    useState<CarCategoryDetail | null>(null);
   const { carId } = useParams<{ carId: string }>();
-  const carData = {
-    carName: "Toyota Camry",
-    carType: "Sport",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae omnis, laudantium recusandae repellendus excepturi vero ea consequuntur, ratione asperiores odio assumenda corrupti nihil. Quia vel, aliquam sunt tempora architecto laboriosam.",
-    capacity: 5,
-    steering: "Manual",
-    fuel: 70,
-    price: 80.0,
-    promotionPrice: 100.0,
-    rating: 4.5,
-    reviewersCount: 440,
-    amenities: ["Map", "Bluetooth", "GPS Navigation", "USB Port"],
-  };
 
   useEffect(() => {
     const fetchCarDetail = async () => {
       if (carId) {
         const id = carId.split("-").slice(1).join("-");
         try {
-          const response = await axios.get<CarCategoryDetailResponse>(
+          const response = await axios.get<CarCategoryDetail>(
             `http://localhost:8080/api/car-category/${id}`
           );
           setCarDetails(response.data);
@@ -73,13 +35,14 @@ const CarDetail = () => {
     return <p>Loading...</p>;
   }
 
-  const amenityNames =
-    carDetails.amenities?.map((amenity) => amenity.name) || [];
   return (
     <div>
       <div className="grid grid-cols-2 pb-8">
-        <CarImage />
+        <CarImage images={[carDetails.mainImage, ...carDetails.carImages.map(image => image.imageUrl)]}/>
         <CarDetailCard
+          id={carDetails.id}
+          mainImage={carDetails.mainImage}
+          carImages={carDetails.carImages.map(image => ({...image, imageUrl: image.imageUrl}))}
           name={carDetails.name}
           type={carDetails.type}
           description={carDetails.description}
@@ -90,7 +53,7 @@ const CarDetail = () => {
           promotionPrice={carDetails.promotionPrice}
           rating={4.5}
           reviewersCount={123}
-          amenities={amenityNames}
+          amenities={carDetails.amenities}
         />
       </div>
       <ReviewSection></ReviewSection>
