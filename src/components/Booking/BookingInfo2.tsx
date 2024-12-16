@@ -1,28 +1,47 @@
 import { useSelector } from "react-redux";
 import "./BookingInfo.css";
 import { RootState } from "../../store/store";
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const BookingInfo2 = () => {
   const user = useSelector((state: RootState) => state.user.user);
+  const totalPrice = useSelector((state: RootState) => state.booking.totalPrice);
+  const selectedCar = useSelector((state: RootState) => state.booking.selectedCar);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!selectedCar) {
+      navigate('/');
+    }
+  }, [selectedCar, navigate]);
+
+  if (!selectedCar) {
+    return null;
+  }
+
+  const handleReturn = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="bg-gray-200 flex h-[1000px]">
       {/**left container */}
       <span className="flex flex-col gap-5 w-1/3 ml-10 my-5 pr-5">
         {/**car information seciton */}
         <div className="bg-white mb-5 py-5">
-          <div className="bg-blue-100 w-3/4 h-60 mx-11 mb-5 text-center">
-            Car img
-          </div>
+          <img className="bg-blue-100 h-60 mx-11 mb-5 text-center" src={selectedCar?.mainImage}>
+          </img>
           <div className=" w-4/5 ml-4">
             <h3 className="text-2xl text-blue-900 font-bold pb-5 text-center">
-              Name
+              {selectedCar.name}
             </h3>
             <hr className="pb-5" />
             <div className="text-xl flex flex-col gap-3">
-              <label>Car Type: </label>
-              <label>Price: </label>
-              <label>Fuel: </label>
-              <label>Capacity: </label>
+              <label>Car Type: {selectedCar.type}</label>
+              <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
+              <label>Fuel: {selectedCar.gasoline}L</label>
+              <label>Capacity: {selectedCar.numberOfPerson} Person</label>
             </div>
           </div>
         </div>
@@ -32,16 +51,16 @@ const BookingInfo2 = () => {
             <h3 className="text-2xl text-blue-900 font-bold py-5">Bill</h3>
             <hr />
             <div className="text-xl flex flex-col gap-3 py-5">
-              <label>Price: </label>
+              <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
               <label>Number of days: </label>
               <hr className="" />
-              <label className="text-blue-600 font-bold">Total: </label>
+              <label className="text-blue-600 font-bold">Total: {totalPrice}</label>
             </div>
           </div>
         </div>
         {/**button section */}
         <div className="flex gap-10 justify-center">
-          <button className="text-white bg-gray-600 text-xl w-40 h-12 hover:bg-gray-400 rounded focus:outline-none">
+          <button className="text-white bg-gray-600 text-xl w-40 h-12 hover:bg-gray-400 rounded focus:outline-none" onClick={handleReturn}>
             Return
           </button>
           <button className="text-white bg-blue-900 text-xl w-40 h-12 hover:bg-blue-600 rounded focus:outline-none">
@@ -66,6 +85,7 @@ const BookingInfo2 = () => {
             <input
               type="text"
               className="w-3/4 border border-gray-300 p-2 rounded"
+              value={user.username}
             />
           </div>
           <div className="flex my-3">
@@ -75,15 +95,17 @@ const BookingInfo2 = () => {
             <input
               type="text"
               className="w-3/4 border border-gray-300 p-2 rounded"
+              value={user.phone}
             />
           </div>
           <div className="flex my-3">
             <label className="w-1/4 my-3 mr-5 text-left text-xl">
-              Address(*)
+              Email(*)
             </label>
             <input
               type="text"
               className="w-3/4 border border-gray-300 p-2 rounded"
+              value={user.email}
             />
           </div>
         </div>
