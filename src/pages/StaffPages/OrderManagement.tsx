@@ -1,101 +1,148 @@
-import carIcon from "../../assets/carIcon.png";
-import order from "../../assets/order.png";
-import overview from "../../assets/overview.png";
+import { Button, Card, Divider, Tabs } from 'antd';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Booking from "../../types/Booking"
+import CarSelectionModal from '../../components/Booking/CarSelectionModal';
 
-const orders = [
-  {
-    status: "Da hoan thanh",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg/1920px-2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg",
-    name: "Toyota Corolla",
-    date: "5 ngay",
-    fee: "5.000.000 VND",
-    bill: "25.000.000 VND",
-    start: "1/1/1111",
-  },
-  {
-    status: "Da hoan thanh",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg/1920px-2019_Toyota_Corolla_Icon_Tech_VVT-i_Hybrid_1.8.jpg",
-    name: "Toyota Corolla",
-    date: "5 ngay",
-    fee: "5.000.000 VND",
-    bill: "25.000.000 VND",
-    start: "1/1/1111",
-  },
-];
+
 const OrderManagement = () => {
+  const [activeKey, setActiveKey] = useState("IN_PROCESS");
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
+  const [carCategoryId, setCarCategoryId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/bookings');
+        setBookings(response.data);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };
+
+    fetchBookings();
+  }, []);
+
+  // Group bookings by status
+  const groupedBookings = bookings.reduce((acc, booking) => {
+    acc[booking.status] = acc[booking.status] || [];
+    acc[booking.status].push({
+      status: booking.status,
+      name: booking.carCategoryName,
+      username: booking.customerName,
+      date: `${new Date(booking.returnDate).getDate() - new Date(booking.startDate).getDate()} ngày`,
+      fee: `${booking.totalPrice.toLocaleString()} VND`,
+      bill: `${booking.totalPrice.toLocaleString()} VND`,
+      start: new Date(booking.startDate).toLocaleDateString(),
+      id: booking.id,
+      carCategoryId: booking.carCategoryId
+    });
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Define the desired order of tabs
+  const tabOrder = ["IN_PROCESS", "APPROVED", "COMPLETED", "CANCELED"];
+
+  const handleApprove = (bookingId: string, carCategoryId: string) => {
+    setCurrentBookingId(bookingId);
+    setCarCategoryId(carCategoryId);
+    setIsModalVisible(true);
+  };
+
+  const handleCarSelect = (carId: string) => {
+    // Optionally refresh bookings or handle any other logic after assigning the car
+    console.log(`Car assigned: ${carId}`);
+  };
+
+  const handleCancel = async (bookingId: string) => {
+    try {
+      await axios.put(`http://localhost:8080/api/bookings/${bookingId}/cancel`);
+      // Refresh bookings after cancellation
+      const response = await axios.get('http://localhost:8080/api/bookings');
+      setBookings(response.data);
+    } catch (error) {
+      console.error('Error canceling booking:', error);
+    }
+  };
+
   return (
-    <div className="flex gap-5 bg-gray-300">
-      {/**left container */}
-
-      <div className="w-1/5 flex flex-col ml-2 my-5 gap-2 ">
-        {/**overview */}
-
-        <button className="py-1 px-3 mx-3 flex gap-2 h-10 text-white bg-blue-600 text-xl hover:bg-blue-900 rounded focus:outline-none">
-          <img src={overview} alt="overview" className="w-5 h-5 my-1" />
-          <label className="text-white">Overview </label>
-        </button>
-        {/**car */}
-        <button className="py-1 px-3 mx-3 flex gap-2 h-10 text-white bg-blue-600 text-xl hover:bg-blue-900 rounded focus:outline-none">
-          <img src={carIcon} alt="overview" className="w-5 h-5 my-1" />
-          <label className="text-white">Car </label>
-        </button>
-        {/**order */}
-        <button className="py-1 px-3 mx-3 flex gap-2 h-10 text-white bg-blue-600 text-xl hover:bg-blue-900 rounded focus:outline-none">
-          <img src={order} alt="overview" className="w-5 h-5 my-1" />
-          <label className="text-white">Order </label>
-        </button>
-      </div>
-
-      {/**right container */}
-      <div className="w-4/5 flex flex-col gap-5 mr-5 py-5">
-        {orders.map((order, index) => (
-          <div key={index} className="bg-white py-2">
-            {/**top section */}
-            <div className="text-xl font-bold text-blue-600 pb-3 text-right px-5">
-              {order.status}
-            </div>
-            <hr className="pb-5" />
-            {/**middle section */}
-            <div className="flex px-5 pb-3">
-              <img src={order.image} alt="car image" className="w-40" />
-              <div className="flex-grow">
-                <div className="flex flex-col gap-1 mx-3">
-                  <p className="text-2xl text-blue-900 font-bold">
-                    {order.name}
-                  </p>
-                  <p className="text-sm font-bold">{order.fee}</p>
-                  <p className="text-sm font-bold">{order.date}</p>
+    <div className="p-5">
+      <Tabs activeKey={activeKey} onChange={setActiveKey}>
+        {tabOrder.map(status => (
+          <Tabs.TabPane tab={status} key={status}>
+            {groupedBookings[status]?.map((order, index) => (
+              <Card 
+                key={index} 
+                className="mb-5"
+                bodyStyle={{ padding: '16px' }}
+              >
+                {/* Status header */}
+                <div className="text-right">
+                  <span className="text-lg font-bold text-blue-600">
+                    {order.status}
+                  </span>
                 </div>
-              </div>
-              <div className="flex">
-                <p className="pr-5">Thanh tien:</p>
-                <p className="text-2xl font-bold">{order.bill}</p>
-              </div>
-            </div>
-            <hr className="" />
-            {/**bottom section */}
-            <div className="flex gap-20 mt-2">
-              <div className="flex flex-grow text-sm mx-5">
-                <p>Thoi gian dat:</p>
-                <p className="mx-1">{order.start}</p>
-              </div>
-              <div className="flex gap-2 mx-5">
-                <button className="border-2 py-1 px-3 w-40 h-10 text-white bg-blue-300 hover:bg-blue-600 focus:outline-none">
-                  Thong tin chi tiet
-                </button>
-                <button className="w-auto border-2 py-1 px-3 w-40 h-10 bg-gray-300 hover:bg-gray-600 focus:outline-none">
-                  Lien he khach hang
-                </button>
-                <button className="border-2 py-1 px-3 w-40 h-10 hover:bg-gray-300 focus:outline-none">
-                  Huy don dat
-                </button>
-              </div>
-            </div>
-          </div>
+                
+                <Divider className="my-3" />
+                
+                {/* Main content */}
+                <div className="flex">
+                  <div className="flex-grow px-5">
+                    <h3 className="text-xl font-bold text-blue-900">{order.name}</h3>
+                    <p className="text-sm font-medium">Customer: {order.username}</p>
+                    <p className="text-sm font-medium">Price: {order.fee}</p>
+                    <p className="text-sm font-medium">Number of days: {order.date}</p>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <span className="mr-2">Total:</span>
+                    <span className="text-xl font-bold">{order.bill}</span>
+                  </div>
+                </div>
+                
+                <Divider className="my-3" />
+                
+                {/* Footer */}
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">
+                    <span>Start Date: </span>
+                    <span>{order.start}</span>
+                  </div>
+                  
+                  <div className="space-x-3">
+                    <Button type="primary" className="bg-blue-500">
+                      Thông tin chi tiết
+                    </Button>
+                    <Button>
+                      Liên hệ khách hàng
+                    </Button>
+                    {status === 'IN_PROCESS' && (
+                      <>
+                        <Button type="primary" className="bg-green-500" onClick={() => handleApprove(order.id, order.carCategoryId)}>
+                          Phê duyệt
+                        </Button>
+                        <Button danger onClick={() => handleCancel(order.id)}>
+                          Hủy đơn đặt
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </Tabs.TabPane>
         ))}
-      </div>
+      </Tabs>
+
+      <CarSelectionModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSelect={handleCarSelect}
+        bookingId={currentBookingId!}
+        carCategoryId={carCategoryId!}
+      />
     </div>
   );
 };
