@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CarImage from "../../components/Cars/CarImage";
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { setTotalPrice } from '../../store/Booking/bookingSlice'
-import routes from "../../config/routes";
+import { setTotalPrice, setStartDate, setReturnDate } from '../../store/Booking/bookingSlice'
 
 const BookingInfo1 = () => {
   const dispatch = useDispatch();
@@ -29,9 +28,16 @@ const BookingInfo1 = () => {
 
     if (dates[0] && dates[1]) {
       const days = dates[1].diff(dates[0], 'day');
-      setTotal(selectedCar.price * days);
+      const totalPrice = selectedCar.price * days;
+      setTotal(totalPrice);
+      dispatch(setTotalPrice(totalPrice));
+      dispatch(setStartDate(dates[0].format('YYYY-MM-DD')));
+      dispatch(setReturnDate(dates[1].format('YYYY-MM-DD')));
     } else {
       setTotal(0);
+      dispatch(setTotalPrice(0));
+      dispatch(setStartDate(null));
+      dispatch(setReturnDate(null));
     }
   };
 
@@ -42,6 +48,10 @@ const BookingInfo1 = () => {
     };
 
   const handleOrder = () => {
+    if (!dateRange[0] || !dateRange[1]) {
+      alert("Please select a date range before ordering.");
+      return; // Exit the function if date range is not valid
+    }
     dispatch(setTotalPrice(total));
     navigate('/bookingInfo2');
   };

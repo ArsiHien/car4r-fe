@@ -3,12 +3,18 @@ import "./BookingInfo.css";
 import { RootState } from "../../store/store";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
+import { Spin } from 'antd';
 
 const BookingInfo2 = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const totalPrice = useSelector((state: RootState) => state.booking.totalPrice);
   const selectedCar = useSelector((state: RootState) => state.booking.selectedCar);
+  const startDate = useSelector((state: RootState) => state.booking.startDate);
+  const returnDate = useSelector((state: RootState) => state.booking.returnDate);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!selectedCar) {
@@ -24,8 +30,40 @@ const BookingInfo2 = () => {
     navigate(-1);
   };
 
+  const handleOrder = async () => {
+    setLoading(true);
+    try {
+      const bookingData = {
+        customerId: user.id,
+        carCategoryId: selectedCar.id,
+        bookingDate: dayjs().format('YYYY-MM-DD'),
+        startDate: startDate,
+        returnDate: returnDate,
+        loanPlace: "hanoi", // You might want to make this dynamic
+        returnPlace: "hanoi", // You might want to make this dynamic
+        totalPrice: totalPrice.toString()
+      };
+      console.log(selectedCar);
+
+      const response = await axios.post('http://localhost:8080/api/bookings', bookingData);
+      
+      if (response.status === 200 || response.status === 201) {
+        alert("Booking successful! Please wait for employee approval.");
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Booking failed:', error);
+      alert("Booking failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gray-200 flex h-[1000px]">
+      {loading && (
+        <div className="loading-indicator">Loading...</div>
+      )}
       {/**left container */}
       <span className="flex flex-col gap-5 w-1/3 ml-10 my-5 pr-5">
         {/**car information seciton */}
@@ -63,7 +101,7 @@ const BookingInfo2 = () => {
           <button className="text-white bg-gray-600 text-xl w-40 h-12 hover:bg-gray-400 rounded focus:outline-none" onClick={handleReturn}>
             Return
           </button>
-          <button className="text-white bg-blue-900 text-xl w-40 h-12 hover:bg-blue-600 rounded focus:outline-none">
+          <button className="text-white bg-blue-900 text-xl w-40 h-12 hover:bg-blue-600 rounded focus:outline-none" onClick={handleOrder}>
             Order
           </button>
         </div>

@@ -22,11 +22,15 @@ const loadTotalPriceFromStorage = () => {
 interface BookingState {
   selectedCar: CarCategoryDetail | null;
   totalPrice: number;
+  startDate: string | null;
+  returnDate: string | null;
 }
 
 const initialState: BookingState = {
   selectedCar: loadSelectedCarFromStorage(),
   totalPrice: loadTotalPriceFromStorage(),
+  startDate: null,
+  returnDate: null,
 };
 
 const bookingSlice = createSlice({
@@ -45,8 +49,14 @@ const bookingSlice = createSlice({
       state.totalPrice = action.payload;
       localStorage.setItem('totalPrice', JSON.stringify(action.payload));
     },
+    setStartDate: (state, action: PayloadAction<string>) => {
+      state.startDate = action.payload;
+    },
+    setReturnDate: (state, action: PayloadAction<string>) => {
+      state.returnDate = action.payload;
+    },
   },
 });
 
-export const { setSelectedCar, clearSelectedCar, setTotalPrice } = bookingSlice.actions;
+export const { setSelectedCar, clearSelectedCar, setTotalPrice, setStartDate, setReturnDate } = bookingSlice.actions;
 export default bookingSlice.reducer;
