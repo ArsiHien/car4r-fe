@@ -9,6 +9,8 @@ import selectedCarReducer from "./Car/selectedCarSlice";
 import carCategoryReducer from "./CarCategory/carCategorySlice";
 import amenityReducer from "./CarCategory/amenitySlice";
 import carByStatusReducer from "./Car/carSliceByStatus";
+import customerBookings from "./Customer/bookingSlice";
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -21,6 +23,7 @@ const store = configureStore({
     selectedCar: selectedCarReducer,
     carCategory: carCategoryReducer,
     amenity: amenityReducer,
+    customerBookings: customerBookings
   },
 });
 
