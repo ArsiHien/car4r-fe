@@ -1,3 +1,5 @@
+import { ReviewResponse } from "./Review";
+
 export type CarCategoryDetail = {
   id: string;
   name: string;
@@ -13,6 +15,7 @@ export type CarCategoryDetail = {
   mainImage: string;
   carImages: CarImageResponse[];
   amenities: AmenityResponse[];
+  reviews: ReviewResponse[];
 };
 
 export interface CarCategoryRequest {

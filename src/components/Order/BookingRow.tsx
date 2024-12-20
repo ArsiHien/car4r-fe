@@ -13,7 +13,6 @@ import {
 } from "../../store/Customer/bookingsAction";
 import {
   updateBookingReview,
-  updateBookingStatus,
 } from "../../store/Customer/bookingSlice";
 
 interface BookingRowProps {
@@ -46,7 +45,6 @@ const BookingRow: React.FC<BookingRowProps> = ({
   const [currentRating, setCurrentRating] = useState(
     booking.review?.rating || 5
   );
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
