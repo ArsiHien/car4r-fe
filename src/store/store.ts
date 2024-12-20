@@ -10,7 +10,8 @@ import carCategoryReducer from "./CarCategory/carCategorySlice";
 import amenityReducer from "./CarCategory/amenitySlice";
 import carByStatusReducer from "./Car/carSliceByStatus";
 import customerBookings from "./Customer/bookingSlice";
-import carCategoryBasicReducer from "./CarCategory/carCategoryBasicSlice"
+import carCategoryBasicReducer from "./CarCategory/carCategoryBasicSlice";
+import staffReducer from "./Staff/StaffSlice";
 
 const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ const store = configureStore({
     carCategory: carCategoryReducer,
     carCategoryBasic: carCategoryBasicReducer,
     amenity: amenityReducer,
-    customerBookings: customerBookings
+    customerBookings: customerBookings,
+    staff: staffReducer,
   },
 });
 
