@@ -10,6 +10,8 @@ const useRefreshToken = () => {
   const refreshToken = async () => {
     const refreshToken = Cookies.get("refreshToken");
 
+    console.log(refreshToken);
+
     if (refreshToken != null) {
       try {
         const res = await axios.get(

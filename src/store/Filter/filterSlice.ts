@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FilterState {
   types: string[];
-  capacities: string[];
+  numberOfPerson: string[];
   maxPrice: number;
 }
 
 const initialState: FilterState = {
   types: [],
-  capacities: [],
+  numberOfPerson: [],
   maxPrice: 100,
 };
 
@@ -28,11 +28,11 @@ const filterSlice = createSlice({
       state.types = [action.payload];
     },
     toggleCapacity: (state, action: PayloadAction<string>) => {
-      const capacity = action.payload;
-      if (state.capacities.includes(capacity)) {
-        state.capacities = state.capacities.filter((c) => c !== capacity);
+      const numberOfPerson = action.payload;
+      if (state.numberOfPerson.includes(numberOfPerson)) {
+        state.numberOfPerson = state.numberOfPerson.filter((c) => c !== numberOfPerson);
       } else {
-        state.capacities.push(capacity);
+        state.numberOfPerson.push(numberOfPerson);
       }
     },
     setMaxPrice: (state, action: PayloadAction<number>) => {

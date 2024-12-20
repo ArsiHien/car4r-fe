@@ -21,6 +21,7 @@ const authenSlice = createSlice({
       symbol: false,
       general: false,
     },
+    isLoading: true,
   },
 
   reducers: {
@@ -70,6 +71,9 @@ const authenSlice = createSlice({
     setValidatePw: (state, action: PayloadAction<IValidatePw>) => {
       state.validatePw = action.payload;
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
@@ -82,6 +86,7 @@ export const {
   setRole,
   setValidateEmail,
   setValidatePw,
+  setLoading,
   logout,
 } = authenSlice.actions;
 

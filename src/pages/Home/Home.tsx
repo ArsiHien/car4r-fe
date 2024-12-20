@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import User from "../../data/User";
+import { setUser, clearUser } from "../../store/User/userSlice";
+import Cookies from "js-cookie";
+
 
 const Home = () => {
   const { RangePicker } = DatePicker;
@@ -15,22 +18,23 @@ const Home = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
+    const storedUser = Cookies.get('user');
 
-    console.log(token);
     const verifyTokenAndFetchUser = async () => {
       try {
-        if (token) {
+        if (token && !storedUser) {
           const response = await axios.post(
             "http://localhost:8080/api/v1/users/verifyAccessToken",
             { token },
           );
 
           const user: User = response.data;
-          console.log(user);
+          dispatch(setUser(user));
         }
       } catch (error) {
         console.error("Error verifying token or fetching user data:", error);
-        localStorage.removeItem("accessToken"); // Xóa token nếu không hợp lệ
+        localStorage.removeItem("accessToken");
+        dispatch(clearUser());
       }
     };
 
@@ -67,8 +71,7 @@ const Home = () => {
             <div className="flex items-center justify-between space-x-4">
               <div className="flex-1">
                 <RangePicker
-                  showTime={{ format: "HH:mm" }}
-                  format="HH:mm, DD/MM/YYYY"
+                  format="DD/MM/YYYY"
                   className="w-full text-2xl"
                   placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
                 />

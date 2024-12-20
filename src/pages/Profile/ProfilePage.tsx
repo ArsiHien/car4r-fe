@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import avatar from "../../assets/avatar.png";
 const ProfilePage: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
+
   const [profilePicture, setProfilePicture] = useState(
-    "https://via.placeholder.com/100", // Default profile picture
+    user?.avatar || avatar,
   );
 
   const handleProfilePictureChange = (
@@ -14,7 +18,7 @@ const ProfilePage: React.FC = () => {
       reader.onload = (e) => {
         const result = e.target?.result;
         if (result && typeof result === "string") {
-          setProfilePicture(result); // Update the profile picture
+          setProfilePicture(result);
         }
       };
       reader.readAsDataURL(file);
@@ -31,11 +35,8 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-      {/* Container */}
       <div className="bg-white shadow-md rounded-md w-full max-w-4xl p-6">
-        {/* Profile Header */}
         <div className="flex items-center space-x-4 mb-6">
-          {/* Profile Picture */}
           <div
             className="w-20 h-20 rounded-full bg-gray-200 overflow-hidden cursor-pointer"
             onClick={triggerFileInput}
@@ -47,12 +48,13 @@ const ProfilePage: React.FC = () => {
             />
           </div>
           <div>
-            <h1 className="text-xl font-bold">Mason Wilson</h1>
-            <p className="text-gray-500">Admin</p>
+            <h1 className="text-xl font-bold">
+              {user?.firstName} {user?.lastName}
+            </h1>
+            <p className="text-gray-500">{user?.role}</p>
           </div>
         </div>
 
-        {/* Hidden File Input */}
         <input
           type="file"
           id="profilePictureInput"
@@ -61,11 +63,9 @@ const ProfilePage: React.FC = () => {
           className="hidden"
         />
 
-        {/* Profile Information */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Profile Information</h2>
           <div className="space-y-4">
-            {/* Profile Form */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label
@@ -78,7 +78,7 @@ const ProfilePage: React.FC = () => {
                   type="text"
                   id="firstName"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                  defaultValue="Mason"
+                  defaultValue={user?.firstName}
                 />
               </div>
               <div>
@@ -92,7 +92,7 @@ const ProfilePage: React.FC = () => {
                   type="text"
                   id="lastName"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                  defaultValue="Wilson"
+                  defaultValue={user?.lastName}
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ const ProfilePage: React.FC = () => {
                 type="email"
                 id="email"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                defaultValue="masowilson123@gmail.com"
+                defaultValue={user?.email}
               />
             </div>
             <div>
@@ -121,13 +121,12 @@ const ProfilePage: React.FC = () => {
                 type="tel"
                 id="phone"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                defaultValue="+1 (555) 000-0000"
+                defaultValue={user?.phone}
               />
             </div>
           </div>
         </div>
 
-        {/* Change Password */}
         <div className="mt-6">
           <h2 className="text-lg font-semibold mb-4">Change Password</h2>
           <div className="grid grid-cols-2 gap-4">
@@ -162,7 +161,6 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Save Button */}
         <div className="mt-6 text-right">
           <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
             Save
