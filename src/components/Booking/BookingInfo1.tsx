@@ -1,5 +1,5 @@
 import "./BookingInfo.css";
-import { DatePicker } from "antd";
+import { DatePicker, Card, Button, Typography } from "antd";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import CarImage from "../../components/Cars/CarImage";
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { setTotalPrice, setStartDate, setReturnDate } from '../../store/Booking/bookingSlice'
+
+const { Title, Text } = Typography;
 
 const BookingInfo1 = () => {
   const dispatch = useDispatch();
@@ -41,11 +43,9 @@ const BookingInfo1 = () => {
     }
   };
 
-    dispatch(setTotalPrice(total));
-
-    const handleReturn = () => {
-      navigate(-1);
-    };
+  const handleReturn = () => {
+    navigate(-1);
+  };
 
   const handleOrder = () => {
     if (!dateRange[0] || !dateRange[1]) {
@@ -57,81 +57,62 @@ const BookingInfo1 = () => {
   };
 
   return (
-    <div className="bg-gray-200 flex h-[800px] text-xl">
+    <div className="bg-gray-200 flex h-full text-xl p-5">
       {/**left container */}
-      <span className="flex flex-col w-2/3 ml-10 my-5 mr-5 h-[600px]">
+      <div className="flex flex-col w-2/3 mr-5">
         {/**left top section */}
-        <div className="flex bg-white h-[500px]">
-          {/**image section */}
-          <div className=" flex flex-col w-1/2 ml-5 my-5 ">
-            <CarImage images={[selectedCar.mainImage, ...selectedCar.carImages.map(image => image.imageUrl)]} />
-          </div>
+        <Card className="mb-5" bordered={false}>
+          <div className="flex">
+            {/**image section */}
+            <div className="flex flex-col w-1/2">
+              <CarImage images={[selectedCar.mainImage, ...selectedCar.carImages.map(image => image.imageUrl)]} />
+            </div>
 
-          {/**information section */}
-          <div className="bg-white w-1/2 my-5 mr-5">
-            <div className="pl-5">
-              <div>
-                <h3 className="bg-blue-100 text-3xl text-center text-blue-900 font-bold py-5">
-                  {selectedCar.name}
-                </h3>
-                <h3 className="bg-gray-300 text-xl text-center text-white font-bold mt-3 py-3">
-                  Rating: {selectedCar.rating}
-                </h3>
-              </div>
-              <div className="flex flex-col gap-3 mt-5">
-                <label>Car Type: {selectedCar.type}</label>
-                <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
-                <label>Fuel: {selectedCar.gasoline}L</label>
-                <label>Capacity: {selectedCar.numberOfPerson} Person</label>
+            {/**information section */}
+            <div className="flex flex-col w-1/2 pl-5">
+              <Title level={3} className="text-blue-900">{selectedCar.name}</Title>
+              <Text className="text-gray-600 text-lg">Rating: {selectedCar.rating}</Text>
+              <div className="flex flex-col gap-2 mt-3">
+                <Text className="text-lg">Car Type: {selectedCar.type}</Text>
+                <Text className="text-lg">Price: {selectedCar.price.toLocaleString()} USD/day</Text>
+                <Text className="text-lg">Fuel: {selectedCar.gasoline}L</Text>
+                <Text className="text-lg">Capacity: {selectedCar.numberOfPerson} Person</Text>
               </div>
             </div>
           </div>
-        </div>
-        {/**bottom left container*/}
-        <div className="bg-white my-5 h-[300px]">
-          <h3 className="text-2xl text-blue-900 font-bold py-5 pl-5">
-            {/* Thông tin chi tiết */}
-          </h3>
-        </div>
-      </span>
+        </Card>
+      </div>
 
       {/**right container */}
-      <span className="flex flex-col gap-5 w-1/3 mt-5 pr-5">
+      <div className="flex flex-col w-1/3">
         {/**date section */}
-        <div className="bg-white pb-5 pl-3">
-          <h3 className="text-2xl text-blue-900 font-bold py-5">
-            Thời gian thuê
-          </h3>
-          <div className="flex items-center justify-between space-x-4">
-            <div className="flex-1">
-              <RangePicker
-                format="DD/MM/YYYY"
-                className="w-full text-3xl"
-                placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
-                onChange={handleDateChange}
-              />
-            </div>
-          </div>
-        </div>
+        <Card className="mb-5" bordered={false}>
+          <Title level={3} className="text-blue-900">Thời gian thuê</Title>
+          <RangePicker
+            format="DD/MM/YYYY"
+            className="w-full text-3xl"
+            placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+            onChange={handleDateChange}
+          />
+        </Card>
         {/**bill section */}
-        <div className="bg-white pl-3 text-xl">
-          <h3 className="text-2xl text-blue-900 font-bold py-5">Bill</h3>
-          <hr className="pb-5" />
-          <div className="flex flex-col gap-3 pb-5">
-            <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
-            <label>Total: {total} USD</label>
+        <Card className="mb-5" bordered={false}>
+          <Title level={3} className="text-blue-900">Bill</Title>
+          <div className="flex flex-col gap-3">
+            <Text>Price: {selectedCar.price.toLocaleString()} USD/day</Text>
+            <Text>Total: {total} USD</Text>
           </div>
-        </div>
+        </Card>
         {/**button section */}
-        <div className=" bg-white flex flex-col gap-3 py-3">
-          <button className="h-10 text-white bg-blue-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleOrder}>
+        <div className="flex flex-col gap-3">
+          <Button type="primary" className="h-10 text-xl" onClick={handleOrder}>
             Order
-          </button>
-          <button className="h-10 text-white bg-gray-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleReturn}>
+          </Button>
+          <Button className="h-10 text-xl" onClick={handleReturn}>
             Return
-          </button>
+          </Button>
         </div>
-      </span>
+      </div>
     </div>
   );
 };
