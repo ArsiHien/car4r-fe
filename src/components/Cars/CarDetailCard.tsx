@@ -38,7 +38,11 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
       promotionPrice,
       rating,
       mainImage,
-      carImages
+      carImages,
+      description: "",
+      reviewersCount: 0,
+      amenities: [],
+      reviews: []
     }));
     navigate('/bookinginfo1'); // Assuming this is your booking route
   };

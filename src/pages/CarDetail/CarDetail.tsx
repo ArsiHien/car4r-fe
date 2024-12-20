@@ -42,7 +42,7 @@ const CarDetail = () => {
         <CarDetailCard
           id={carDetails.id}
           mainImage={carDetails.mainImage}
-          carImages={carDetails.carImages.map(image => ({...image, imageUrl: image.imageUrl}))}
+          carImages={carDetails.carImages.map(image => ({ ...image, imageUrl: image.imageUrl }))}
           name={carDetails.name}
           type={carDetails.type}
           description={carDetails.description}
@@ -53,10 +53,9 @@ const CarDetail = () => {
           promotionPrice={carDetails.promotionPrice}
           rating={4.5}
           reviewersCount={123}
-          amenities={carDetails.amenities}
-        />
+          amenities={carDetails.amenities} reviews={[]}        />
       </div>
-      <ReviewSection></ReviewSection>
+      <ReviewSection reviews={carDetails.reviews}></ReviewSection>
       <div className="mt-12">
         <CarSectionHeader title="Similar Car"></CarSectionHeader>
         <CarListHorizontal sliderId="iimilar-slider"></CarListHorizontal>

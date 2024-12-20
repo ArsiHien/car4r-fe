@@ -31,7 +31,6 @@ export const CarCard: React.FC<CarCardProps> = ({
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    console.log(id);
     navigate(`/car/${name}-${id}`);
   };
   return (

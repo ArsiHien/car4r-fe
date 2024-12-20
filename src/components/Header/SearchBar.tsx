@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutoComplete } from "antd";
 import { CiSearch } from "react-icons/ci";
 import cars from "../../data/cars";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setType } from "../../store/Filter/filterSlice";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchCarCategoriesBasic } from "../../store/CarCategory/carCategoryActions";
 
-const Title: React.FC<
-  Readonly<{ title?: string; closeDropdown: () => void }>
-> = ({ title, closeDropdown }) => {
+const Title: React.FC<Readonly<{ title?: string }>> = ({ title }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleMoreClick = () => {
     if (title) {
       dispatch(setType(title));
-      closeDropdown();
       navigate("/search");
     }
   };
@@ -44,55 +43,57 @@ interface AutoCompleteOption {
 
 const SearchBar: React.FC = () => {
   const [options, setOptions] = useState<AutoCompleteOption[]>([]);
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const carCategories = useSelector(
+    (state: RootState) => state.carCategoryBasic.carCategories
+  );
+
+  useEffect(() => {
+    if (!carCategories.length) dispatch(fetchCarCategoriesBasic());
+  }, [carCategories.length, dispatch]);
 
   const handleSearch = (value: string) => {
     if (value.trim()) {
-      const groupedOptions = cars
-        .filter((car) =>
-          car.carName.toLowerCase().includes(value.toLowerCase())
-        )
+      const groupedOptions = carCategories
+        .filter((car) => car.name.toLowerCase().includes(value.toLowerCase()))
         .reduce<{
           [type: string]: { value: string; label: string; key: string }[];
         }>((acc, car) => {
           const option = {
-            value: car.carName,
-            label: `${car.carName}`,
-            key: `${car.carName}-${car.capacity}-${car.carType}`,
+            value: car.name,
+            label: `${car.name}`,
+            key: `${car.id}`,
           };
-          if (!acc[car.carType]) {
-            acc[car.carType] = [];
+          if (!acc[car.type]) {
+            acc[car.type] = [];
           }
-          acc[car.carType].push(option);
+          acc[car.type].push(option);
           return acc;
         }, {});
 
       const optionsArray = Object.entries(groupedOptions).map(
         ([type, cars]) => ({
-          label: <Title title={type} closeDropdown={() => setOpen(false)} />,
+          label: <Title title={type} />,
           options: cars,
         })
       );
 
       setOptions(optionsArray);
-      setOpen(true);
     } else {
       setOptions([]);
-      setOpen(false);
     }
   };
 
-  const navigate = useNavigate();
   const handleSelect = (carName: string) => {
-    console.log("Selected car:", carName);
-    navigate(`/car/${carName}`);
-    setOpen(false);
+    const carId = carCategories.find((car) => car.name === carName)?.id;
+    navigate(`/car/${carName}-${carId}`);
   };
 
   return (
     <>
       <AutoComplete
-        open={open}
         options={options}
         onSearch={handleSearch}
         onSelect={handleSelect}
@@ -103,7 +104,6 @@ const SearchBar: React.FC = () => {
           type="text"
           placeholder="Search something here"
           className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-300 placeholder:text-base"
-          onFocus={() => setOpen(true)}
         />
       </AutoComplete>
       <button className="absolute top-2 right-3 text-gray-500">
