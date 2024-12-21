@@ -21,9 +21,9 @@ const RevenueDetail = () => {
                     document.getElementById("totalCar")!.innerText = data.data.totalCar;
                     document.getElementById("rentedCar")!.innerText = data.data.rentedCar;
                     document.getElementById("unusedCar")!.innerText = data.data.availableCar;**/
-                    setTotalRev(data.totalRevenue);
-                    setTotalCar(data.totalCar);
-                    setRentedCar(data.rentedCar);
+                setTotalRev(data.totalRevenue);
+                setTotalCar(data.totalCar);
+                setRentedCar(data.rentedCar);
                 setUnusedCar(data.availableCar);
                 console.log("fetch revenue done\n");
             } catch (error) {
@@ -64,14 +64,14 @@ const RevenueDetail = () => {
                     $
                 </h2>
             </span>
-            <span className="w-1/6 h-26 rounded-lg bg-white p-6 shadow-md m-3">
+            {/* <span className="w-1/6 h-26 rounded-lg bg-white p-6 shadow-md m-3">
                 <label className="text-xs text-left align-top text-slate-600">Today Revenue</label>
                 <br />
                 <h2 className="inline-flex">
                     <p id="todayRev">ERROR</p>
                     $
                 </h2>
-            </span>
+            </span> */}
             <span className="w-1/6 h-26 rounded-lg bg-white p-6 shadow-md m-3">
                 <label className="text-xs text-left align-top text-slate-600">Total Car</label>
                 <br />
