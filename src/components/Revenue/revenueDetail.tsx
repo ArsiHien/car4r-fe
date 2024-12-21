@@ -101,10 +101,7 @@ const RevenueDetail = () => {
                     <RevenueChart />
                 </div>
                     
-                <div className="rounded-lg bg-white p-6 shadow-md m-3">
-                    <h2>User Visits</h2>
-                    <VisitorChart />   
-                </div>
+                <VisitorChart />
             </div>
             </div>
             <div className="rounded-lg bg-white p-6 shadow-md m-3">
