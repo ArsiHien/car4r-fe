@@ -46,10 +46,11 @@ const authenSlice = createSlice({
       state.refreshToken = refreshToken;
 
       Cookies.set("refreshToken", refreshToken, {
-        sameSite: "None",
         path: "/",
-        expires: 28,
+        expires: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000),
       });
+
+      console.log(Cookies.get("refreshToken"));
     },
 
     logout: (state) => {

@@ -11,7 +11,7 @@ export const Avatar: React.FC<IAvatarProps> = ({ imageUrl, classNameAdd }) => {
       className={`${classNameAdd} rounded-full overflow-hidden bg-gray-200 flex items-center justify-center`}
     >
       <img
-        src={imageUrl || "../../src/assets/avatar.png"}
+        src={imageUrl || "../assets/avatar.png"}
         className="object-cover w-full h-full"
       />
     </div>

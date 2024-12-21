@@ -182,7 +182,7 @@ const Login = () => {
         <>
           <img
             className="object-cover w-full h-screen -z-10"
-            src="../../../src/assets/Background_LogSign.png"
+            src="../../assets/Background_LogSign.png"
           />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-300 w-[35%] pb-14 rounded-2xl flex flex-col items-center bg-white">
             <div className="flex flex-col items-center mt-10">
@@ -223,7 +223,7 @@ const Login = () => {
 
             <img
               className="absolute top-2 right-2 w-8 h-8 hover:scale-75 hover:cursor-pointer"
-              src="../../../src/assets/XIcon.png"
+              src="../../assets/XIcon.png"
               onClick={() => navigate("/")}
             />
           </div>
