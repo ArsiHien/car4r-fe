@@ -51,8 +51,8 @@ const StaffList: React.FC<StaffListProps> = ({ staffList }: StaffListProps) => {
         </tr>
       </thead>
       <tbody>
-        {staffList.map((staff) => (
-          <tr>
+        {staffList.map((staff, index) => (
+          <tr key={index}>
             <td className="border-t border-gray-200 px-2 py-2 text-center align-middle">
               <input type="checkbox" className="h-4 w-4" />
             </td>

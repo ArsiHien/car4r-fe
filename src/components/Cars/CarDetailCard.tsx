@@ -44,7 +44,7 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
       amenities: [],
       reviews: []
     }));
-    navigate('/bookinginfo1'); // Assuming this is your booking route
+    navigate('/booking'); // Assuming this is your booking route
   };
 
   return (
