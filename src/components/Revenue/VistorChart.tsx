@@ -1,40 +1,53 @@
-import React, { useRef, useEffect } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const VisitorChart: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [names, setNames] = useState<string[]>([]);
+    const [bookingCounts, setBookingCounts] = useState<number[]>([]);
+    const [revenues, setRevenues] = useState<number[]>([]);
 
     useEffect(() => {
-        const ctx = canvasRef.current?.getContext('2d');
-        if (ctx) {
-            if (Chart.getChart(ctx)) {
-                Chart.getChart(ctx)?.destroy();
+        const fetchTopCustomerRes = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/management/customers/top");
+                const data = await response.data;
+                const names = data.map((element: { name: string }) => element.name);
+                const bookingCounts = data.map((element: { bookingCount: number }) => element.bookingCount);
+                const revenues = data.map((element: { totalRevenue: number }) => element.totalRevenue);
+                setNames(names);
+                setBookingCounts(bookingCounts);
+                setRevenues(revenues);
+                console.log("fetch top customer done\n");
+            } catch (error) {
+                console.error("Error fetching top customer:", error);
             }
-            new Chart(ctx, {
-                type: 'bar', // or 'line', 'pie', etc.
-                data: {
-                    labels: ['Monday', 'Tuesday', 'Wenesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    datasets: [{
-                        label: 'User Visits',
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
         }
+        fetchTopCustomerRes();
     }, []);
 
-    return <canvas id="chart" ref={canvasRef} width={400} height={400} className='max-w-80 max-h-80 ' />;
+    return (
+        <div className="rounded-lg bg-white p-6 shadow-md m-3">
+            <h2>Top customer</h2>
+            <table className="min-w-full table-auto">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Bookings</th>
+                        <th>Spent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {names.map((name, index) => (
+                        <tr key={index}>
+                            <td className="text-center">{name}</td>
+                            <td className="text-center">{bookingCounts[index]}</td>
+                            <td className="text-center">{revenues[index]}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default VisitorChart;

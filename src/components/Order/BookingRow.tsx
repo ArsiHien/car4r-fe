@@ -86,8 +86,6 @@ const BookingRow: React.FC<BookingRowProps> = ({
       reviewDate: new Date().toISOString().split("T")[0],
     };
 
-    console.log(reviewData);
-
     if (booking.review) {
       message.loading({
         content: "Submitting your review...",
