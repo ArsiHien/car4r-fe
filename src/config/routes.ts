@@ -36,10 +36,7 @@ const routes = {
   resetPassword: "/resetPassword",
 
   ordermanagement: "/ordermanagement",
-  bookingInfo2: "/bookinginfo2",
-  bookingInfo1: "/bookinginfo1",
-  booking3: "/booking3",
-  booking4: "/booking4",
+  booking: "/booking"
 };
 
 export default routes;

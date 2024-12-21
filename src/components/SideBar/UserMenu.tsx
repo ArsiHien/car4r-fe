@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
 import { logout } from "../../store/Authen/authenSlice";
@@ -6,6 +6,7 @@ import { clearUser } from "../../store/User/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import Role from "../../const/Role";
+import avatar from "../../assets/avatar.png";
 
 interface UserMenuProps {
   onClose: () => void;
@@ -13,6 +14,10 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
   const role = useSelector((state: RootState) => state.auth.role);
+  const user = useSelector((state: RootState) => state.user.user);
+  const [profilePicture, setProfilePicture] = useState(
+    user?.avatar || avatar,
+  );
   const getProfileRoute = () => {
     switch (role) {
       case Role.CUSTOMER:
@@ -51,13 +56,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
       {/* User Info */}
       <div className="flex items-center mb-4">
         <img
-          src="src\assets\avatar.png" // replace with profile image path
+          src={profilePicture} // replace with profile image path
           alt="Profile"
           className="w-12 h-12 rounded-full mr-3"
         />
         <div>
-          <p className="font-semibold">Your name</p>
-          <p className="text-sm text-gray-500">userEmail</p>
+          <p className="font-semibold">{user?.username}</p>
+          <p className="text-sm text-gray-500">{user?.email}</p>
         </div>
       </div>
 

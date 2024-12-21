@@ -5,7 +5,7 @@ interface CarImageProps {
   images: string[]; // Add a prop for images
 }
 
-const CarImage:React.FC<CarImageProps> = ({images}) => {
+const CarImage: React.FC<CarImageProps> = ({ images }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -32,7 +32,7 @@ const CarImage:React.FC<CarImageProps> = ({images}) => {
             <img
               src={src}
               alt={`Slide ${index}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover max-h-[400px]"
             />
           </div>
         ))}

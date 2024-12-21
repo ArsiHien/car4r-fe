@@ -88,7 +88,7 @@ const FilterSidebar = () => {
             <input
               type="checkbox"
               className="form-checkbox text-blue-600"
-              checked={filters.capacities.includes(type)}
+              checked={filters.numberOfPerson.includes(type)}
               onChange={() => handleCapacityChange(type)}
             />
             <span className="ml-2 text-[#596780]">{type} Person</span>
@@ -104,7 +104,7 @@ const FilterSidebar = () => {
           <input
             type="range"
             min="0"
-            max="10000000"
+            max="100"
             value={filters.maxPrice}
             onChange={(e) => handlePriceChange(Number(e.target.value))}
             className="slider w-full"

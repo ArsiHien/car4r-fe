@@ -9,6 +9,10 @@ import selectedCarReducer from "./Car/selectedCarSlice";
 import carCategoryReducer from "./CarCategory/carCategorySlice";
 import amenityReducer from "./CarCategory/amenitySlice";
 import carByStatusReducer from "./Car/carSliceByStatus";
+import customerBookings from "./Customer/bookingSlice";
+import carCategoryBasicReducer from "./CarCategory/carCategoryBasicSlice";
+import staffReducer from "./Staff/StaffSlice";
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -20,7 +24,10 @@ const store = configureStore({
     cars: carsReducer,
     selectedCar: selectedCarReducer,
     carCategory: carCategoryReducer,
+    carCategoryBasic: carCategoryBasicReducer,
     amenity: amenityReducer,
+    customerBookings: customerBookings,
+    staff: staffReducer,
   },
 });
 

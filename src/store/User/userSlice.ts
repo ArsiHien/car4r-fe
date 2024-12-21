@@ -1,24 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const userSlice = createSlice({
   name: "userSlice",
   initialState: {
-    user: null,
+    user: Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null,
   },
 
   reducers: {
-    // Action cập nhật user
     setUser: (state, action) => {
       state.user = action.payload;
+      // Store user data in cookie with 7 days expiration
+      Cookies.set('user', JSON.stringify(action.payload), { expires: 7 });
     },
 
-    // Action để logout
     clearUser: (state) => {
       state.user = null;
+      // Remove user data from cookie
+      Cookies.remove('user');
     },
   },
 });
 
 export const { setUser, clearUser } = userSlice.actions;
-
 export default userSlice.reducer;

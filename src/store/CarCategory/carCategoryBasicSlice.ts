@@ -1,35 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  fetchCarCategories,
+  fetchCarCategoriesBasic,
   fetchCarCategoryTypes,
   addCarCategory,
   updateCarCategory,
   deleteCarCategory,
-  fetchCarCategory,
 } from "./carCategoryActions";
-import { CarCategoryDetail } from "../../types/CarCategoryDetail";
+import { CarCategoryBasic } from "../../types/CarCategoryBasic";
 
-interface CarCategoriesState {
-  carCategories: CarCategoryDetail[];
+interface CarCategoriesBasicState {
+  carCategories: CarCategoryBasic[];
   carCategoryTypes: string[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: CarCategoriesState = {
+const initialState: CarCategoriesBasicState = {
   carCategories: [],
   carCategoryTypes: [],
   loading: false,
   error: null,
 };
 
-const handlePending = (state: CarCategoriesState) => {
+const handlePending = (state: CarCategoriesBasicState) => {
   state.loading = true;
   state.error = null;
 };
 
 const handleRejected = (
-  state: CarCategoriesState,
+  state: CarCategoriesBasicState,
   action: PayloadAction<unknown>
 ) => {
   state.loading = false;
@@ -48,15 +47,16 @@ const carCategorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCarCategories.pending, handlePending)
+      .addCase(fetchCarCategoriesBasic.pending, handlePending)
       .addCase(
-        fetchCarCategories.fulfilled,
-        (state, action: PayloadAction<CarCategoryDetail[]>) => {
+        fetchCarCategoriesBasic.fulfilled,
+        (state, action: PayloadAction<CarCategoryBasic[]>) => {
+          console.log('action: ', action.payload)
           state.carCategories = action.payload;
           state.loading = false;
         }
       )
-      .addCase(fetchCarCategories.rejected, handleRejected)
+      .addCase(fetchCarCategoriesBasic.rejected, handleRejected)
       .addCase(fetchCarCategoryTypes.pending, handlePending)
       .addCase(
         fetchCarCategoryTypes.fulfilled,
@@ -69,7 +69,7 @@ const carCategorySlice = createSlice({
       .addCase(addCarCategory.pending, handlePending)
       .addCase(
         addCarCategory.fulfilled,
-        (state, action: PayloadAction<CarCategoryDetail>) => {
+        (state, action: PayloadAction<CarCategoryBasic>) => {
           state.carCategories.push(action.payload);
           state.loading = false;
         }
@@ -78,7 +78,7 @@ const carCategorySlice = createSlice({
       .addCase(updateCarCategory.pending, handlePending)
       .addCase(
         updateCarCategory.fulfilled,
-        (state, action: PayloadAction<CarCategoryDetail>) => {
+        (state, action: PayloadAction<CarCategoryBasic>) => {
           const index = state.carCategories.findIndex(
             (category) => category.id === action.payload.id
           );
@@ -99,13 +99,7 @@ const carCategorySlice = createSlice({
           state.loading = false;
         }
       )
-      .addCase(deleteCarCategory.rejected, handleRejected)
-      .addCase(fetchCarCategory.pending, handlePending)
-      .addCase(fetchCarCategory.fulfilled, (state, action: PayloadAction<CarCategoryDetail>) => {
-        state.carCategories.push(action.payload);
-        state.loading = false;
-      })
-      .addCase(fetchCarCategory.rejected, handleRejected);
+      .addCase(deleteCarCategory.rejected, handleRejected);
   },
 });
 

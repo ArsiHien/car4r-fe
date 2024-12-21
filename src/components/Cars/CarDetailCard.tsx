@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setSelectedCar } from '../../store/Booking/bookingSlice';
 
 const CarDetailCard: React.FC<CarCategoryDetail> = ({
+  id,
   name,
   type,
   description,
@@ -27,6 +28,7 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
 
   const handleRentNow = () => {
     dispatch(setSelectedCar({
+      id,
       name,
       type,
       numberOfPerson,
@@ -36,9 +38,13 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
       promotionPrice,
       rating,
       mainImage,
-      carImages
+      carImages,
+      description: "",
+      reviewersCount: 0,
+      amenities: [],
+      reviews: []
     }));
-    navigate('/bookinginfo1'); // Assuming this is your booking route
+    navigate('/booking'); // Assuming this is your booking route
   };
 
   return (
