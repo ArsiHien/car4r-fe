@@ -13,6 +13,14 @@ export const fetchCarCategories = createAsyncThunk<CarCategoryDetail[]>(
   }
 );
 
+export const fetchCarCategory = createAsyncThunk<CarCategoryDetail, string>(
+  "carCategories/fetchOne",
+  async (id) => {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  }
+);
+
 export const fetchCarCategoriesBasic = createAsyncThunk<CarCategoryBasic[]>(
   "carCategoriesBasic/fetchAll",
   async () => {

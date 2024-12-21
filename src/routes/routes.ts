@@ -10,10 +10,6 @@ import Search from "../pages/Search";
 import ProfilePage from "../pages/Profile";
 import { FC, ReactNode } from "react";
 import Profile from "../pages/Profile";
-import Booking1 from "../pages/Booking/Booking1";
-import Booking2 from "../pages/Booking/Booking2";
-import Booking3 from "../pages/Booking/Booking3";
-import Booking4 from "../pages/Booking/Booking4";
 import SignUp from "../pages/SignUp/SignUp";
 import ResetPwPage from "../pages/ResetPwPage";
 import AddCar from "../pages/AddCar/AddCar";
@@ -32,7 +28,8 @@ import FilterSidebar from "../components/SideBar/FilterSideBar";
 import { StaffOverview } from "../pages/StaffPages";
 import CustomerSidebar from "../components/SideBar/CustomerSidebar";
 import CustomerOrderManagement from "../pages/CustomerOrderManagement";
-import Role from '../const/Role';
+import Role from "../const/Role";
+import BookingPage from "../pages/Booking";
 
 interface RouteConfig {
   path: string;
@@ -66,49 +63,49 @@ const publicRoutes: RouteConfig[] = [
     page: ManagerOverview,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.dashboard,
     page: ManagerDashboard,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.profile,
     page: Profile,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.staffManagement,
     page: StaffManagement,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.cars,
     page: CarsManagement,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.addCar,
     page: AddCar,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
   {
     path: config.routes.manager.editCar,
     page: EditCar,
     layout: SidebarLayout,
     sidebar: ManagerSidebar,
-    allowedRoles: [Role.MANAGER]
+    allowedRoles: [Role.MANAGER],
   },
 
   //STAFF
@@ -117,28 +114,28 @@ const publicRoutes: RouteConfig[] = [
     page: StaffOverview,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
   {
     path: config.routes.staff.profile,
     page: ProfilePage,
     sidebar: StaffSidebar,
     layout: SidebarLayout,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
   {
     path: config.routes.staff.orderManagement,
     page: OrderManagement,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
   {
     path: config.routes.staff.cars,
     page: CarsManagement,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
 
   {
@@ -146,34 +143,35 @@ const publicRoutes: RouteConfig[] = [
     page: AddCar,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
   {
     path: config.routes.staff.editCar,
     page: EditCar,
     layout: SidebarLayout,
     sidebar: StaffSidebar,
-    allowedRoles: [Role.STAFF]
+    allowedRoles: [Role.STAFF],
   },
   {
     path: config.routes.customer.orderManagement,
     page: CustomerOrderManagement,
     layout: SidebarLayout,
     sidebar: CustomerSidebar,
-    allowedRoles: [Role.CUSTOMER]
+    allowedRoles: [Role.CUSTOMER],
   },
   {
     path: config.routes.customer.profile,
     page: Profile,
     layout: SidebarLayout,
     sidebar: CustomerSidebar,
-    allowedRoles: [Role.CUSTOMER]
+    allowedRoles: [Role.CUSTOMER],
   },
 
-  { path: config.routes.bookingInfo1, page: Booking1, layout: Booking1 },
-  { path: config.routes.bookingInfo2, page: Booking2, layout: Booking2 },
-  { path: config.routes.booking3, page: Booking3, layout: Booking3 },
-  { path: config.routes.booking4, page: Booking4, layout: Booking4 },
+  {
+    path: config.routes.booking,
+    page: BookingPage,
+    allowedRoles: [Role.CUSTOMER],
+  },
 ];
 
 export { publicRoutes };
