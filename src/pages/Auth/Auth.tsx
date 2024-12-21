@@ -14,9 +14,10 @@ import {
   setRole,
 } from "../../store/Authen/authenSlice";
 import jwtDecode from "../../utils/JwtDecode";
+import { Spin } from "antd";
 
 const Auth = () => {
-  const pathImg = "../../../src/assets/Background_LogSign.png";
+  const pathImg = "../../assets/Background_LogSign.png";
 
   const [loading, setLoading] = useState(false);
 
@@ -25,6 +26,7 @@ const Auth = () => {
 
   const logInWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      setLoading(true);
       try {
         // Lấy thông tin user từ Google
         const userInfo = await axios.get(
@@ -71,6 +73,7 @@ const Auth = () => {
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
+        setLoading(false);
         notify(
           "error",
           "Sign Up With Google Not Successfully. Please Try Again",
@@ -81,51 +84,58 @@ const Auth = () => {
     onError: () => {
       console.error("Google login failed");
       notify("error", "Google login failed. Please try again.");
+      setLoading(false);
     },
   });
 
   return (
     <div className="flex flex-row flex-wrap w-full h-screen overflow-hidden">
-      <Header />
+      {loading ? (
+        <Spin size="large" />
+      ) : (
+        <>
+          <Header />
 
-      <div className="w-1/2 h-full flex justify-center">
-        <div className="w-3/4 flex flex-col items-center relative top-[11rem]">
-          <h1 className="text-6xl font-bold text-center mb-5">
-            Fast car rentals
-            <br />
-            smooth journeys!
-          </h1>
+          <div className="w-1/2 h-full flex justify-center">
+            <div className="w-3/4 flex flex-col items-center relative top-[11rem]">
+              <h1 className="text-6xl font-bold text-center mb-5">
+                Fast car rentals
+                <br />
+                smooth journeys!
+              </h1>
 
-          <GoogleButton
-            txtVal="Continue With Google"
-            handleClick={logInWithGoogle}
-          />
+              <GoogleButton
+                txtVal="Continue With Google"
+                handleClick={logInWithGoogle}
+              />
 
-          <Or classNameAdd="mt-12 mb-12" />
+              <Or classNameAdd="mt-12 mb-12" />
 
-          <ButtonAuth
-            txtVal="Sign Up With Email"
-            classNameAdd="bg-white hover:bg-gray-500"
-            handleClick={() => navigate("/signUp")}
-          />
+              <ButtonAuth
+                txtVal="Sign Up With Email"
+                classNameAdd="bg-white hover:bg-gray-500"
+                handleClick={() => navigate("/signUp")}
+              />
 
-          <h1 className="text-center mt-6 text-sm text-wrap max-w-[28rem]">
-            By signing up, you agree to the{" "}
-            <span className="underline hover:cursor-pointer">
-              Terms of Service
-            </span>{" "}
-            and{" "}
-            <span className="underline hover:cursor-pointer">
-              Privacy Policy
-            </span>
-            , including cookie use.
-          </h1>
-        </div>
-      </div>
+              <h1 className="text-center mt-6 text-sm text-wrap max-w-[28rem]">
+                By signing up, you agree to the{" "}
+                <span className="underline hover:cursor-pointer">
+                  Terms of Service
+                </span>{" "}
+                and{" "}
+                <span className="underline hover:cursor-pointer">
+                  Privacy Policy
+                </span>
+                , including cookie use.
+              </h1>
+            </div>
+          </div>
 
-      <div className="w-1/2">
-        <img className="w-full h-full" src={pathImg} />
-      </div>
+          <div className="w-1/2">
+            <img className="w-full h-full" src={pathImg} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

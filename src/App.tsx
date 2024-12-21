@@ -7,40 +7,41 @@ import {
 } from "react-router-dom";
 import { publicRoutes } from "./routes";
 import DefaultLayout from "./layouts";
-import PrivateRoute from './components/PrivateRoute';
-import { useDispatch } from 'react-redux';
-import { setRole, setLoading } from './store/Authen/authenSlice';
-import jwtDecode from './utils/JwtDecode';
+import PrivateRoute from "./components/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { setRole, setLoading } from "./store/Authen/authenSlice";
+import jwtDecode from "./utils/JwtDecode";
 import useRefreshToken from "./utils/RefreshToken";
-
 
 const App = () => {
   const location = useLocation();
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = useRefreshToken();
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const initializeAuth = async () => {
       dispatch(setLoading(true));
-      const token = localStorage.getItem('accessToken');
+
+      const token = localStorage.getItem("accessToken");
       if (token) {
         try {
           const role = await jwtDecode(token);
           if (role) {
             dispatch(setRole(role));
           } else {
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem("accessToken");
           }
         } catch (error) {
-          console.error('Error verifying token:', error);
-          localStorage.removeItem('accessToken');
+          console.error("Error verifying token:", error);
+          localStorage.removeItem("accessToken");
         }
       }
       dispatch(setLoading(false));
     };
     initializeAuth();
   }, [dispatch]);
+
   useEffect(() => {
     const duration = 300;
     const startPosition = window.scrollY;
@@ -64,7 +65,7 @@ const App = () => {
   // Kiem tra refresh token
   useEffect(() => {
     const checkAndRefreshToken = async () => {
-      console.log("refreshToken");
+      console.log("checkAndRefreshToken");
       if (!accessToken) {
         console.log("null access token");
         await refreshToken();

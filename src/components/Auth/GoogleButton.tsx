@@ -5,10 +5,7 @@ const GoogleButton = ({ txtVal = "", handleClick = () => {} }) => {
       onClick={handleClick}
     >
       <span className="flex justify-center w-full">
-        <img
-          className="mr-3"
-          src="../../../src/assets/SocialMedia/Google.png"
-        />
+        <img className="mr-3" src="../../assets/SocialMedia/Google.png" />
         {txtVal}
       </span>
     </button>
