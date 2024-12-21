@@ -1,3 +1,4 @@
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { carAmenities } from "../../data/carAmenitiesData";
 
 type CarAmenitiesProps = {
@@ -20,9 +21,10 @@ const CarAmenities: React.FC<CarAmenitiesProps> = ({ amenitiesName }) => {
                 <span className="text-gray-800">{matchingAmenity.name}</span>
               </>
             ) : (
-              <span className="text-gray-800">
-                {amenity} (No icon available)
-              </span>
+              <>
+                <AiOutlineAppstoreAdd className="text-blue-500 text-lg"/>
+                <span className="text-gray-800">{amenity}</span>
+              </>
             )}
           </div>
         );

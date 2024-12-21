@@ -8,6 +8,7 @@ import {
   CiCircleCheck,
 } from "react-icons/ci";
 import { MdDriveEta, MdOutlineTireRepair } from "react-icons/md";
+import { TfiLayoutMediaCenter } from "react-icons/tfi";
 
 type CarAmenity = {
   name: string;
@@ -23,7 +24,7 @@ export const carAmenities: CarAmenity[] = [
   { name: "GPS Navigation", icon: CiGlobe },
   { name: "USB Port", icon: CiUsb },
   { name: "Spare Tire", icon: MdOutlineTireRepair },
-  { name: "DVD Player", icon: CiCamera },
+  { name: "DVD Player", icon: TfiLayoutMediaCenter },
   { name: "ETC", icon: CiCircleCheck },
   { name: "Airbag Safety", icon: MdDriveEta },
 ];

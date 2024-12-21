@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Button, Tag } from "antd";
-import { BookingResponse } from "../../store/Customer/bookingSlice";
+import React from "react";
 import BookingList from "./BookingList";
+import { BookingResponse } from "../../types/Booking";
 
 interface OrderDashboardProps {
   currentBookings: BookingResponse[];

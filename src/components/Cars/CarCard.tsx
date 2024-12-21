@@ -4,6 +4,10 @@ import transmissionImg from "../../assets/CarType.png";
 import capacityImg from "../../assets/capacity.png";
 import { useNavigate } from "react-router-dom";
 import CarPrice from "./CarPrice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { setSelectedCar } from "../../store/Booking/bookingSlice";
+import { fetchCarCategory } from "../../store/CarCategory/carCategoryActions";
 
 export interface CarCardProps {
   id: string;
@@ -29,10 +33,50 @@ export const CarCard: React.FC<CarCardProps> = ({
   price,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleCardClick = () => {
     navigate(`/car/${name}-${id}`);
   };
+  const { carCategories } = useSelector(
+    (state: RootState) => state.carCategory
+  );
+
+  const handleRentNow = async () => {
+    let selectedCar = carCategories.find((car) => car.id === id);
+    if (!selectedCar) {
+      const actionResult = await dispatch(fetchCarCategory(id));
+
+      if (fetchCarCategory.fulfilled.match(actionResult)) {
+        selectedCar = actionResult.payload;
+      } else {
+        console.error("Failed to fetch the car category");
+        return;
+      }
+    }
+
+    dispatch(
+      setSelectedCar({
+        id,
+        name,
+        type,
+        numberOfPerson,
+        steering,
+        gasoline,
+        price,
+        promotionPrice,
+        rating: selectedCar?.rating || 5,
+        mainImage,
+        carImages: selectedCar?.carImages || [],
+        description: "",
+        reviewersCount: 0,
+        amenities: [],
+        reviews: [],
+      })
+    );
+    navigate("/booking");
+  };
+
   return (
     <div
       onClick={handleCardClick}
@@ -73,9 +117,15 @@ export const CarCard: React.FC<CarCardProps> = ({
           <CarPrice price={price} />
         )}
 
-  <button className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]">
-      Rent Now
-    </button>
+        <button
+          className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRentNow();
+          }}
+        >
+          Rent Now
+        </button>
       </div>
     </div>
   );

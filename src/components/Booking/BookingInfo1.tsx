@@ -1,137 +1,272 @@
-import "./BookingInfo.css";
-import { DatePicker } from "antd";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DatePicker, Card, Button, Typography, Form, Select } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 import CarImage from "../../components/Cars/CarImage";
-import { useState } from 'react';
-import dayjs from 'dayjs';
-import { setTotalPrice, setStartDate, setReturnDate } from '../../store/Booking/bookingSlice'
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import {
+  setTotalPrice,
+  setStartDate,
+  setReturnDate,
+  setPickupPlace,
+  setDropOffPlace,
+  resetBookingState,
+} from "../../store/Booking/bookingSlice";
 
-const BookingInfo1 = () => {
+const { Title, Text } = Typography;
+const { Option } = Select;
+
+interface BookingInfo1Props {
+  onNext: () => void;
+}
+
+const locations = [
+  "My Garage",
+  "New York",
+  "Los Angeles",
+  "Chicago",
+  "Houston",
+  "San Francisco",
+];
+
+const BookingInfo1: React.FC<BookingInfo1Props> = ({ onNext }) => {
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [numberOfDay, setNumberOfDay] = useState(0);
   const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
   const navigate = useNavigate();
-  const selectedCar = useSelector((state: RootState) => state.booking.selectedCar);
-  console.log(selectedCar)
-  // Redirect if no car is selected
-  if (!selectedCar) {
-    navigate('/');
-    return null;
-  }
+  const selectedCar = useSelector(
+    (state: RootState) => state.booking.selectedCar
+  );
+  const totalPrice = useSelector(
+    (state: RootState) => state.booking.totalPrice
+  );
+  const startDate = useSelector((state: RootState) => state.booking.startDate);
+  const returnDate = useSelector(
+    (state: RootState) => state.booking.returnDate
+  );
+  const pickupPlace = useSelector(
+    (state: RootState) => state.booking.pickupPlace
+  );
+  const dropOffPlace = useSelector(
+    (state: RootState) => state.booking.dropOffPlace
+  );
 
-  const [dateRange, setDateRange] = useState<[dayjs.Dayjs | null, dayjs.Dayjs | null]>([null, null]);
-  const [total, setTotal] = useState<number>(0);
+  const [form] = Form.useForm();
 
-  const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
-    setDateRange(dates);
+  useEffect(() => {
+    if (!selectedCar) {
+      navigate("/");
+    }
+  }, [selectedCar, navigate]);
 
-    if (dates[0] && dates[1]) {
-      const days = dates[1].diff(dates[0], 'day');
-      const totalPrice = selectedCar.price * days;
-      setTotal(totalPrice);
+  useEffect(() => {
+    if (selectedCar && numberOfDay >= 0) {
+      const totalPrice = selectedCar.price * numberOfDay + deliveryFee;
       dispatch(setTotalPrice(totalPrice));
-      dispatch(setStartDate(dates[0].format('YYYY-MM-DD')));
-      dispatch(setReturnDate(dates[1].format('YYYY-MM-DD')));
+    }
+  }, [numberOfDay, deliveryFee, selectedCar, dispatch]);
+
+  useEffect(() => {
+    if (pickupPlace && dropOffPlace) {
+      const fee =
+        locations.indexOf(pickupPlace) + locations.indexOf(dropOffPlace);
+      setDeliveryFee(fee);
+    }
+  }, [pickupPlace, dropOffPlace]);
+
+  const handleDateChange = (
+    dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]
+  ) => {
+    if (dates[0] && dates[1]) {
+      const days = dates[1].diff(dates[0], "day");
+      setNumberOfDay(days);
+      dispatch(setStartDate(dates[0].format("YYYY-MM-DD")));
+      dispatch(setReturnDate(dates[1].format("YYYY-MM-DD")));
     } else {
-      setTotal(0);
       dispatch(setTotalPrice(0));
       dispatch(setStartDate(null));
       dispatch(setReturnDate(null));
     }
   };
 
-    dispatch(setTotalPrice(total));
-
-    const handleReturn = () => {
-      navigate(-1);
-    };
-
-  const handleOrder = () => {
-    if (!dateRange[0] || !dateRange[1]) {
-      alert("Please select a date range before ordering.");
-      return; // Exit the function if date range is not valid
+  const handleLocationChange = (value: string, isPickupLocation: boolean) => {
+    if (isPickupLocation) {
+      dispatch(setPickupPlace(value));
+    } else {
+      dispatch(setDropOffPlace(value));
     }
-    dispatch(setTotalPrice(total));
-    navigate('/bookingInfo2');
+  };
+
+  const handleReturn = () => {
+    dispatch(resetBookingState());
+    navigate(-1);
+  };
+
+  const handleFormSubmit = (values: any) => {
+    if (!startDate || !returnDate) {
+      alert("Please select a date range before proceeding.");
+      return;
+    }
+    if (!values.pickupLocation || !values.dropOffLocation) {
+      alert("Please select pickup and drop-off locations before proceeding.");
+      return;
+    }
+    onNext();
   };
 
   return (
-    <div className="bg-gray-200 flex h-[800px] text-xl">
-      {/**left container */}
-      <span className="flex flex-col w-2/3 ml-10 my-5 mr-5 h-[600px]">
-        {/**left top section */}
-        <div className="flex bg-white h-[500px]">
-          {/**image section */}
-          <div className=" flex flex-col w-1/2 ml-5 my-5 ">
-            <CarImage images={[selectedCar.mainImage, ...selectedCar.carImages.map(image => image.imageUrl)]} />
-          </div>
+    <div className="flex h-full text-xl p-5">
+      {/** Left container */}
+      <div className="flex flex-col w-2/3 mr-5">
+        <Card className="mb-5" bordered={false}>
+          <div className="flex">
+            <div className="flex flex-col w-1/2">
+              <CarImage
+                images={
+                  selectedCar
+                    ? [
+                        selectedCar.mainImage,
+                        ...selectedCar.carImages.map((image) => image.imageUrl),
+                      ]
+                    : []
+                }
+              />
+            </div>
+            <div className="flex flex-col w-1/2 pl-5">
+              <Title level={3} className="text-blue-900">
+                {selectedCar?.name}
+              </Title>
 
-          {/**information section */}
-          <div className="bg-white w-1/2 my-5 mr-5">
-            <div className="pl-5">
-              <div>
-                <h3 className="bg-blue-100 text-3xl text-center text-blue-900 font-bold py-5">
-                  {selectedCar.name}
-                </h3>
-                <h3 className="bg-gray-300 text-xl text-center text-white font-bold mt-3 py-3">
-                  Rating: {selectedCar.rating}
-                </h3>
-              </div>
-              <div className="flex flex-col gap-3 mt-5">
-                <label>Car Type: {selectedCar.type}</label>
-                <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
-                <label>Fuel: {selectedCar.gasoline}L</label>
-                <label>Capacity: {selectedCar.numberOfPerson} Person</label>
+              <div className="flex flex-col gap-2 mt-3">
+                <Text className="text-lg">Car Type: {selectedCar?.type}</Text>
+                <Text className="text-lg">
+                  Price: {selectedCar?.price.toLocaleString()} USD/day
+                </Text>
+                <Text className="text-lg">Rating: {selectedCar?.rating}</Text>
+                <Text className="text-lg">Fuel: {selectedCar?.gasoline}L</Text>
+                <Text className="text-lg">
+                  Capacity: {selectedCar?.numberOfPerson} Person
+                </Text>
               </div>
             </div>
           </div>
-        </div>
-        {/**bottom left container*/}
-        <div className="bg-white my-5 h-[300px]">
-          <h3 className="text-2xl text-blue-900 font-bold py-5 pl-5">
-            {/* Thông tin chi tiết */}
-          </h3>
-        </div>
-      </span>
+        </Card>
+      </div>
 
-      {/**right container */}
-      <span className="flex flex-col gap-5 w-1/3 mt-5 pr-5">
-        {/**date section */}
-        <div className="bg-white pb-5 pl-3">
-          <h3 className="text-2xl text-blue-900 font-bold py-5">
-            Thời gian thuê
-          </h3>
-          <div className="flex items-center justify-between space-x-4">
-            <div className="flex-1">
+      {/** Right container */}
+      <div className="flex flex-col w-1/3">
+        <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
+          <Card className="mb-5" bordered={false}>
+            <Title level={3} className="text-blue-900">
+              Rental Period
+            </Title>
+            <Form.Item
+              name="dateRange"
+              rules={[
+                { required: true, message: "Please select the rental period!" },
+              ]}
+            >
               <RangePicker
                 format="DD/MM/YYYY"
                 className="w-full text-3xl"
-                placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                placeholder={["Pickup Date", "Return Date"]}
                 onChange={handleDateChange}
+                defaultValue={
+                  startDate && returnDate
+                    ? [
+                        dayjs(startDate, "YYYY-MM-DD"),
+                        dayjs(returnDate, "YYYY-MM-DD"),
+                      ]
+                    : undefined
+                }
               />
+            </Form.Item>
+            <Title level={3} className="text-blue-900">
+              Pickup and Drop-off
+            </Title>
+            <div className="flex justify-between gap-4">
+              <Form.Item
+                className="w-full"
+                name="pickupLocation"
+                label="Pickup Location"
+                initialValue={pickupPlace}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select a pickup location!",
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Select pickup location"
+                  onChange={(value) => handleLocationChange(value, true)}
+                >
+                  {locations.map((location) => (
+                    <Option key={location} value={location}>
+                      {location}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                className="w-full"
+                name="dropOffLocation"
+                label="Drop-off Location"
+                initialValue={dropOffPlace}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select a drop-off location!",
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Select drop-off location"
+                  onChange={(value) => handleLocationChange(value, false)}
+                >
+                  {locations.map((location) => (
+                    <Option key={location} value={location}>
+                      {location}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
             </div>
+          </Card>
+
+          <Card className="mb-5" bordered={false}>
+            <Title level={3} className="text-blue-900">
+              Bill Summary
+            </Title>
+            <div className="flex flex-col gap-3">
+              <Text>
+                Price per Day: {selectedCar?.price.toLocaleString()} USD
+              </Text>
+              <Text>
+                Number Of Day: {numberOfDay} {numberOfDay <= 1 ? "day" : "days"}
+              </Text>
+              <Text>Delivery Fee: {deliveryFee} USD</Text>
+              <Text>Total Price: {totalPrice} USD</Text>
+            </div>
+          </Card>
+
+          <div className="flex gap-3">
+            <Button
+              type="primary"
+              className="h-10 text-xl w-full"
+              htmlType="submit"
+            >
+              Order
+            </Button>
+            <Button className="h-10 text-xl w-full" onClick={handleReturn}>
+              Return
+            </Button>
           </div>
-        </div>
-        {/**bill section */}
-        <div className="bg-white pl-3 text-xl">
-          <h3 className="text-2xl text-blue-900 font-bold py-5">Bill</h3>
-          <hr className="pb-5" />
-          <div className="flex flex-col gap-3 pb-5">
-            <label>Price: {selectedCar.price.toLocaleString()} USD/day</label>
-            <label>Total: {total} USD</label>
-          </div>
-        </div>
-        {/**button section */}
-        <div className=" bg-white flex flex-col gap-3 py-3">
-          <button className="h-10 text-white bg-blue-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleOrder}>
-            Order
-          </button>
-          <button className="h-10 text-white bg-gray-600 text-xl mx-10 hover:bg-blue-600 rounded focus:outline-none" onClick={handleReturn}>
-            Return
-          </button>
-        </div>
-      </span>
+        </Form>
+      </div>
     </div>
   );
 };

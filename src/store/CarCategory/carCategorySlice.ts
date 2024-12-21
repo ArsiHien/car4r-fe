@@ -5,6 +5,7 @@ import {
   addCarCategory,
   updateCarCategory,
   deleteCarCategory,
+  fetchCarCategory,
 } from "./carCategoryActions";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
 
@@ -98,7 +99,13 @@ const carCategorySlice = createSlice({
           state.loading = false;
         }
       )
-      .addCase(deleteCarCategory.rejected, handleRejected);
+      .addCase(deleteCarCategory.rejected, handleRejected)
+      .addCase(fetchCarCategory.pending, handlePending)
+      .addCase(fetchCarCategory.fulfilled, (state, action: PayloadAction<CarCategoryDetail>) => {
+        state.carCategories.push(action.payload);
+        state.loading = false;
+      })
+      .addCase(fetchCarCategory.rejected, handleRejected);
   },
 });
 
