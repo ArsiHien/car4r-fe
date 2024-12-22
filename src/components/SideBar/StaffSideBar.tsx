@@ -2,6 +2,7 @@ import {
   CarOutlined,
   HomeOutlined,
   ScheduleOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { ConfigProvider, Menu, MenuProps } from "antd";
 import React from "react";
@@ -17,10 +18,6 @@ const StaffSidebar: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout()); // Dispatch the logout action
-    dispatch(clearUser());
-  };
   type MenuItem = Required<MenuProps>["items"][number];
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
