@@ -6,9 +6,19 @@ import { Link, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
 import { CgProfile } from "react-icons/cg";
 import { BsClipboard2Check } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/Authen/authenSlice";
+import { clearUser } from "../../store/User/userSlice";
 
 const CustomerSidebar: React.FC = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    dispatch(clearUser());
+  };
+
   type MenuItem = Required<MenuProps>["items"][number];
   const items: MenuItem[] = [
     {
@@ -39,7 +49,15 @@ const CustomerSidebar: React.FC = () => {
       type: "group",
       children: [
         { key: "settings", label: "Settings", icon: <SettingOutlined /> },
-        { key: "logout", label: "Logout", icon: <TbLogout2 /> },
+        {
+          key: "logout",
+          label: (
+            <Link to="/login" onClick={handleLogout}>
+              Log out
+            </Link>
+          ),
+          icon: <TbLogout2 />,
+        },
       ],
     },
   ];

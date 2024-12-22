@@ -3,9 +3,13 @@ import CarPrice from "./CarPrice";
 import { Rate } from "antd";
 import CarAmenities from "./CarAmenities";
 import { CarCategoryDetail } from "../../types/CarCategoryDetail";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setSelectedCar } from '../../store/Booking/bookingSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setSelectedCar } from "../../store/Booking/bookingSlice";
+import { RootState } from "../../store/store";
+import Role from "../../const/Role";
+import { fetchCarCategory } from "../../store/CarCategory/carCategoryActions";
+import routes from "../../config/routes";
 
 const CarDetailCard: React.FC<CarCategoryDetail> = ({
   id,
@@ -21,30 +25,47 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
   reviewersCount,
   amenities,
   mainImage,
-  carImages
+  carImages,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = useSelector((state: RootState) => state.auth.role);
+  const { carCategories } = useSelector(
+    (state: RootState) => state.carCategory
+  );
 
   const handleRentNow = () => {
-    dispatch(setSelectedCar({
-      id,
-      name,
-      type,
-      numberOfPerson,
-      steering,
-      gasoline,
-      price,
-      promotionPrice,
-      rating,
-      mainImage,
-      carImages,
-      description: "",
-      reviewersCount: 0,
-      amenities: [],
-      reviews: []
-    }));
-    navigate('/booking'); // Assuming this is your booking route
+    dispatch(
+      setSelectedCar({
+        id,
+        name,
+        type,
+        numberOfPerson,
+        steering,
+        gasoline,
+        price,
+        promotionPrice,
+        rating,
+        mainImage,
+        carImages,
+        description: "",
+        reviewersCount: 0,
+        amenities: [],
+        reviews: [],
+      })
+    );
+    navigate("/booking"); // Assuming this is your booking route
+  };
+
+  const handleEdit = async () => {
+    const carCategory = carCategories.find((car) => car.id === id);
+
+    const editUrl =
+      role === Role.MANAGER
+        ? routes.manager.editCar.replace(":id", id)
+        : routes.staff.editCar.replace(":id", id);
+
+    navigate(editUrl, { state: { carCategory } });
   };
 
   return (
@@ -83,7 +104,9 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
         </div>
       </div>
       <h1 className="text-xl font-semibold pt-4">Other Amenities</h1>
-      <CarAmenities amenitiesName={amenities.map(amenity => amenity.name)}></CarAmenities>
+      <CarAmenities
+        amenitiesName={amenities.map((amenity) => amenity.name)}
+      ></CarAmenities>
 
       <div className="flex items-center justify-between">
         {promotionPrice ? (
@@ -91,12 +114,27 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
         ) : (
           <CarPrice price={price} />
         )}
-        <button 
-          className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
-          onClick={handleRentNow}
-        >
-          Rent Now
-        </button>
+        {role === Role.CUSTOMER ? (
+          <button
+            className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRentNow();
+            }}
+          >
+            Edit
+          </button>
+        ) : (
+          <button
+            className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit();
+            }}
+          >
+            Edit
+          </button>
+        )}
       </div>
     </div>
   );
