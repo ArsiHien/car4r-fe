@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const VisitorChart: React.FC = () => {
+const TopCustomerChart: React.FC = () => {
     const [names, setNames] = useState<string[]>([]);
     const [bookingCounts, setBookingCounts] = useState<number[]>([]);
     const [revenues, setRevenues] = useState<number[]>([]);
@@ -26,7 +26,7 @@ const VisitorChart: React.FC = () => {
     }, []);
 
     return (
-        <div className="rounded-lg bg-white p-6 shadow-md m-3">
+        <div>
             <h2>Top customer</h2>
             <table className="min-w-full table-auto">
                 <thead>
@@ -50,4 +50,4 @@ const VisitorChart: React.FC = () => {
     );
 };
 
-export default VisitorChart;
+export default TopCustomerChart;

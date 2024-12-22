@@ -1,6 +1,6 @@
 import axios from "axios";
 import RevenueChart from "./RevenueChart";
-import VisitorChart from "./VisitorChart";
+import TopCustomerChart from "./TopCustomerChart";
 import RevenueByCarCateChart from "./RevenueByCarCateChart";
 import { useEffect, useState } from "react";
 import RatingChart from "./RatingChart";
@@ -76,7 +76,7 @@ const RevenueDetail = () => {
             </span>
             <span className="w-1/6 h-26 rounded-lg bg-white p-6 shadow-md m-3 flex justify-between items-center">
                 <div>
-                    <label className="text-xs text-left align-top text-slate-600">Number Of Customer</label>
+                    <label className="text-xs text-left align-top text-slate-600">Customer</label>
                     <br />
                     <h2 className="inline-flex">
                             <p id="numberOfCustomer">{numberOfCustomer}</p>
@@ -140,31 +140,34 @@ const RevenueDetail = () => {
                 </div>
             </div>
             </div>
-            <div className="rounded-lg bg-white p-6 shadow-md m-3">
-                <h2>Top car rent</h2>
-                <table className="min-w-full table-auto">
-                    <thead>
-                        <tr>
-                            <th>Car</th>
-                            <th>Type</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {carNames.map((name, index) => (
-                            <tr key={index}>
-                                <td className="text-center">{name}</td>
-                                <td className="text-center">{carTypes[index]}</td>
-                                <td className="text-center">{carQuantities[index]}</td>
-                                <td className="text-center">{carAmounts[index]}$</td>
+            <div className="flex justify-between items-center">
+                <div className="w-1/2 rounded-lg bg-white p-6 shadow-md m-3">
+                    <h2>Top car rent</h2>
+                    <table className="min-w-full table-auto">
+                        <thead>
+                            <tr>
+                                <th>Car</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {carNames.map((name, index) => (
+                                <tr key={index}>
+                                    <td className="text-center">{name}</td>
+                                    <td className="text-center">{carTypes[index]}</td>
+                                    <td className="text-center">{carQuantities[index]}</td>
+                                    <td className="text-center">{carAmounts[index]}$</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="w-1/2 rounded-lg bg-white p-6 shadow-md m-3">
+                    <TopCustomerChart />
+                </div>
             </div>
-
-            <VisitorChart />
         </>
     );
 };
