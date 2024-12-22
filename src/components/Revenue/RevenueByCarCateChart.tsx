@@ -23,7 +23,7 @@ const RevenueByCarCateChart: React.FC = () => {
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Rating',
+                                label: 'Revenue',
                                 data: values,
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.8)',
