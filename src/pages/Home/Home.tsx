@@ -62,6 +62,7 @@ const Home = () => {
             <div className="flex flex-col items-start sm:w-1/4">
               <label className="text-gray-500 font-medium mb-1">
                 Location:
+
               </label>
               <div className="text-black font-bold">Hanoi</div>
             </div>

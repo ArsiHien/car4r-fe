@@ -10,9 +10,17 @@ import { setSelectedCarID } from "../../store/Car/selectedCarSlice";
 const RentalDetails: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { carsByStatus } = useSelector((state: RootState) => state.carsByStatus);
+  const userRole = useSelector((state: RootState) => state.user.user.role); // Assuming you have user role in your state
+  console.log(userRole);
 
-
-  const selectedCarId = useSelector((state: RootState) => state.selectedCar.selectedCarID)
+  const selectedCarId = useSelector((state: RootState) => state.selectedCar.selectedCarID);
+  const getCarsManagementLink = () => {
+    if (userRole === "MANAGER") {
+      return "/management/manager/cars"; // Link for manager
+    } else if (userRole === "STAFF") {
+      return "/management/staff/cars"; // Link for staff
+    }
+  };
 
   const handleCarSelect = (carId: string) => {
     dispatch(setSelectedCarID(carId)); // Update selected car ID
@@ -64,13 +72,13 @@ const RentalDetails: React.FC = () => {
               <div className="relative">
                 <label className="text-sm text-gray-500">Locations</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingLoanPlace:"bla"}</option>
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingLoanPlace:""}</option>
                 </select>
               </div>
               <div className="relative">
                 <label className="text-sm text-gray-500">Date</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  {/* <option>{cars.length > 0 ?cars[0].currentBookingStartDate.toDateString() :"bla"}</option> */}
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingStartDate:""}</option>
                 </select>
               </div>
             </div>
@@ -86,13 +94,13 @@ const RentalDetails: React.FC = () => {
               <div className="relative">
                 <label className="text-sm text-gray-500">Locations</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingReturnPlace:"bla"}</option>
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingReturnPlace:""}</option>
                 </select>
               </div>
               <div className="relative">
                 <label className="text-sm text-gray-500">Date</label>
                 <select className="w-full mt-1 p-2 border rounded-lg">
-                  <option>21 July 2022</option>
+                  <option>{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingReturnDate:""}</option>
                 </select>
               </div>
             </div>
@@ -106,7 +114,7 @@ const RentalDetails: React.FC = () => {
                 Overall price and includes rental discount
               </p>
             </div>
-            <p className="text-2xl font-bold">$80.00</p>
+            <p className="text-2xl font-bold">{carsByStatus.length > 0 ? carsByStatus.find(car => car.id === selectedCarId)?.currentBookingTotalPrice:""}$</p>
           </div>
         </div>
 
@@ -115,7 +123,7 @@ const RentalDetails: React.FC = () => {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">Recent Transaction</h2>
             <button className="text-blue-500 text-sm">
-              <Link to="/management/cars">View All</Link>
+              <Link to={getCarsManagementLink()}>View All</Link>
             </button>
           </div>
 
