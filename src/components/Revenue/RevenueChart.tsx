@@ -31,9 +31,10 @@ const RevenueChart: React.FC = () => {
                 {
                   label: "Revenue",
                   data: values,
-                  backgroundColor: "rgba(255, 99, 132, 0.8)",
+                  backgroundColor: "rgba(56, 189, 248, 0.7)",
                   borderColor: "rgba(75, 192, 192, 1)",
                   borderWidth: 1,
+                  fill: true,
                 },
               ],
             },
@@ -48,9 +49,9 @@ const RevenueChart: React.FC = () => {
                 title: {
                   display: true,
                   text: "Revenue",
-                  font:{
-                    size:18
-                  }
+                  font: {
+                    size: 18,
+                  },
                 },
               },
             },
