@@ -5,10 +5,11 @@ import routes from "../../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { fetchCarCategories } from "../../store/CarCategory/carCategoryActions";
+import { Spin } from "antd";
 
 const CarsManagement = () => {
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
-  const [selectedCarId, setSelectedCarId] = useState<string | null>(null); // Local state for selected car
+  const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { carCategories, loading, error } = useSelector(
@@ -19,28 +20,30 @@ const CarsManagement = () => {
     dispatch(fetchCarCategories());
   }, [dispatch]);
 
-
-
   const handleToggle = (id: string) => {
     if (loading) {
-      setExpandedCardId(null); // Reset expanded card when loading
+      setExpandedCardId(null);
     } else {
-      setExpandedCardId(expandedCardId === id ? null : id); // Toggle the expanded state
+      setExpandedCardId(expandedCardId === id ? null : id);
     }
   };
 
   const handleCarSelect = (id: string) => {
-    setSelectedCarId(id); // Update local selected car ID
+    setSelectedCarId(id);
   };
 
   useEffect(() => {
     if (loading) {
-      setExpandedCardId(null); // Reset expanded card when loading
-    } 
+      setExpandedCardId(null);
+    }
   }, [loading]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   if (error) {
@@ -65,14 +68,14 @@ const CarsManagement = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow ">
-      {carCategories.map((category) => (
+        {carCategories.map((category) => (
           <CarCard
             key={category.id}
             carCategory={category}
-            isExpanded={expandedCardId === category.id} // Check if this card is expanded
-            onToggle={() => handleToggle(category.id)} // Pass the toggle function 
-            />    
-          ))}
+            isExpanded={expandedCardId === category.id}
+            onToggle={() => handleToggle(category.id)}
+          />
+        ))}
       </div>
     </>
   );

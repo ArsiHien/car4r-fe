@@ -144,7 +144,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
           </Link>
         </div>
 
-        <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+        {/* <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +182,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
               d="m8.25 4.5 7.5 7.5-7.5 7.5"
             />
           </svg>
-        </div>
+        </div> */}
 
         {/* <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
           <div className="flex items-center">
