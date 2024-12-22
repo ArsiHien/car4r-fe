@@ -2,7 +2,6 @@ import {
   CarOutlined,
   HomeOutlined,
   ScheduleOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 import { ConfigProvider, Menu, MenuProps } from "antd";
 import React from "react";
@@ -10,10 +9,18 @@ import { TbLogout2 } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
 import { BsClipboard2Check } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/Authen/authenSlice";
+import { clearUser } from "../../store/User/userSlice";
 
 const StaffSidebar: React.FC = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   type MenuItem = Required<MenuProps>["items"][number];
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    dispatch(clearUser());
+  };
   const items: MenuItem[] = [
     {
       key: "main",
@@ -47,8 +54,7 @@ const StaffSidebar: React.FC = () => {
       label: "SETTINGS",
       type: "group",
       children: [
-        { key: "settings", label: <Link to={routes.staff.profile}>Settings</Link>, icon: <SettingOutlined /> },
-        { key: "logout", label: "Logout", icon: <TbLogout2 /> },
+        { key: "logout", label: "Logout", icon: <TbLogout2 />,onClick:handleLogout },
       ],
     },
   ];

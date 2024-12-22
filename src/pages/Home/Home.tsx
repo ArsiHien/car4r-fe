@@ -61,7 +61,7 @@ const Home = () => {
             {/* Location */}
             <div className="flex flex-col items-start sm:w-1/4">
               <label className="text-gray-500 font-medium mb-1">
-                Địa điểm:
+                Locations:
               </label>
               <div className="text-black font-bold">Hà Nội</div>
             </div>
@@ -72,7 +72,7 @@ const Home = () => {
                 <RangePicker
                   format="DD/MM/YYYY"
                   className="w-full text-2xl"
-                  placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                  placeholder={["Start Date", "End Date"]}
                 />
               </div>
             </div>
@@ -83,7 +83,7 @@ const Home = () => {
                 type="primary"
                 className="bg-green-500 text-lg text-white py-2"
               >
-                Tìm Xe
+                Search
               </Button>
             </Link>
           </div>
