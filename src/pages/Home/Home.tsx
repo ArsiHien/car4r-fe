@@ -73,7 +73,7 @@ const Home = () => {
                 <RangePicker
                   format="DD/MM/YYYY"
                   className="w-full text-2xl"
-                  placeholder={["Start date", "End Date"]}
+                  placeholder={["Start Date", "End Date"]}
                 />
               </div>
             </div>
