@@ -10,7 +10,6 @@ import User from "../../data/User";
 import { setUser, clearUser } from "../../store/User/userSlice";
 import Cookies from "js-cookie";
 
-
 const Home = () => {
   const { RangePicker } = DatePicker;
 
@@ -18,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    const storedUser = Cookies.get('user');
+    const storedUser = Cookies.get("user");
 
     const verifyTokenAndFetchUser = async () => {
       try {
@@ -49,7 +48,7 @@ const Home = () => {
         {" "}
         {/* Set the height to 50% of the viewport */}
         <img
-          src="src\assets\bg-landingpage.png" // Replace with your actual image URL
+          src="\assets\bg-landingpage.png" // Replace with your actual image URL
           alt="Hanoi City"
           className="w-full h-full object-cover rounded-3xl"
         />
