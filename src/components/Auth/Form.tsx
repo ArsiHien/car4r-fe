@@ -16,11 +16,11 @@ const Form = () => {
   const [show, setShow] = useState(false);
   const passwordToggle = [
     {
-      hidePath: "../../../src/assets/Auth/HidePass.png",
+      hidePath: "../../assets/Auth/HidePass.png",
       value: "Hide",
     },
     {
-      showPath: "../../../src/assets/Auth/ShowPass.png",
+      showPath: "../../assets/Auth/ShowPass.png",
       value: "Show",
     },
   ];

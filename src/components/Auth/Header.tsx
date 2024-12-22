@@ -15,7 +15,7 @@ const Header = () => {
           onClick={() => setIsOpen(!isOpen)}
         >
           English(UnitedState)
-          <img className="size-3" src="../../../src/assets/DownArrow.png" />
+          <img className="size-3" src="../../assets/DownArrow.png" />
         </button>
 
         <button

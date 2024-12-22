@@ -8,7 +8,7 @@ const ResetPw = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const pathImg = "../../../src/assets/Auth/ResetPw.png";
+  const pathImg = "../../assets/Auth/ResetPw.png";
   const navigate = useNavigate();
 
   // validate
