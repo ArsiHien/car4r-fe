@@ -30,6 +30,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
         return routes.customer.profile;
     }
   };
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -106,8 +107,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
           </div>
         </Link>
         <div>
-          <Link to={routes.customer.orderManagement}>
-            <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+        <Link to={role === Role.MANAGER ? routes.manager.dashboard : role === Role.STAFF ? routes.staff.overview : routes.customer.orderManagement}>
+        <div className="flex items-center justify-between cursor-pointer hover:bg-gray-100 p-2 rounded-md">
               <div className="flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +125,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
                   />
                 </svg>
 
-                <span className="ml-2">Manage Car Booking</span>
+                <span className="ml-2">{role === Role.MANAGER ? "Dashboard" : role === Role.STAFF ? "Car overview" : "Manage Car Booking"}</span>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
