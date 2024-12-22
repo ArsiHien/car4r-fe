@@ -61,18 +61,18 @@ const Home = () => {
             {/* Location */}
             <div className="flex flex-col items-start sm:w-1/4">
               <label className="text-gray-500 font-medium mb-1">
-                Địa điểm:
+                Location:
               </label>
-              <div className="text-black font-bold">Hà Nội</div>
+              <div className="text-black font-bold">Hanoi</div>
             </div>
 
             {/* Date and Time Pickers */}
-            <div className="flex items-center justify-between space-x-4">
+            <div className="flex items-center justify-between space-x-4 w-3/5">
               <div className="flex-1">
                 <RangePicker
                   format="DD/MM/YYYY"
                   className="w-full text-2xl"
-                  placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                  placeholder={["Start date", "End Date"]}
                 />
               </div>
             </div>
@@ -83,7 +83,7 @@ const Home = () => {
                 type="primary"
                 className="bg-green-500 text-lg text-white py-2"
               >
-                Tìm Xe
+                Search
               </Button>
             </Link>
           </div>

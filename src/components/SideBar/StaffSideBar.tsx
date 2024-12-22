@@ -10,9 +10,18 @@ import { TbLogout2 } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
 import { BsClipboard2Check } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/Authen/authenSlice";
+import { clearUser } from "../../store/User/userSlice";
 
 const StaffSidebar: React.FC = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    dispatch(clearUser());
+  };
   type MenuItem = Required<MenuProps>["items"][number];
   const items: MenuItem[] = [
     {
@@ -47,8 +56,20 @@ const StaffSidebar: React.FC = () => {
       label: "SETTINGS",
       type: "group",
       children: [
-        { key: "settings", label: <Link to={routes.staff.profile}>Settings</Link>, icon: <SettingOutlined /> },
-        { key: "logout", label: "Logout", icon: <TbLogout2 /> },
+        {
+          key: "settings",
+          label: <Link to={routes.staff.profile}>Settings</Link>,
+          icon: <SettingOutlined />,
+        },
+        {
+          key: "logout",
+          label: (
+            <Link to="/login" onClick={handleLogout}>
+              Log out
+            </Link>
+          ),
+          icon: <TbLogout2 />,
+        },
       ],
     },
   ];

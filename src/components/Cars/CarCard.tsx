@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { setSelectedCar } from "../../store/Booking/bookingSlice";
 import { fetchCarCategory } from "../../store/CarCategory/carCategoryActions";
+import Role from "../../const/Role";
+import routes from "../../config/routes";
+import { Spin } from "antd";
 
 export interface CarCardProps {
   id: string;
@@ -34,6 +37,8 @@ export const CarCard: React.FC<CarCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
+  const role = useSelector((state: RootState) => state.auth.role);
 
   const handleCardClick = () => {
     navigate(`/car/${name}-${id}`);
@@ -77,6 +82,26 @@ export const CarCard: React.FC<CarCardProps> = ({
     navigate("/booking");
   };
 
+  const handleEdit = async () => {
+    let carCategory = carCategories.find((car) => car.id === id);
+    if (!carCategory) {
+      const actionResult = await dispatch(fetchCarCategory(id));
+
+      if (fetchCarCategory.fulfilled.match(actionResult)) {
+        carCategory = actionResult.payload;
+      } else {
+        console.error("Failed to fetch the car category");
+        return;
+      }
+    }
+    const editUrl =
+      role === Role.MANAGER
+        ? routes.manager.editCar.replace(":id", id)
+        : routes.staff.editCar.replace(":id", id);
+
+    navigate(editUrl, { state: { carCategory } });
+  };
+
   return (
     <div
       onClick={handleCardClick}
@@ -117,15 +142,27 @@ export const CarCard: React.FC<CarCardProps> = ({
           <CarPrice price={price} />
         )}
 
-        <button
-          className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleRentNow();
-          }}
-        >
-          Rent Now
-        </button>
+        {role === Role.CUSTOMER ? (
+          <button
+            className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRentNow();
+            }}
+          >
+            Edit
+          </button>
+        ) : (
+          <button
+            className="rounded-lg bg-[#3563E9] px-6 py-2 text-white hover:bg-[#274bb1]"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit();
+            }}
+          >
+            Edit
+          </button>
+        )}
       </div>
     </div>
   );
