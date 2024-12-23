@@ -10,17 +10,17 @@ import { setSelectedCarID } from "../../store/Car/selectedCarSlice";
 const RentalDetails: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { carsByStatus } = useSelector((state: RootState) => state.carsByStatus);
-  const userRole = useSelector((state: RootState) => state.user.user.role); // Assuming you have user role in your state
-  console.log(userRole);
+  // const userRole = useSelector((state: RootState) => state.user.user.role); // Assuming you have user role in your state
+  // console.log(userRole);
 
   const selectedCarId = useSelector((state: RootState) => state.selectedCar.selectedCarID);
-  const getCarsManagementLink = () => {
-    if (userRole === "MANAGER") {
-      return "/management/manager/cars"; // Link for manager
-    } else if (userRole === "STAFF") {
-      return "/management/staff/cars"; // Link for staff
-    }
-  };
+  // const getCarsManagementLink = () => {
+  //   if (userRole === "MANAGER") {
+  //     return "/management/manager/cars"; // Link for manager
+  //   } else if (userRole === "STAFF") {
+  //     return "/management/staff/cars"; // Link for staff
+  //   }
+  // };
 
   const handleCarSelect = (carId: string) => {
     dispatch(setSelectedCarID(carId)); // Update selected car ID
@@ -122,9 +122,9 @@ const RentalDetails: React.FC = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">Recent Transaction</h2>
-            <button className="text-blue-500 text-sm">
+            {/* <button className="text-blue-500 text-sm">
               <Link to={getCarsManagementLink()}>View All</Link>
-            </button>
+            </button> */}
           </div>
 
           <CurrentRentalsList onCarSelect={handleCarSelect} />
