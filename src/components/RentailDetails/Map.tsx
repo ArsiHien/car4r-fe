@@ -1,4 +1,9 @@
-import { GoogleMap, Polyline, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  Polyline,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { useCallback, useState } from "react";
 
 // Define the container style for the map
@@ -35,7 +40,7 @@ const Map = ({ routeCoordinates }: routeCoordinatesProp) => {
   if (!isLoaded) {
     return <div>Loading map...</div>;
   }
-  console.log(routeCoordinates.length)
+  console.log(routeCoordinates.length);
 
   return (
     <div className="w-full h-full">
@@ -54,6 +59,24 @@ const Map = ({ routeCoordinates }: routeCoordinatesProp) => {
             strokeColor: "blue",
             strokeOpacity: 1.0,
             strokeWeight: 2,
+          }}
+        />
+
+        <Marker
+          position={{
+            lat: routeCoordinates[0].lat,
+            lng: routeCoordinates[0].lng,
+          }}
+        />
+
+        <Marker
+          position={{
+            lat: routeCoordinates[routeCoordinates.length - 1].lat,
+            lng: routeCoordinates[routeCoordinates.length - 1].lng,
+          }}
+          icon={{
+            url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Circle-icons-car.svg",
+            scaledSize: new window.google.maps.Size(16, 16),
           }}
         />
       </GoogleMap>

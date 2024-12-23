@@ -1,15 +1,19 @@
 import React from "react";
 import BookingList from "./BookingList";
 import { BookingResponse } from "../../types/Booking";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface OrderDashboardProps {
   currentBookings: BookingResponse[];
   pastBookings: BookingResponse[];
+  isLoading: boolean;
 }
 
 const OrderDashboard: React.FC<OrderDashboardProps> = ({
   currentBookings,
   pastBookings,
+  isLoading,
 }) => {
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
@@ -27,16 +31,23 @@ const OrderDashboard: React.FC<OrderDashboardProps> = ({
         <div className="basis-[15%]"></div>
       </div>
 
-      <div className="my-4">
-        <h2 className="text-lg font-semibold mb-4">Current Bookings</h2>
-        <BookingList bookings={currentBookings} isCurrent={true} />
-      </div>
+      {isLoading ? (
+        <div className="flex h-56 items-center justify-center">
+          <Spin indicator={<LoadingOutlined spin />} size="large" />
+        </div>
+      ) : (
+        <div>
+          <div className="my-4">
+            <h2 className="text-lg font-semibold mb-4">Current Bookings</h2>
+            <BookingList bookings={currentBookings} isCurrent={true} />
+          </div>
 
-      {/* Past Bookings */}
-      <div className="my-4">
-        <h2 className="text-lg font-semibold mb-4">Past Bookings</h2>
-        <BookingList bookings={pastBookings} isCurrent={false} />
-      </div>
+          <div className="my-4">
+            <h2 className="text-lg font-semibold mb-4">Past Bookings</h2>
+            <BookingList bookings={pastBookings} isCurrent={false} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -59,6 +59,7 @@ const CarMap = () => {
         onChange={(value) => setTimeRatio(value)}
         marks={marks}
         style={{ marginBottom: "20px" }}
+        tooltip={{ open: false }}
       />
     </div>
   );
