@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Steps } from "antd";
 import BookingInfo1 from "./BookingInfo1";
 import BookingInfo2 from "./BookingInfo2";
@@ -47,6 +47,26 @@ const Booking = () => {
         return null;
     }
   };
+
+  useEffect(() => {
+    const duration = 300;
+    const startPosition = window.scrollY;
+    const distance = -startPosition;
+    const startTime = performance.now();
+
+    const scroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const position = startPosition + distance * progress;
+      window.scrollTo(0, position);
+
+      if (progress < 1) {
+        requestAnimationFrame(scroll);
+      }
+    };
+
+    requestAnimationFrame(scroll);
+  }, [currentStep]);
 
   return (
     <div className="p-4 justify-center">

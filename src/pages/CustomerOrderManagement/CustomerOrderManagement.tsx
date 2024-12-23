@@ -21,6 +21,7 @@ const CustomerOrderManagement = () => {
       <OrderDashboard
         currentBookings={currentBookings}
         pastBookings={pastBookings}
+        isLoading={loading}
       ></OrderDashboard>
     </div>
   );

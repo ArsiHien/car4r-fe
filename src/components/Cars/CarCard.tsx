@@ -39,6 +39,9 @@ export const CarCard: React.FC<CarCardProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const role = useSelector((state: RootState) => state.auth.role);
+  console.log('role: ', role)
+  console.log('bool: ', Role.CUSTOMER)
+  console.log('caca: ', role === Role.CUSTOMER)
 
   const handleCardClick = () => {
     navigate(`/car/${name}-${id}`);
@@ -150,7 +153,7 @@ export const CarCard: React.FC<CarCardProps> = ({
               handleRentNow();
             }}
           >
-            Edit
+            Rent Now
           </button>
         ) : (
           <button

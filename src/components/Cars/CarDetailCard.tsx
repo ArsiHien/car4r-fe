@@ -122,7 +122,7 @@ const CarDetailCard: React.FC<CarCategoryDetail> = ({
               handleRentNow();
             }}
           >
-            Edit
+            Rent Now
           </button>
         ) : (
           <button
